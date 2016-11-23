@@ -8,17 +8,24 @@
   $ cf install-plugin Diego-Enabler -r CF-Community
   ```
 
-2. Migrate an app to Diego
+1. Migrate an app to Diego
 
   ```
   $ cf enable-diego <app_name>
   ```
   or 
   ```
-  cf push app <app_name> —no-start
-  cf enable-diego <app_name>
-  cf start <app_name>
+  $ cf push app <app_name> —no-start
+  $ cf enable-diego <app_name>
+  $ cf start <app_name>
   ```
+
+1. SSH into an application container instance
+
+  ```
+  cf ssh todo
+  ```
+  
 
 ## Resources
 
