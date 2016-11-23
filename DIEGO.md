@@ -1,4 +1,4 @@
-3 steps to migration from Cloud Foundry DEA to DIEGO
+3 steps to migrate from Cloud Foundry DEA to DIEGO
 
 ## Migration Steps
 
