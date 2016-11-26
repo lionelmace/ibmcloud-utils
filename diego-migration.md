@@ -31,4 +31,5 @@
 ## Resources
 
 - [A CF CLI plugin to help you migrate apps from the DEA to Diego runtime](https://github.com/cloudfoundry-incubator/Diego-Enabler)
+- [Migrating to Diego](https://github.com/cloudfoundry/diego-design-notes/blob/master/migrating-to-diego.md)
 - [Diego Migration](https://github.ibm.com/Bluemix-Ops/diego-migration/wiki)
