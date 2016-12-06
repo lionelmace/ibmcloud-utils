@@ -24,7 +24,7 @@
 1. SSH into an application container instance
 
   ```
-  cf ssh todo
+  cf ssh <app_name>
   ```
   
 
