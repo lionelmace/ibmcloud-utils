@@ -52,31 +52,31 @@
 
 1. Get the ID of your org
 
-```
-cf org lionel.mace@fr.ibm.com --guid
-```
+  ```
+  cf org lionel.mace@fr.ibm.com --guid
+  ```
 
 1. Get the instance usage
 
-```
-$ cf curl /v2/organizations/<org-guid>/instance_usage
-```
+  ```
+  $ cf curl /v2/organizations/<org-guid>/instance_usage
+  ```
 
-Output:
-{
-   "instance_usage": 25
-}
+  Output:
+  {
+     "instance_usage": 25
+  }
 
 2. Get the memory usage
 
-```
-$ cf curl /v2/organizations/<org-guid>/memory_usage
-```
+  ```
+  $ cf curl /v2/organizations/<org-guid>/memory_usage
+  ```
 
-Output:
-{
-   "memory_usage_in_mb": 11008
-}
+  Output:
+  {
+     "memory_usage_in_mb": 11008
+  }
 
 
 ## Resources
