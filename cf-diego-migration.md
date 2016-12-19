@@ -15,7 +15,7 @@
   $ cf enable-diego <app_name>
   ```
   or 
-  ```
+  ```sh
   $ cf push app <app_name> —no-start
   $ cf enable-diego <app_name>
   $ cf start <app_name>
