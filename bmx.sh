@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Please choose a target:"
-select target in "Prod EU" "Prod US" "Prod AU" "Stage1 EU" "Stage1 US" "CIO DYS0 Dedicated" "Exit"; do
+select target in "Prod EU" "Prod US" "Prod AU" "Stage1 EU" "Stage1 US" "CIO DYS0 Dedicated" "CIO W3IBM Dedicated" "Exit"; do
   case $target in
   "Prod US" )
     export BMX_TARGET=ng
@@ -19,6 +19,9 @@ select target in "Prod EU" "Prod US" "Prod AU" "Stage1 EU" "Stage1 US" "CIO DYS0
     break;;
   "CIO DYS0 Dedicated" )
     export BMX_TARGET=dys0
+    break;;
+  "CIO W3IBM Dedicated" )
+    export BMX_TARGET=w3ibm
     break;;
   "Exit" )
     exit;;
