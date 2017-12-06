@@ -1,4 +1,4 @@
-To find out which version of Cloud Foundry is deployed on IBM Cloud, got ot
+To find out which version of Cloud Foundry is deployed on IBM Cloud, go to
 [http://api.ng.bluemix.net/v2/info](http://api.ng.bluemix.net/v2/info)
 
 This page should return something like this:
