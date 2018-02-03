@@ -17,7 +17,7 @@ To use the Private Ingress Controller, we need to activate the ALB (Automatic Lo
 
 1. Then, activate the **Application Load Balancer** ALB
 
-  bx cs alb-configure --albID public-crc787582007c543f9b03e1656727e263d-alb1 --enable
+    ```bx cs alb-configure --albID public-crc787582007c543f9b03e1656727e263d-alb1 --enable```
 
 1. The applications are now available on the private IP address. In this case, via [http://10.135.30.246](http://10.135.30.246)
 
