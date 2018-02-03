@@ -48,4 +48,4 @@ To use the Private Ingress Controller, we need to activate the ALB (Automatic Lo
 
 ## Resources
 
-- [Cloud Foundry API](https://apidocs.cloudfoundry.org/270/#)
+- [Doc on how to privately expose apps using a custom domain without TLS](https://console.bluemix.net/docs/containers/cs_ingress.html#private_ingress_no_tls)
