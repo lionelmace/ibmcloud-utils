@@ -23,7 +23,7 @@ List existing images
 ```bx cr images```
 
 Tag local image to Bluemix Container Repository naming (update with your namespace and nginx version)
-```docker tag hellonode:1.0 registry.eu-de.bluemix.net/chemi/hellonode:1.0
+```docker tag hellonode:1.0 registry.eu-de.bluemix.net/chemi/hellonode:1.0```
 
 Publish local image into Bluemix Container Repository (update with your namespace and nginx version)
 ```docker push registry.eu-de.bluemix.net/chemi/hellonode:1.0```
