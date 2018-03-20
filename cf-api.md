@@ -32,7 +32,7 @@ The Cloud Foundry is available at [https://apidocs.cloudfoundry.org/270/](https
   The cf cli is going to the api - i.e. cloud controller - all the time.
 
   ```
-  cf app <mycfapp> --guid
+  bx cf app <mycfapp> --guid
   ```
 
   Copy the guid: 5c33a489-9fcd-4961-b3bc-22957ea4be19
@@ -40,12 +40,12 @@ The Cloud Foundry is available at [https://apidocs.cloudfoundry.org/270/](https
 1. Get detailed stats for a STARTED App using CF API
 
   ```
-  cf curl /v2/apps/<guid>/stats
+  bx cf curl /v2/apps/<guid>/stats
 
-  cf curl /v2/apps/5c33a489-9fcd-4961-b3bc-22957ea4be19/stats
+  bx cf curl /v2/apps/5c33a489-9fcd-4961-b3bc-22957ea4be19/stats
   ```
 
-  `cf curl` convenient because it injects your bearer token from the login automatically.
+  `bx cf curl` convenient because it injects your bearer token from the login automatically.
 
 1. Below are the results:
 
@@ -75,18 +75,34 @@ The Cloud Foundry is available at [https://apidocs.cloudfoundry.org/270/](https
   }
   ```
 
+## Find out the creator of the service
+
+1. Get the list of Service Instance Create Events
+
+  ```
+  bx cf curl /v2/events?q=type:audit.service_instance.create
+  ```
+
+1. Export this list to Excel
+  ```
+  bx cf curl /v2/events?q=type:audit.service_instance.create > allsvcinstances.json
+  ```
+
+1. Convert this json to Excel using tool such as (http://www.convertcsv.com/json-to-csv.htm)[http://www.convertcsv.com/json-to-csv.htm]
+
+
 ## Get instance/memory usage per organization
 
 1. Get the ID of your org
 
   ```
-  cf org lionel.mace@fr.ibm.com --guid
+  bx cf org lionel.mace@fr.ibm.com --guid
   ```
 
 1. Get the instance usage
 
   ```
-  $ cf curl /v2/organizations/<org-guid>/instance_usage
+  bx cf curl /v2/organizations/<org-guid>/instance_usage
   ```
 
   Output:
@@ -97,7 +113,7 @@ The Cloud Foundry is available at [https://apidocs.cloudfoundry.org/270/](https
 2. Get the memory usage
 
   ```
-  $ cf curl /v2/organizations/<org-guid>/memory_usage
+  bx cf curl /v2/organizations/<org-guid>/memory_usage
   ```
 
   Output:
