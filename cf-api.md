@@ -79,16 +79,16 @@ The Cloud Foundry is available at [https://apidocs.cloudfoundry.org/270/](https
 
 1. Get the list of Service Instance Create Events
 
-    ```
+    ```sh
     bx cf curl /v2/events?q=type:audit.service_instance.create
     ```
 
 1. Export this list to Excel
-    ```
+    ```sh
     bx cf curl /v2/events?q=type:audit.service_instance.create > allsvcinstances.json
     ```
 
-1. Convert this json to Excel using tool such as (http://www.convertcsv.com/json-to-csv.htm)[http://www.convertcsv.com/json-to-csv.htm]
+1. Convert this json to Excel using tool such as [http://www.convertcsv.com/json-to-csv.htm](http://www.convertcsv.com/json-to-csv.htm)
 
 
 ## Get instance/memory usage per organization
