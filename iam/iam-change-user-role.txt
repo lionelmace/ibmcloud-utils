@@ -1,0 +1,45 @@
+
+
+Step 1 - Invite users (Account owner only)
+
+    bx account user-invite lionel.mace@gmail.com
+
+
+Step 2 - Invite users (Account owner only)
+______________________________________________
+
+NOK bx iam user-policy-create Remy.Choupin@fr.ibm.com --roles Administrator, Editor, Operator, Viewer --service-name monitoring
+OK  bx iam user-policy-create Remy.Choupin@fr.ibm.com --roles Administrator --service-name monitoring
+bx iam user-policy-create lionel.mace@gmail.com --roles Administrator --service-name containers-kubernetes
+
+______________________________________________
+$ bx iam user-policies Remy.Choupin@fr.ibm.com
+Getting policies of user Remy.Choupin@fr.ibm.com under current account as lionel.mace@fr.ibm.com...
+OK
+                
+Policy ID:   ab11fda2-ab44-470b-b743-9e8a57027e9a   
+Roles:       Administrator, Editor, Operator, Viewer   
+Resources:                            
+             Service Name       containers-kubernetes      
+             Service Instance         
+             Region                   
+             Resource Type            
+             Resource                 
+                        
+Policy ID:   096da845-0a96-40f6-bb51-dbc93cb57b79   
+Roles:       Administrator, Editor, Operator, Viewer   
+Resources:                            
+             Service Name       monitoring      
+             Service Instance         
+             Region                   
+             Resource Type            
+             Resource                 
+                
+Policy ID:   f00930f0-55ce-4540-a134-82cbc019a853   
+Roles:       Administrator, Editor, Operator, Viewer   
+Resources:                            
+             Service Name       ibmcloud-log-analysis      
+             Service Instance         
+             Region                   
+             Resource Type            
+             Resource               
