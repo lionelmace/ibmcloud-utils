@@ -10,21 +10,27 @@ do
 	echo $user
     # Retrieve policies assigned to the user
     #policies=$(bx iam user-policies $user)
-    policies="OK Policy ID: 1bc955f2-f9c1-49be-a7de-3eb0ddd9c52f Roles: Viewer Resources: Service Name Service Instance Region Resource Type resource-group Resource c9dcb01f2b4a4ba79aab7bad93e326c3 Roles: Administrator Resources: Service Name containers-kubernetes Service Instance Region Resource Type Resource"
-    echo $policies
+    #policies="OK Policy ID: 1bc955f2-f9c1-49be-a7de-3eb0ddd9c52f Roles: Viewer Resources: Service Name Service Instance Region Resource Type resource-group Resource c9dcb01f2b4a4ba79aab7bad93e326c3 Roles: Administrator Resources: Service Name containers-kubernetes Service Instance Region Resource Type Resource"
+    #echo $policies
     # Regular expression to extract policies
-    echo "Match"
-    re="ID: (.*)\sRoles"
+    #echo "Match"
+    #re="ID: (.*)\sRoles"
     #re="(account)"
-    if [[ $policies =~ $re ]]; then echo ${BASH_REMATCH[1]}; fi
+    #if [[ $policies =~ $re ]]; then echo ${BASH_REMATCH[1]}; fi
     #echo ${BASH_REMATCH[1]};
     #while read policies  # For as many lines as the input file has ...
     #do
     #    echo "$line"   # Output the line itself.
     #done
-
+    #PY
+    # if output : bx iam user-policies $user
+    # OK Policy ID: 1bc955f2-f9c1-49be-a7de-3eb0ddd9c52f Roles: Viewer Resources: Service Name Service Instance Region Resource Type resource-group Resource c9dcb01f2b4a4ba79aab7bad93e326c3 Roles: Administrator Resources: Service Name containers-kubernetes Service Instance Region Resource Type Resource 
+    # OK Policy ID: 1bc955f2-f9c1-49be-a7de-3eb0ddd9c53f Roles: Viewer Resources: Service Name
+    for $i in $(bx iam user-policies $user| awk -v FS="ID:" '{print $2}' | awk '{print $1}')
+    do
 	# Delete Policy
-	#bx iam user-policy-delete $i containers-kubernetes -f
-	#bx iam user-policy-delete $i monitoring -f
-	#bx iam user-policy-delete $i ibmcloud-log-analysis -f
+	bx iam user-policy-delete $i containers-kubernetes -f
+	bx iam user-policy-delete $i monitoring -f
+	bx iam user-policy-delete $i ibmcloud-log-analysis -f
+    done
 done
