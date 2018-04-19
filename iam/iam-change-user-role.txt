@@ -2,19 +2,19 @@
 
 Step 1 - Invite users (Account owner only)
 
-    bx account user-invite lionel.mace@gmail.com
+    bx account user-invite first.last@gmail.com
 
 
 Step 2 - Invite users (Account owner only)
 ______________________________________________
 
-NOK bx iam user-policy-create Remy.Choupin@fr.ibm.com --roles Administrator, Editor, Operator, Viewer --service-name monitoring
-OK  bx iam user-policy-create Remy.Choupin@fr.ibm.com --roles Administrator --service-name monitoring
-bx iam user-policy-create lionel.mace@gmail.com --roles Administrator --service-name containers-kubernetes
+NOK bx iam user-policy-create first.last@gmail.com --roles Administrator, Editor, Operator, Viewer --service-name monitoring
+OK  bx iam user-policy-create first.last@gmail.com --roles Administrator --service-name monitoring
+bx iam user-policy-create first.last@gmail.com --roles Administrator --service-name containers-kubernetes
 
 ______________________________________________
-$ bx iam user-policies Remy.Choupin@fr.ibm.com
-Getting policies of user Remy.Choupin@fr.ibm.com under current account as lionel.mace@fr.ibm.com...
+$ bx iam user-policies first.last@gmail.com
+Getting policies of user first.last@gmail.com under current account as first.last@gmail.com...
 OK
                 
 Policy ID:   ab11fda2-ab44-470b-b743-9e8a57027e9a   
