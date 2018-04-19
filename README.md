@@ -1,2 +1,2 @@
-# bluemix-cheatsheet
-Cheat Sheet Bluemix
+# ibm-cloud-cheatsheet
+Cheat Sheet IBM Cloud
