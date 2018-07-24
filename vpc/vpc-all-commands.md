@@ -16,7 +16,7 @@ ibmcloud is help
  
 # Create VPC
 ibmcloud is vpcs
-ibmcloud is vpc-create vpc-sey
+ibmcloud is vpc-create vpc-lma
 ibmcloud is vpcs
 $vpc="9ffa38c7-c59c-4a38-94bb-615b35f58012"
  
