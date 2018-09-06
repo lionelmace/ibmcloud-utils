@@ -1,8 +1,12 @@
 # Connect to IBM Cloud
+```
 ibmcloud login --sso
- 
+```
+
 # Show plugin and update
+```
 ibmcloud plugin repo-plugins
+```
 #ibmcloud install infrastructure-service
 ibmcloud plugin update
  
@@ -129,7 +133,7 @@ ibmcloud is instance-create D1 $vpc us-south-2 $profile $d 1000 --image $image -
 ibmcloud is instances
 ```
  
-#Create floating IP
+# Create floating IP
 ```
 ibmcloud is instance 66f31a3d-09d1-44a9-b7fe-e6b716737273
 ```
