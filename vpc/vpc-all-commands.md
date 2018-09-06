@@ -5,7 +5,15 @@
 + Install the [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/ibmcloud/download_cli.html#install_use)
 
 
-# Step 1 - Install IBM Cloud Infrasctructure plugins
+# Steps
+
+1. [Step 1 - Install IBM Cloud Infrasctructure plugin](#step-1---install-ibm-cloud-infrastructure-plugin)
+1. [Step 2 - Connect to IBM Cloud](#step-2---connect-to-ibm-cloud)
+1. [Step 3 - Show Infrastructure and Region commands](#step-3---show-infrastructure-and-region-commands)
+1. [Step 4 - Create VPC](#step-2---create-vpc)
+
+
+# Step 1 - Install IBM Cloud Infrasctructure plugin
 
 To create VPC, and VSI, install the Infrastructure plug-in.
 
@@ -70,46 +78,45 @@ To create VPC, and VSI, install the Infrastructure plug-in.
 
     >  To switch afterwards to a different region, use the command `ibmcloud target -r eu-de`
 
- 
-# Connect to IaaS
-```
-ibmcloud sl init -c 1433073
-```
-```
-ibmcloud sl vs list
-```
- 
-# Show commands
-```
-ibmcloud is help
-```
 
-# Create VPC
-```
-ibmcloud is vpcs
-```
-```
-ibmcloud is vpc-create vpc-lma
-```
-```
-ibmcloud is vpcs
-```
-```
-$vpc="9ffa38c7-c59c-4a38-94bb-615b35f58012"
-```
  
-# Show regions and zones
-```
-ibmcloud is regions
-```
-```
-ibmcloud is zones us-south
-```
-```
-ibmcloud is zone us-south us-south-2
-```
+# Step 3 - Show Infrastructure and Region commands
+
+1. Get the list of all Infrastructure commands
+    ```
+    ibmcloud is help
+    ```
+
+1. List all regions
+    ```
+    ibmcloud is regions
+    ```
+
+1. List all zones in a region
+    ```
+    ibmcloud is zones us-south
+    ```
+
+1. Get zone info with a region
+    ```
+    ibmcloud is zone us-south us-south-2
+    ```
+
+
+# Step 4 - Create VPC
+
+1. List all VPCs in the account
+    ```
+    ibmcloud is vpcs
+    ```
+
+1. Create a VPC
+    ```
+    ibmcloud is vpc-create mace-vpc1
+    ```
+
  
-# Create subnets
+# Step 5 - Create subnets
 ```
 ibmcloud is subnet-create Z2-S1-P $vpc us-south-2 --ipv4_cidr_block 10.1.1.0/24
 ```
