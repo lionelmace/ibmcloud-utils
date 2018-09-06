@@ -1,14 +1,75 @@
-# Connect to IBM Cloud
-```
-ibmcloud login --sso
-```
 
-# Show plugin and update
-```
-ibmcloud plugin repo-plugins
-```
-#ibmcloud install infrastructure-service
-ibmcloud plugin update
+# Pre-Requisites
+
++ Get a [IBM Cloud account](https://bluemix.net)
++ Install the [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/ibmcloud/download_cli.html#install_use)
+
+
+# Step 1 - Install IBM Cloud Infrasctructure plugins
+
+To create VPC, and VSI, install the Infrastructure plug-in.
+
+1. Open a command line utility.
+
+1. Before installing the Infrastructure plugin, we need to add the repository hosting IBM Cloud CLI plug-ins.
+    ```
+    ibmcloud plugin repos
+    ```
+    Output:
+    ```
+    Listing added plug-in repositories...
+
+    Repo Name   URL
+    Bluemix     https://plugins.ng.bluemix.net
+    ```
+
+1. If you don't see a repository, run the following command:
+    ```
+    ibmcloud plugin repo-add Bluemix https://plugins.ng.bluemix.net
+    ```
+
+1. To install the Infrastructure Service plugin, run the following command:
+    ```
+   ibmcloud plugin install infrastructure-service
+    ```
+
+1. To verify that the plug-in is installed properly, run the following command:
+    ```
+    ibmcloud plugin list
+    ```
+    and both plug-ins are displayed in the results:
+    ```
+    Listing installed plug-ins...
+
+    Plugin Name          Version
+    infrastructure-service                 0.1.3
+    ```
+
+1. To update the plugin
+    ```
+    ibmcloud plugin update
+    ```
+
+
+# Step 2 - Connect to IBM Cloud
+
+1. Login to IBM Cloud
+    ```
+    ibmcloud login
+    ```
+
+1. Select the region (API Endpoint) where you deployed your application.
+
+    | Location | Acronym | API Endpoint |
+    | ----- | ----------- | ----------- |
+    |Germany|eu-de|https://api.eu-de.bluemix.net|
+    |Sydney|au-syd|https://api.au-syd.bluemix.net|
+    |US East|us-east|https://api.us-east.bluemix.net|
+    |US South|us-south|https://api.us-south.bluemix.net|
+    |United Kingdom|eu-gb|https://api.eu-gb.bluemix.net|
+
+    >  To switch afterwards to a different region, use the command `ibmcloud target -r eu-de`
+
  
 # Connect to IaaS
 ```
