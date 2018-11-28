@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # Shell script to remove a list of users and their associated Cloud Foundry space
-for email in firstname.lastname@fr.ibm.com xx.xxx@gmail.com xx.xxx@gmail.com
+
+# for email in firstname.lastname@fr.ibm.com xx.xxx@gmail.com xx.xxx@gmail.com
 
 do
 	## Extract last name from email
