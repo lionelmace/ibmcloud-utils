@@ -43,6 +43,7 @@ Certificate to be used in Cloud Foundry
     ```
     mytodos.secure.lionelmace.com
     ```
+    ![](cf-custom-route.png)
 
 ## Configure the DNS CNAME to route your domain name to Bluemix
 
@@ -59,6 +60,32 @@ Certificate to be used in Cloud Foundry
     ![](cis-custom-domain.png)
 
 1. Go back to Cloud Foundry and test the new route.
+
+## Generate a client certificate with OpenSSL
+
+1. Generate a new 2048 bit private key and a self signed certificate that will be used for the client certificate
+    ```
+    openssl req -newkey rsa:2048 -nodes -keyout clientPrivate.key -x509 \
+   -days 365 -out clientPublic.crt \
+   -subj "/C=UK/O=Example Corporation/CN=Mace's Sample API"
+   ```
+
+1. Generate a "p12" file containing both the public certificate and private key, which will be used by API Connect
+    ```
+    openssl pkcs12 -inkey clientPrivate.key -in clientPublic.crt -export -out clientCert.p12
+    ```
+    >Enter your chosen Export Password (eg "clientP4ssphr4se")
+
+1. Delete the unprotected private key
+    ```
+    rm clientPrivate.key
+    ```
+
+# API Connect
+
+## Create a new API in API Connect with TLS Profile
+
+1. Go to this [tutorial](https://developer.ibm.com/apiconnect/2016/07/06/securing-apic-bm-app-mutual-tls/#step2a)
 
 # Resources
 * [Securing the connection from API Connect to a Bluemix application with mutual TLS authentication](https://developer.ibm.com/apiconnect/2016/07/06/securing-apic-bm-app-mutual-tls/)
