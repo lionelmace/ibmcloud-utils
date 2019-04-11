@@ -32,7 +32,7 @@ Certificate to be used in Cloud Foundry
     chmod 644 privkey.pem
     ```
 
-## Generate a client certificate with OpenSSL
+## Generate a client self-signed certificate with OpenSSL
 
 1. Generate a new 2048 bit private key and a self signed certificate that will be used for the client certificate
     ```
