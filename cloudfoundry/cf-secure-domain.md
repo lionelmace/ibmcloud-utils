@@ -1,18 +1,21 @@
 Certificate to be used in Cloud Foundry
 
-## Generate a server certificate that will be presented by the Cloud Foundry Server
+# Generate the Server and Client Certificates
 
-1. Install **Let's Encrypt**
+## Generate a **Server Certificate** with **Let's Encrypt** that will be presented by the Cloud Foundry Server
+
+
+1. Install **Let's Encrypt** on macOS
     ```
     brew install letsencrypt
     ```
 
-1. Generate a signed certificate for **secure.lionelmace.com**
+1. Generate a signed certificate. In this case, the domain used is **secure.lionelmace.com**
     ```
     sudo certbot certonly --manual --preferred-challenges=dns --server https://acme-v02.api.letsencrypt.org/directory -d '*.secure.lionelmace.com'
     ```
 
-1. Check the generate certificates
+1. Check the generated certificates
     ```
     sudo ls /etc/letsencrypt/live/secure.lionelmace.com/
     ```
@@ -28,38 +31,6 @@ Certificate to be used in Cloud Foundry
     chmod 644 fullchain.pem
     chmod 644 privkey.pem
     ```
-
-## Create a custom domain in Cloud Foundry and upload the certificate
-
-1. Go to the **Domains** of Cloud Foundry org [https://cloud.ibm.com/account/cloud-foundry](https://cloud.ibm.com/account/cloud-foundry)
-
-1. Add the domain **secure.lionelmace.com**
-
-1. Update the certificate **fullchain.pem** and **privkey.pem**
-
-## Add a route for the custom domain to your CF application
-
-1. Edit the route of your CF App and add the following route
-    ```
-    mytodos.secure.lionelmace.com
-    ```
-    ![](cf-custom-route.png)
-
-## Configure the DNS CNAME to route your domain name to Bluemix
-
-1. Go to your service instance of Go to the **CIS (Cloud Internet Services)**
-
-1. Add a DNS CNAME
-    ```
-    Type: CNAME 
-    Name: mytodos.secure
-    TTL : Automatic
-    Alias Domain Name: custom-domain.eu-de.cf.cloud.ibm.com
-    ```
-
-    ![](cis-custom-domain.png)
-
-1. Go back to Cloud Foundry and test the new route.
 
 ## Generate a client certificate with OpenSSL
 
@@ -80,6 +51,41 @@ Certificate to be used in Cloud Foundry
     ```
     rm clientPrivate.key
     ```
+
+# Create a secure route in **Cloud Foundry**
+
+## Create a custom domain in Cloud Foundry and upload the certificate
+
+1. Go to the **Domains** of Cloud Foundry org [https://cloud.ibm.com/account/cloud-foundry](https://cloud.ibm.com/account/cloud-foundry)
+
+1. Add the domain **secure.lionelmace.com**
+
+1. Update the certificate **fullchain.pem** and **privkey.pem**
+
+## Add a route for the custom domain to your CF application
+
+1. Edit the route of your CF App and add the following route
+    ```
+    mytodos.secure.lionelmace.com
+    ```
+    ![](cf-custom-route.png)
+
+
+# Configure the DNS CNAME to route your domain name to IBM Cloud using **CIS (Cloud Internet Services)**
+
+1. Go to your service instance of **CIS**
+
+1. Add a DNS CNAME
+    ```
+    Type: CNAME 
+    Name: mytodos.secure
+    TTL : Automatic
+    Alias Domain Name: custom-domain.eu-de.cf.cloud.ibm.com
+    ```
+
+    ![](cis-custom-domain.png)
+
+1. Go back to Cloud Foundry and test the new route.
 
 # API Connect
 
