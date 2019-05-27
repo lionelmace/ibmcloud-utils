@@ -1,0 +1,14 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: cfee-ingress-deny-all
+spec:
+  applyOnForward: true
+  ingress:
+  - action: Deny
+    destination: {}
+    source: {}
+  order: 3000
+  selector: ibm.role=='worker_public'
+  types:
+  - Ingress
