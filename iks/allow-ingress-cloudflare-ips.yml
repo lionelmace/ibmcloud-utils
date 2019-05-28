@@ -1,7 +1,7 @@
  apiVersion: projectcalico.org/v3
  kind: GlobalNetworkPolicy
  metadata:
-   name: cfee-ingress-allow-cloudflare-ips
+   name: allow-ingress-cloudflare-ips
  spec:
    applyOnForward: true
    preDNAT: true
@@ -10,8 +10,11 @@
      destination:
        nets:
        # IKS Portable Public Subnets
-       - 158.177.70.144/29
-       - 161.156.112.0/29
+       # - 158.177.70.144/29
+       # - 161.156.112.0/29
+       # CFEE3 Cluster
+       - 161.156.120.72/29
+       - 158.177.180.88/29
        ports:
        - 80
      protocol: TCP
@@ -35,6 +38,6 @@
        ports:
        - 443
    selector: ibm.role=='worker_public'
-   order: 4000
+   order: 2000
    types:
    - Ingress

@@ -1,7 +1,7 @@
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
 metadata:
-  name: cfee-ingress-deny-all
+  name: deny-all-ingress
 spec:
   applyOnForward: true
   ingress:
