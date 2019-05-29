@@ -1,0 +1,24 @@
+ apiVersion: projectcalico.org/v3
+ kind: GlobalNetworkPolicy
+ metadata:
+   name: deny-nodeports
+ spec:
+   applyOnForward: true
+   preDNAT: true
+   ingress:
+   - action: Deny
+     destination:
+       ports:
+       - 30000:32767
+     protocol: TCP
+     source: {}
+   - action: Deny
+     destination:
+       ports:
+       - 30000:32767
+     protocol: UDP
+     source: {}
+   selector: ibm.role=='worker_public'
+   order: 1100
+   types:
+   - Ingress
