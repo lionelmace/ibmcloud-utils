@@ -1,8 +1,8 @@
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
 metadata:
-  name: deny-alb-traffic
   # Deny all incoming TCP traffic from any source IP to the ALB IP address and port
+  name: deny-alb-traffic
 spec:
   applyOnForward: true
   preDNAT: true
@@ -10,21 +10,17 @@ spec:
   - action: Deny
     destination:
       nets:
+      # IPs of (ALB) Automatic Load Balancer (a.k.a Ingress)
+      # CLI: kubectl get ingress
       - 169.50.19.214/32
       - 161.156.130.142/32
       - 149.81.67.38/32
-      # IPs Ingress subdomain from cfee3-eu-demo cluster
-      # dig cfee3-eu-demo-cluster.eu-de.containers.appdomain.cloud
-      # - 158.177.180.90/32
-      # - 161.156.120.78/32
-      # IPs Ingress subdomain from hacluster in demo rg
-      # To get the ingress IP and ports, run cmd: kubectl get ingress
       ports:
       - 80
       - 443
     protocol: TCP
     source: {}
-  selector: ibm.role=='worker_public'
-  order: 800
+  selector: ibm.role == 'worker_public'
+  order: 4000
   types:
   - Ingress
