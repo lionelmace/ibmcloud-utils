@@ -1,28 +1,25 @@
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
 metadata:
-  name: allow-traffic-from-my-ip
-  # allow traffic from your system's IP to the ALB IP address and port
+  # Deny all incoming TCP traffic from any source IP to the ALB IP address and port
+  name: deny-alb-traffic
 spec:
   applyOnForward: true
   preDNAT: true
   ingress:
-  - action: Allow
+  - action: Deny
     destination:
       nets:
       # IPs of (ALB) Automatic Load Balancer (a.k.a Ingress)
       # CLI: kubectl get ingress
-      - 169.50.19.214/32
-      - 161.156.130.142/32
-      - 149.81.67.38/32
+      - 158.177.180.90/32
+      - 161.156.120.78/32
       ports:
       - 80
       - 443
     protocol: TCP
-    source:
-      nets:
-      -  78.207.202.120/32
+    source: {}
   selector: ibm.role == 'worker_public'
-  order: 2000
+  order: 4000
   types:
   - Ingress

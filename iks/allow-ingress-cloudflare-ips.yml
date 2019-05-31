@@ -1,47 +1,38 @@
- apiVersion: projectcalico.org/v3
- kind: GlobalNetworkPolicy
- metadata:
-   name: allow-ingress-cloudflare-ips
- spec:
-   applyOnForward: true
-   preDNAT: true
-   ingress:
-   - action: Allow
-     destination:
-       nets:
-       # IKS Portable Public Subnets
-       # - 158.177.70.144/29
-       # - 161.156.112.0/29
-       # CFEE3 Cluster
-      #  - 161.156.120.72/29
-      #  - 158.177.180.88/29
-       - 158.177.180.90/32
-       - 161.156.120.78/32
-       ports:
-       - 80
-       - 443
-     protocol: TCP
-     source:
-       nets:
-       - 78.207.202.120/32
-       # Source: https://www.cloudflare.com/ips/
-      #  - 173.245.48.0/20
-      #  - 103.21.244.0/22
-      #  - 103.22.200.0/22
-      #  - 103.31.4.0/22
-      #  - 141.101.64.0/18
-      #  - 108.162.192.0/18
-      #  - 190.93.240.0/20
-      #  - 188.114.96.0/20
-      #  - 197.234.240.0/22
-      #  - 198.41.128.0/17
-      #  - 162.158.0.0/15
-      #  - 104.16.0.0/12
-      #  - 172.64.0.0/13
-      #  - 131.0.72.0/22
-       ports:
-       - 443
-   selector: ibm.role=='worker_public'
-   order: 2000
-   types:
-   - Ingress
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-ingress-cloudflare-ips
+spec:
+  applyOnForward: true
+  preDNAT: true
+  ingress:
+  - action: Allow
+    destination:
+      nets:
+      - 158.177.180.90/32
+      - 161.156.120.78/32
+      ports:
+      - 80
+      - 443
+    protocol: TCP
+    source:
+      nets:
+      # Source: https://www.cloudflare.com/ips/
+      - 173.245.48.0/20
+      - 103.21.244.0/22
+      - 103.22.200.0/22
+      - 103.31.4.0/22
+      - 141.101.64.0/18
+      - 108.162.192.0/18
+      - 190.93.240.0/20
+      - 188.114.96.0/20
+      - 197.234.240.0/22
+      - 198.41.128.0/17
+      - 162.158.0.0/15
+      - 104.16.0.0/12
+      - 172.64.0.0/13
+      - 131.0.72.0/22
+  selector: ibm.role == 'worker_public'
+  order: 3000
+  types:
+  - Ingress
