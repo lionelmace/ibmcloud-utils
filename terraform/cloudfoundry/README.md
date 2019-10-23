@@ -1,4 +1,6 @@
 
+Terraform sample to deploy a Cloud Foundry app either using Terraform or Schematics on IBM Cloud.
+
 1. Run `terraform apply`
 2. Fill out the values: application hostname, API Key, CF Org, CF Dev
 
@@ -21,7 +23,7 @@ To make sure CF was able to deploy it, it was unzipped and zipped again without 
   adding: vcap-local.MongoDBexample.json (deflated 38%)
   adding: vcap-local.example.json (deflated 38%)
   adding: views/ (stored 0%)
-  
+
  ~/get-started-node-master  $  unzip -l ../get
 Archive:  ../get.zip
   Length      Date    Time    Name
