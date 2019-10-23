@@ -20,7 +20,7 @@ variable "ibm_cloud_region" {
 
 
 variable "application_hostname" {
-  description = "specify the hostname for the application's route. The specified hostname will then be extended by '.mybluemix.net'"
+  description = "specify the hostname for the application's route. The specified hostname will then be extended by '.eu-de.cf.appdomain.cloud'"
 }
 
 variable "application_version" {
@@ -42,6 +42,7 @@ variable "application_instances" {
 provider "ibm" {
   #bluemix_api_key = "${var.ibm_cloud_apikey}"
   ibmcloud_api_key = "${var.ibm_cloud_apikey}"
+  region = "${var.ibm_cloud_region}"
 }
 
 data "ibm_space" "myspace" {
@@ -63,7 +64,6 @@ resource "ibm_app" "cfapp" {
 
 
 data "ibm_app_domain_shared" "mydomain" {
-  #name = "mybluemix.net"
   name = "${var.ibm_cloud_region}.cf.appdomain.cloud"
 }
 
