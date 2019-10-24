@@ -57,7 +57,7 @@ resource "ibm_app" "cfapp" {
   wait_time_minutes = 10
   buildpack         = "nodejs_buildpack"
   #app_path          = "${path.module}/appcode/get-started-node-master.zip"
-  app_path          = "${path.module}/terraform/cloudfoundry/appcode/get-started-node-master.zip"
+  app_path          = "${path.module}/tree/master/terraform/cloudfoundry/appcode/get-started-node-master.zip"
   app_version       = "${var.application_version}"
   route_guid        = ["${ibm_app_route.myroute.id}"] 
   instances         = "${var.application_instances}"
