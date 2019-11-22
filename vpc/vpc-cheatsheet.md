@@ -9,7 +9,13 @@
 1. [Step 1 - Install IBM Cloud Infrasctructure plugin](#step-1---install-ibm-cloud-infrastructure-plugin)	
 1. [Step 2 - Connect to IBM Cloud](#step-2---connect-to-ibm-cloud)	
 1. [Step 3 - Show Infrastructure and Region commands](#step-3---show-infrastructure-and-region-commands)	
-1. [Step 4 - Create VPC](#step-2---create-vpc)	
+1. [Step 4 - Create VPC](#step-4---create-vpc)	
+1. [Step 5 - Create subnets](#step-5---create-subnets)	
+1. [Step 6 - Create public gateway](#step-6---create-public-gateway)	
+1. [Step 7 - Add key](#step-2---add-key)	
+1. [Step 8 - Show image & profiles](#step-8---show-image-&-profiles)	
+1. [Step 9 - Create VSI](#step-9---create-vsi)	
+1. [Step 10 - Create floating IP](#step-10---create-floating-ip)	
 
 
 # Step 1 - Install IBM Cloud Infrasctructure plugin	
@@ -138,7 +144,7 @@ ibmcloud is subnets
 ```	
 
 
-# Create public gateway	
+# Step 6 - Create public gateway	
 ```	
 ibmcloud is public-gateway-create Gateway-Z2-S2-A $vpc us-south-2	
 ```	
@@ -155,7 +161,7 @@ ibmcloud is subnet-update $a --gw $gateway
 ibmcloud is subnets	
 ```	
 
-# Add key	
+# Step 7 - Add key	
 ```	
 ibmcloud is key-create --name demo-key-ibm --key "ssh-rsa XXXXXXXXXX==" --rg 1	
 ```	
@@ -166,7 +172,7 @@ ibmcloud is keys
 $key="8cda4a00-946c-47ad-8044-bbc3bb09fbd1"	
 ```	
 
-# Show images & profiles	
+# Step 8 - Show images & profiles	
 ```	
 ibmcloud is images	
 ```	
@@ -180,7 +186,7 @@ ibmcloud is instance-profiles
 $profile="c-1x1"	
 ```	
 
-# Create VMs	
+# Step 9 - Create VSI	
 ```	
 ibmcloud is instance-create P1 $vpc us-south-2 $profile $p 1000 --image $image --keys $key	
 ```	
@@ -194,13 +200,14 @@ ibmcloud is instance-create D1 $vpc us-south-2 $profile $d 1000 --image $image -
 ibmcloud is instances	
 ```	
 
-# Create floating IP	
+# Step 10 - Create floating IP	
 ```	
-ibmcloud is instance 66f31a3d-09d1-44a9-b7fe-e6b716737273	
+ibmcloud is instance <instance-id>	
 ```	
 ```	
+ibmcloud is instance <instance-id> | grep eth0
 $nic="53f8d4e4-5531-4cf5-8388-157ce65ffac6"	
 ```	
 ```	
-ibmcloud is floating-ip-reserve VIP-P1 --nic $nic	
+ibmcloud is floating-ip-reserve VIP-P1 --nic-id $nic	
 ```
