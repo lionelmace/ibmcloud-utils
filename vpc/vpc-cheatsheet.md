@@ -84,6 +84,11 @@ To create VPC, and VSI, install the Infrastructure plug-in.
     ibmcloud is help	
     ```	
 
+1. IBM Cloud offers has two generations of Infrastructure. Gen 2 offers 5 times faster provisioning. Note Gen 2 is only available in Dallas. Select Gen 1 to work in Frankfurt.
+    ```
+    ibmcloud is target --gen 1
+    ```
+
 1. List all regions	
     ```	
     ibmcloud is regions	
@@ -91,13 +96,18 @@ To create VPC, and VSI, install the Infrastructure plug-in.
 
 1. List all zones in a region	
     ```	
-    ibmcloud is zones us-south	
+    ibmcloud is zones eu-de
     ```	
-
-1. Get zone info with a region	
-    ```	
-    ibmcloud is zone us-south us-south-2	
-    ```	
+    Output:
+    ```
+    Listing regions for generation 1 compute under account Demo as user first.last@fr.ibm.com...
+    Name       Endpoint                              Status
+    eu-gb      https://eu-gb.iaas.cloud.ibm.com      available
+    au-syd     https://au-syd.iaas.cloud.ibm.com     available
+    jp-tok     https://jp-tok.iaas.cloud.ibm.com     available
+    eu-de      https://eu-de.iaas.cloud.ibm.com      available
+    us-south   https://us-south.iaas.cloud.ibm.com   available
+    ```
 
 
 # Step 4 - Create VPC	
@@ -109,35 +119,24 @@ To create VPC, and VSI, install the Infrastructure plug-in.
 
 1. Create a VPC	
     ```	
-    ibmcloud is vpc-create mace-vpc1	
+    ibmcloud is vpc-create test-vpc-lma	
     ```	
 
 
 # Step 5 - Create subnets	
 ```	
-ibmcloud is subnet-create Z2-S1-P $vpc us-south-2 --ipv4_cidr_block 10.1.1.0/24	
+ibmcloud is subnet-create Z2-S1-P $vpc eu-de-1 --ipv4_cidr_block 10.1.1.0/24	
 ```	
 ```	
-ibmcloud is subnet-create Z2-S2-A $vpc us-south-2 --ipv4_cidr_block 10.1.2.0/24	
+ibmcloud is subnet-create Z2-S2-A $vpc eu-de-2 --ipv4_cidr_block 10.1.2.0/24	
 ```	
 ```	
-ibmcloud is subnet-create Z2-S3-D $vpc us-south-2 --ipv4_cidr_block 10.1.3.0/24	
+ibmcloud is subnet-create Z2-S3-D $vpc eu-de-3 --ipv4_cidr_block 10.1.3.0/24	
 ```	
 ```	
 ibmcloud is subnets	
 ```	
-```	
-ibmcloud is subnets --vpc $vpc	
-```	
-```	
-$p="487df7a9-38aa-45c1-b301-a415b3c59402"	
-```	
-```	
-$a="6c7dc57c-15a9-46f8-8364-a28956c321e6"	
-```	
-```	
-$d="0c8a095c-9c40-4622-91fa-0449e03d0c79"	
-```	
+
 
 # Create public gateway	
 ```	
@@ -158,10 +157,7 @@ ibmcloud is subnets
 
 # Add key	
 ```	
-ibmcloud is key-create --name Eychenne-Steven-IBM --key "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAht/ujDr180	
-ejC3uItul59tX6MvlIPvbYqHm9BvhmSDBTK6X0ZGfEBWVq7lRMmHbdj6sluRl09YjmrqqOo5em73wn46OGSWivuDilAKO5MBsgNEtdavaDNAhUZj7MVgpRm6	
-ATV4HAIDYzk8AIaVUvddDZGIIkVbWL1dXMQ1w2CzoHHlmDIsnwhqxga4xg2yrTCUwgRB6fBTw8T9w8YGH8xNp2V1lVpgph54WHKfgeilPIScxsjLX/6J3qiU	
-SmicyQY2mmBF7lFYzz1gVxXEeZWYZusydXO1HThA/sMS3+hlVvm60euo2bDDVPtRfwYJuUJFI0zCR4eORYF6i0+pvPzQ==" --rg 1	
+ibmcloud is key-create --name demo-key-ibm --key "ssh-rsa XXXXXXXXXX==" --rg 1	
 ```	
 ```	
 ibmcloud is keys	
