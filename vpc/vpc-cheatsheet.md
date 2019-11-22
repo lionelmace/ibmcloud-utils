@@ -1,7 +1,7 @@
 # Pre-Requisites	
 
-+ Get a [IBM Cloud account](https://bluemix.net)	
-+ Install the [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/ibmcloud/download_cli.html#install_use)	
++ Get a [IBM Cloud account](https://cloud.ibm.com)	
++ Install the [IBM Cloud CLI](https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/)	
 
 
 # Steps	
@@ -24,14 +24,15 @@ To create VPC, and VSI, install the Infrastructure plug-in.
     ```	
     Output:	
     ```	
-    Listing added plug-in repositories...	
-    Repo Name   URL	
-    Bluemix     https://plugins.ng.bluemix.net	
+    Listing added plug-in repositories...
+
+    Repo Name   URL                             Description
+    IBM Cloud   https://plugins.cloud.ibm.com   Official repository(Formerly named 'Bluemix')
     ```	
 
 1. If you don't see a repository, run the following command:	
     ```	
-    ibmcloud plugin repo-add Bluemix https://plugins.ng.bluemix.net	
+    ibmcloud plugin repo-add "IBM Cloud" https://plugins.cloud.ibm.com
     ```	
 
 1. To install the Infrastructure Service plugin, run the following command:	
@@ -47,7 +48,7 @@ To create VPC, and VSI, install the Infrastructure plug-in.
     ```	
     Listing installed plug-ins...	
     Plugin Name          Version	
-    infrastructure-service                 0.1.3	
+    vpc-infrastructure/infrastructure-service   0.5.8	
     ```	
 
 1. To update the plugin	
@@ -65,13 +66,13 @@ To create VPC, and VSI, install the Infrastructure plug-in.
 
 1. Select the region (API Endpoint) where you deployed your application.	
 
-    | Location | Acronym | API Endpoint |	
-    | ----- | ----------- | ----------- |	
-    |Germany|eu-de|https://api.eu-de.bluemix.net|	
-    |Sydney|au-syd|https://api.au-syd.bluemix.net|	
-    |US East|us-east|https://api.us-east.bluemix.net|	
-    |US South|us-south|https://api.us-south.bluemix.net|	
-    |United Kingdom|eu-gb|https://api.eu-gb.bluemix.net|	
+    | Location | Acronym |
+    | ----- | ----------- |
+    |Germany|eu-de|
+    |Sydney|au-syd|
+    |US East|us-east|
+    |US South|us-south|
+    |United Kingdom|eu-gb|
 
     >  To switch afterwards to a different region, use the command `ibmcloud target -r eu-de`	
 
