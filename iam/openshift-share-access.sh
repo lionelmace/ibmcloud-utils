@@ -23,7 +23,7 @@ do
   oc new-project $project_name
 
   # Invite user to the account
-  printf "\n## Inviting user: $email to the account $ACCOUNT_ID\n"
+  printf "\n## Inviting user $email to the account $ACCOUNT_ID\n"
   ibmcloud account user-invite $email
 
   # Assign IAM User Policy
