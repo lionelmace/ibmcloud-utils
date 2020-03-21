@@ -32,8 +32,8 @@ do
 
   # Add edit role to the user so they can work within the project $project_name
   printf "\n## Add Edit role to the user $email so he can work within the project $project_name\n"
-#   oc adm policy add-role-to-user edit IAM#$email -n $project_name
-  oc adm policy add-role-to-user admin IAM#$email -n $project_name
+  oc adm policy add-role-to-user edit IAM#$email -n $project_name
+
 
   # Access has been given
   printf "\n## You can now view the cluster $CLUSTER_NAME overview:\n"
