@@ -34,8 +34,7 @@ do
   printf "\n## Add Edit role to the user $email so he can work within the project $project_name\n"
   oc adm policy add-role-to-user edit IAM#$email -n $project_name
 
-
-  # Access has been given
+  # Access has been granted
   printf "\n## You can now view the cluster $CLUSTER_NAME overview:\n"
   printf "https://cloud.ibm.com/kubernetes/clusters/$CLUSTER_ID?bss_account=$ACCOUNT_ID"
   printf "\n## You now have access the project $project_name inside the Openshift cluster:\n"
