@@ -8,7 +8,7 @@ export SERVER_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq 
 INGRESS_URL=$(ibmcloud ks cluster get --cluster iro --json | jq ".ingressHostname" | tr -d '"')
 CLUSTER_ID=$(ibmcloud ks cluster get --cluster iro --json | jq ".id" | tr -d '"')
 sleep 4
-printf "## Logging into OpenShift Cluster $CLUSTER_NAME"
+printf "## Logging into OpenShift Cluster $CLUSTER_NAME\n"
 oc login -u apikey -p ${APIKEY} --server=${SERVER_URL//\"} --insecure-skip-tls-verify=true
 
 for email in $EMAIL
