@@ -2,11 +2,13 @@
 
 source ../local.env
 
+ibmcloud target -g $RESOURCE_GROUP_NAME
+
 IAM_TOKEN=$(ibmcloud iam oauth-tokens | grep IAM | awk '{print $4}')
 
 export SERVER_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".serverURL")
 sleep 4
-printf "## Logging into OpenShift Cluster $CLUSTER_NAME"
+printf "## Logging into OpenShift Cluster $CLUSTER_NAME\n"
 oc login -u apikey -p ${APIKEY} --server=${SERVER_URL//\"} --insecure-skip-tls-verify=true
 
 for email in $EMAIL
@@ -14,7 +16,7 @@ for email in $EMAIL
 do
   # Extract last name from email
   lastname=$(echo $email | awk -F'@' '{print $1}' | sed 's?.*\.??g' | sed 's?.*\_??g' )
-  project_name="user-$lastname"
+  project_name="lab-$lastname"
 
   # Remove edit role from the user
   printf "## Removing Edit role from the user $email in the project $project_name\n"
