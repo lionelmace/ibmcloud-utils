@@ -4,8 +4,6 @@
 
 source ../local.env
 
-IAM_TOKEN=$(ibmcloud iam oauth-tokens | grep IAM | awk '{print $4}')
-
 #for i in `ic sl block volume-list | awk '{ print $1}' `
 for i in `ic sl file volume-list | awk '{ print $1}' `
 do
