@@ -12,9 +12,8 @@ spec:
       nets:
       # IPs of (ALB) Automatic Load Balancer (a.k.a Ingress)
       # CLI: kubectl get ingress
-      - 169.50.19.214/32
-      - 161.156.130.142/32
-      - 149.81.67.38/32
+      - 158.177.180.90/32
+      - 161.156.120.78/32
       ports:
       - 80
       - 443

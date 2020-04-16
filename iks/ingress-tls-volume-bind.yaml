@@ -1,0 +1,80 @@
+---
+# Application to deploy
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mytodos
+spec:
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:   # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: mytodos
+        tier: frontend
+    spec:
+      containers:
+      - name: mytodos
+        image: <region>.icr.io/<namespace>/todo-<lastname>:1.0
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 250m     # 250 millicores = 1/4 core
+            memory: 100Mi # 100 MB
+          limits:
+            cpu: 500m
+            memory: 300Mi
+      #   volumeMounts:
+      #     - mountPath: /opt/service-bind # Mount the "service-bind-volume" volume into the pod.
+      #       name: service-bind-volume
+      # volumes:
+      #   - name: service-bind-volume
+      #     secret:
+      #       defaultMode: 420
+      #       secretName: binding-todo-cloudant
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: mytodos-ingress
+  annotations:
+    # Force the use of https if the request is http
+    ingress.bluemix.net/redirect-to-https: "True"
+    # Activate App ID for Authentication
+    # Requires the existence of an App Id service bound to the cluster
+    # ingress.bluemix.net/appid-auth: "bindSecret=binding-app-id-20180705 namespace=default requestType=web serviceName=mytodos"
+spec:
+  tls:
+  - hosts:
+    - todo.<cluster-name>.<region>.containers.appdomain.cloud
+    secretName: <cluster-name>
+  rules:
+  - host: todo.<cluster-name>.eu-de.containers.appdomain.cloud
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: mytodos
+          servicePort: 8080
+  # - host: www.mycustomdomain.com
+  #   http:
+  #     paths:
+  #     - path: /
+  #       backend:
+  #         serviceName: mytodos
+  #         servicePort: 3000
+---
+# Service to expose frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: mytodos
+  labels:
+    app: mytodos
+    tier: frontend
+spec:
+  ports:
+  - protocol: TCP
+    port: 8080
+  selector:
+    app: mytodos
+    tier: frontend
