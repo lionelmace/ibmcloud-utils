@@ -1,0 +1,53 @@
+# Create a namespace
+cat <<EOF | oc create -f -
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lab-mace
+EOF
+
+cat <<EOF | oc create -f -
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: lab-mace
+  namespace: lab-mace
+EOF
+
+cat <<EOF | oc create -f -
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: lab-mace
+  namespace: lab-mace
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: lab-mace-bindings
+  namespace: lab-mace
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: lab-mace
+subjects:
+- kind: ServiceAccount
+  name: lab-mace
+  namespace: lab-mace
+EOF
+
+cat <<EOF | oc create -f -
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: lab-mace
+  namespace: lab-mace
+spec:
+  serviceAccountName: lab-mace
+  targetNamespaces:
+  - lab-mace
+EOF
