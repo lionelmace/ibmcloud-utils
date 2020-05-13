@@ -1,0 +1,27 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: aggregate-olm-edit2
+  labels:
+    rbac.authorization.k8s.io/aggregate-to-admin: 'true'
+    rbac.authorization.k8s.io/aggregate-to-edit: 'true'
+rules:
+  - verbs:
+      - create
+      - update
+      - patch
+      - delete
+    apiGroups:
+      - operators.coreos.com
+    resources:
+      - subscriptions
+      - operatorgroups
+  - verbs:
+      - delete
+    apiGroups:
+      - operators.coreos.com
+    resources:
+      - clusterserviceversions
+      - catalogsources
+      - installplans
+      - subscriptions

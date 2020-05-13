@@ -13,8 +13,25 @@ sleep 4
 printf "## Logging into OpenShift Cluster $CLUSTER_NAME...\n"
 oc login -u apikey -p ${APIKEY} --server=${SERVER_URL//\"} --insecure-skip-tls-verify=true
 
-for email in $EMAIL
+# Give the user a ClusterRoleBinding to the existing aggregate-olm-view ClusterRole
+# enableClusterRoleBinding() {
+#   cat <<EOF | oc create -f -
+# kind: ClusterRoleBinding
+# apiVersion: rbac.authorization.k8s.io/v1
+# metadata:
+#   name: operators-view
+# subjects:
+#   - kind: User
+#     apiGroup: rbac.authorization.k8s.io
+#     name: IAM#'$1'
+# roleRef:
+#   apiGroup: rbac.authorization.k8s.io
+#   kind: ClusterRole
+#   name: aggregate-olm-view
+# EOF
+# }
 
+for email in $EMAIL
 do
   ## Extract last name from email and convert to lower case
   lastname=$(echo $email | awk -F'@' '{print $1}' | sed 's?.*\.??g' | sed 's?.*\_??g' | awk '{print tolower($0)}' )
@@ -38,6 +55,10 @@ do
   # iam_email=$(oc get users | grep -i $email | awk '{ print $1}')
   printf "\n## Add Edit role to the user $email so he can work within the project $project_name...\n"
   oc adm policy add-role-to-user edit IAM#$email -n $project_name
+
+  # Enable user to install Operator from OperatorHub
+  printf "\n## Enabling user to install Operator from OperatorHub...\n"
+  # enableClusterRoleBinding $email
 
   # Access has been granted
   printf "\n## URL to view the cluster overview in IBM Cloud:\n"

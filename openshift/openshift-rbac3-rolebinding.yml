@@ -1,0 +1,13 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: operators-edit2
+  namespace: lab-droinpy
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: 'IAM#DROINPY@fr.ibm.com'
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: aggregate-olm-edit2
