@@ -5,7 +5,7 @@ metadata:
 subjects:
   - kind: User
     apiGroup: rbac.authorization.k8s.io
-    name: 'IAM#DROINPY@fr.ibm.com'
+    name: 'IAM#lionel.mace@gmail.com'
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

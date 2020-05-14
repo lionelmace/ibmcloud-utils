@@ -7,29 +7,82 @@ ibmcloud target -g $RESOURCE_GROUP_NAME
 IAM_TOKEN=$(ibmcloud iam oauth-tokens | grep IAM | awk '{print $4}')
 
 export SERVER_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".serverURL")
-INGRESS_URL=$(ibmcloud ks cluster get --cluster iro --json | jq ".ingressHostname" | tr -d '"')
-CLUSTER_ID=$(ibmcloud ks cluster get --cluster iro --json | jq ".id" | tr -d '"')
+INGRESS_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".ingressHostname" | tr -d '"')
+CLUSTER_ID=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".id" | tr -d '"')
 sleep 4
-printf "## Logging into OpenShift Cluster $CLUSTER_NAME...\n"
+printf "\n## Logging into OpenShift Cluster $CLUSTER_NAME...\n"
 oc login -u apikey -p ${APIKEY} --server=${SERVER_URL//\"} --insecure-skip-tls-verify=true
 
 # Give the user a ClusterRoleBinding to the existing aggregate-olm-view ClusterRole
-# enableClusterRoleBinding() {
-#   cat <<EOF | oc create -f -
-# kind: ClusterRoleBinding
-# apiVersion: rbac.authorization.k8s.io/v1
-# metadata:
-#   name: operators-view
-# subjects:
-#   - kind: User
-#     apiGroup: rbac.authorization.k8s.io
-#     name: IAM#'$1'
-# roleRef:
-#   apiGroup: rbac.authorization.k8s.io
-#   kind: ClusterRole
-#   name: aggregate-olm-view
-# EOF
-# }
+# --------- BEGIN
+enableClusterRoleBinding() {
+  cat <<EOF | oc apply -f -
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: operators-view
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: IAM#'$1'
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: aggregate-olm-view
+EOF
+}
+
+enableClusterRole()
+{
+  cat <<EOF | oc apply -f -
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: aggregate-olm-edit2
+  labels:
+    rbac.authorization.k8s.io/aggregate-to-admin: 'true'
+    rbac.authorization.k8s.io/aggregate-to-edit: 'true'
+rules:
+  - verbs:
+      - create
+      - update
+      - patch
+      - delete
+    apiGroups:
+      - operators.coreos.com
+    resources:
+      - subscriptions
+      - operatorgroups
+  - verbs:
+      - delete
+    apiGroups:
+      - operators.coreos.com
+    resources:
+      - clusterserviceversions
+      - catalogsources
+      - installplans
+      - subscriptions
+EOF
+}
+
+enableRoleBinding() {
+  cat <<EOF | oc apply -f -
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: operators-edit2
+  namespace: '$1'
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: IAM#'$2'
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: aggregate-olm-edit2
+EOF
+}
+# --------- END
 
 for email in $EMAIL
 do
@@ -46,19 +99,22 @@ do
   ibmcloud account user-invite $email
 
   # Assign IAM User Policy
-  printf "\n## Assigning user policy Platform Viewer to the user $email...\n"
+  printf "\n## Assigning IAM Platform Viewer to allow the user to see the cluster in the IBM Cloud environment\n"
   ibmcloud iam user-policy-create $email --roles Viewer --service-name containers-kubernetes --service-instance $CLUSTER_ID
-  #ibmcloud iam user-policy-create $email --roles Viewer,Writer --service-name containers-kubernetes --service-instance $CLUSTER_ID --attributes "namespace=$project_name"
+  printf "\n## Assigning IAM Platform Writer to the project\n"
+  ibmcloud iam user-policy-create $email --roles Writer --service-name containers-kubernetes --service-instance $CLUSTER_ID --attributes "namespace=$project_name"
 
   # Add edit role to the user so they can work within the project $project_name
   # Warning: user will appear in OpenShift once the user has logged at least once
   # iam_email=$(oc get users | grep -i $email | awk '{ print $1}')
   printf "\n## Add Edit role to the user $email so he can work within the project $project_name...\n"
-  oc adm policy add-role-to-user edit IAM#$email -n $project_name
+  # oc adm policy add-role-to-user edit IAM#$email -n $project_name
 
   # Enable user to install Operator from OperatorHub
   printf "\n## Enabling user to install Operator from OperatorHub...\n"
   # enableClusterRoleBinding $email
+  # enableClusterRole
+  # enableRoleBinding $project_name $email
 
   # Access has been granted
   printf "\n## URL to view the cluster overview in IBM Cloud:\n"
