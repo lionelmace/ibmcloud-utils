@@ -1,5 +1,7 @@
 Cloud Native Reference Architecture with Cloud Services
 
+![](./ibmcloud-vpc-iks-architecture.png)
+
 PaaS
 * [Internet Services](https://cloud.ibm.com/catalog/services/internet-services)
 * [Certificate Manager](https://cloud.ibm.com/catalog/services/certificate-manager)
@@ -25,8 +27,5 @@ Iaas
 * [VPC Public Gateways](https://cloud.ibm.com/vpc-ext/network/publicGateways)
 * [VPC VPN Gateways](https://cloud.ibm.com/vpc/provision/vpngateway)
 * [VPC Load Balancer](https://cloud.ibm.com/vpc/provision/loadBalancer)
-
-
-![](./ibmcloud-vpc-iks-architecture.png)
 
 ![](./ibmcloud-vpc-iks-architecture.mov)
