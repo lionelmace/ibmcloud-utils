@@ -18,7 +18,7 @@ PaaS
 * [Cloud Object Storage](https://cloud.ibm.com/catalog/services/cloud-object-storage)
 
 CaaS
-* [IKS(IBM Cloud Kubernetes Service)](https://cloud.ibm.com/kubernetes/catalog/create)
+* [IKS (IBM Cloud Kubernetes Service)](https://cloud.ibm.com/kubernetes/catalog/create)
 * [Red Hat OpenShift on IBM Cloud](https://cloud.ibm.com/kubernetes/catalog/create?platformType=openshift&newCreate=true)
 
 IaaS
