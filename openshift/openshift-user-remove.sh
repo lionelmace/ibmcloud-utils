@@ -6,10 +6,10 @@ ibmcloud target -g $RESOURCE_GROUP_NAME
 
 IAM_TOKEN=$(ibmcloud iam oauth-tokens | grep IAM | awk '{print $4}')
 
-export SERVER_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".serverURL")
+export MASTER_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".serverURL")
 sleep 4
 printf "## Logging into OpenShift Cluster $CLUSTER_NAME...\n"
-oc login -u apikey -p ${APIKEY} --server=${SERVER_URL//\"} --insecure-skip-tls-verify=true
+oc login -u apikey -p ${APIKEY} --server=${MASTER_URL//\"} --insecure-skip-tls-verify=true
 
 for email in $EMAIL
 

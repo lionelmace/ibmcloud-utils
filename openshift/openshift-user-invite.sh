@@ -6,12 +6,12 @@ ibmcloud target -g $RESOURCE_GROUP_NAME
 
 IAM_TOKEN=$(ibmcloud iam oauth-tokens | grep IAM | awk '{print $4}')
 
-export SERVER_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".serverURL")
+export MASTER_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".masterURL")
 INGRESS_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".ingressHostname" | tr -d '"')
 CLUSTER_ID=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".id" | tr -d '"')
 sleep 4
 printf "\n## Logging into OpenShift Cluster $CLUSTER_NAME...\n"
-oc login -u apikey -p ${APIKEY} --server=${SERVER_URL//\"} --insecure-skip-tls-verify=true
+oc login -u apikey -p ${APIKEY} --server=${MASTER_URL//\"} --insecure-skip-tls-verify=true
 
 # Give the user a ClusterRoleBinding to the existing aggregate-olm-view ClusterRole
 # --------- BEGIN
