@@ -1,13 +1,13 @@
 #!/bin/sh
+# Uncommment to verbose
+# set -x 
 
 source ../local.env
 
 ibmcloud target -g $RESOURCE_GROUP_NAME
 
-IAM_TOKEN=$(ibmcloud iam oauth-tokens | grep IAM | awk '{print $4}')
-
 export MASTER_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".masterURL")
-INGRESS_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".ingressHostname" | tr -d '"')
+INGRESS_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".ingress.hostname" | tr -d '"')
 CLUSTER_ID=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".id" | tr -d '"')
 sleep 4
 printf "\n## Logging into OpenShift Cluster $CLUSTER_NAME...\n"
@@ -20,11 +20,11 @@ enableClusterRoleBinding() {
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: operators-view
+  name: operators-view-$1
 subjects:
   - kind: User
     apiGroup: rbac.authorization.k8s.io
-    name: IAM#'$1'
+    name: IAM#$2
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -71,11 +71,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: operators-edit2
-  namespace: '$1'
+  namespace: $1
 subjects:
   - kind: User
     apiGroup: rbac.authorization.k8s.io
-    name: IAM#'$2'
+    name: IAM#$2
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -112,9 +112,9 @@ do
 
   # Enable user to install Operator from OperatorHub
   printf "\n## Enabling user to install Operator from OperatorHub...\n"
-  # enableClusterRoleBinding $email
-  # enableClusterRole
-  # enableRoleBinding $project_name $email
+  enableClusterRoleBinding $lastname $email
+  enableClusterRole
+  enableRoleBinding $project_name $email
 
   # Access has been granted
   printf "\n## URL to view the cluster overview in IBM Cloud:\n"
