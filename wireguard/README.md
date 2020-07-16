@@ -160,3 +160,6 @@
     ```
     ping c2.private.eu-de.containers.cloud.ibm.com
     ```
+
+## Resources
+* [set-up-wireguard-vpn-on-ubuntu](https://www.linode.com/docs/networking/vpn/set-up-wireguard-vpn-on-ubuntu/)
