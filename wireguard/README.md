@@ -1,5 +1,7 @@
 # Connect IBM Cloud by VPN using Wireguard
 
+![](./ibmcloud-wireguqrd-vpc.jpg)
+
 ## Install Wireguard
 
 1. On Mac, you can download it from the [App Store](https://apps.apple.com/fr/app/wireguard/id1451685025?l=en&mt=12)
