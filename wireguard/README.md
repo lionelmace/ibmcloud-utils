@@ -1,5 +1,9 @@
 # Connect IBM Cloud by VPN using Wireguard
 
+## Install Wireguard
+
+1. On Mac, you can download it from the [App Store](https://apps.apple.com/fr/app/wireguard/id1451685025?l=en&mt=12)
+
 ## Create a Security Group
 
 1. Create the following Security Group
@@ -156,7 +160,7 @@
     ping 10.23.5.1
     ```
 
-1. From your local machine, ping the private endpoing of your kubernetes cluster such as
+1. From your local machine, ping the private endpoint of one of your [Kubernetes cluster](https://cloud.ibm.com/kubernetes/clusters) such as
     ```
     ping c2.private.eu-de.containers.cloud.ibm.com
     ```

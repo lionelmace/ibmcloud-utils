@@ -10,7 +10,7 @@
 RG="client"
 
 ## Define Access Group name and description
-AG_NAME="group-administrator"
+AG_NAME="group-admin-test"
 AG_DESCRIPTION="GroupAdministrator"
 
 ## Create Access Group
@@ -18,10 +18,9 @@ ibmcloud iam access-group-create $AG_NAME -d $AG_DESCRIPTION
 
 ## Assing Access Group Policies
 echo "Assigning policies to Access Group $AG_NAME"
+
 # Add Policy: All account management services
-##### Not supported by IAM
-# https://github.ibm.com/Bluemix/bluemix-cli/issues/2022#issuecomment-8517015
-ibmcloud iam access-group-policy-create $AG_NAME --roles Administrator --service-type platform_service
+ibmcloud iam access-group-policy-create $AG_NAME --roles Administrator --account-management
 
 # Add Policy: All resources in account (including future IAM enabled services)
 # ibmcloud iam access-group-policy-create $AG_NAME --roles Administrator,Manager --service-type service
