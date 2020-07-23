@@ -1,6 +1,6 @@
 # Connect IBM Cloud by VPN using Wireguard
 
-![](./ibmcloud-wireguqrd-vpc.jpg)
+![](./ibmcloud-wireguard-vpc.jpg)
 
 ## Install Wireguard
 
