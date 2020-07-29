@@ -8,22 +8,22 @@
 
 ## Create a Security Group
 
-1. Create a new [Security Group](https://cloud.ibm.com/vpc/network/securityGroups) with 4 Inbound Rules
+1. Create a new [Security Group](https://cloud.ibm.com/vpc/network/securityGroups) with
 
     4 **Inbound** Rules:
     
-    Source | Protocol | Port Range | Description
-    --- | --- | ---
-    *Still* | TCP | **nicely**
-    1 | 2 | 3 | Allow all outbound IPv4 traffic.
+    Protocol | Source Type | Source | Port | Description
+    ---  | --- | --- | --- | ---
+    TCP  | Any | 0.0.0.0/0 | 22-22       | Allow incoming SSH traffic
+    TCP  | Any | 0.0.0.0/0 | 443-443     | Allow incoming SSL traffic
+    UDP  | Any | 0.0.0.0/0 | 65000-65000 | Allow incoming traffic from Wireguard client
+    ICMP | Any | 0.0.0.0/0 | Any         | Allow incoming ping traffic
 
-    1 **Outound** Rules:
+    1 **Outound** Rule:
 
-    Destination | Protocol | Port Range | Description
-    --- | --- | ---
-    0.0.0.0/0 | All | All | Allow all outbound IPv4 traffic.
-
-![](./vsi-security-group.png)
+    Protocol | Destination Type | Destination | Port | Description
+    --- | --- | --- | --- | ---
+    ALL | Any | 0.0.0.0/0 | All | Allow all outbound IPv4 traffic.
 
 
 ## Provision a VSI in VPC
