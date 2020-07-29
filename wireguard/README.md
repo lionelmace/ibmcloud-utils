@@ -1,16 +1,16 @@
-# Connect IBM Cloud by VPN using Wireguard
+# How to use Wireguard VPN to connect to IBM Cloud?
 
 ![](./ibmcloud-wireguard-vpc.jpg)
 
-## Install Wireguard
+## Install Wireguard Client on your desktop
 
-1. On Mac, you can download it from the [App Store](https://apps.apple.com/fr/app/wireguard/id1451685025?l=en&mt=12)
+1. Download and install the wireguard from [here](https://www.wireguard.com/install/)
 
 ## Create a Security Group
 
-1. Create a new [Security Group](https://cloud.ibm.com/vpc/network/securityGroups) with
+1. Create a new [Security Group](https://cloud.ibm.com/vpc/network/securityGroups) called `wireguard-sg` with the following rules:
 
-    4 **Inbound** Rules:
+    4 **Inbound** Rules
     
     Protocol | Source Type | Source | Port | Description
     ---  | --- | --- | --- | ---
@@ -19,7 +19,7 @@
     UDP  | Any | 0.0.0.0/0 | 65000-65000 | Allow incoming traffic from Wireguard client
     ICMP | Any | 0.0.0.0/0 | Any         | Allow incoming ping traffic
 
-    1 **Outound** Rule:
+    1 **Outbound** Rule
 
     Protocol | Destination Type | Destination | Port | Description
     --- | --- | --- | --- | ---
