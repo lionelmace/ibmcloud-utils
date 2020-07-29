@@ -8,7 +8,20 @@
 
 ## Create a Security Group
 
-1. Create the following Security Group
+1. Create a new [Security Group](https://cloud.ibm.com/vpc/network/securityGroups) with 4 Inbound Rules
+
+    4 **Inbound** Rules:
+    
+    Source | Protocol | Port Range | Description
+    --- | --- | ---
+    *Still* | TCP | **nicely**
+    1 | 2 | 3 | Allow all outbound IPv4 traffic.
+
+    1 **Outound** Rules:
+
+    Destination | Protocol | Port Range | Description
+    --- | --- | ---
+    0.0.0.0/0 | All | All | Allow all outbound IPv4 traffic.
 
 ![](./vsi-security-group.png)
 
