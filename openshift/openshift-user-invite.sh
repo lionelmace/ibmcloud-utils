@@ -98,9 +98,10 @@ do
   printf "\n## Inviting user $email to the account $ACCOUNT_ID...\n"
   ibmcloud account user-invite $email
 
-  # Assign IAM User Policy
+  # Assign IAM User Policy - Warning: Those 2 independant policies are required.
   printf "\n## Assigning IAM Platform Viewer to allow the user to see the cluster in the IBM Cloud environment\n"
   ibmcloud iam user-policy-create $email --roles Viewer --service-name containers-kubernetes --service-instance $CLUSTER_ID
+  # Grant admin access on the OpenShift project
   printf "\n## Assigning IAM Platform Writer to the project\n"
   ibmcloud iam user-policy-create $email --roles Writer --service-name containers-kubernetes --service-instance $CLUSTER_ID --attributes "namespace=$project_name"
 
