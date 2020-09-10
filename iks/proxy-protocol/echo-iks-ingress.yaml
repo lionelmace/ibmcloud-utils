@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: echo
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-deployment
+  namespace: echo
+  labels:
+    app: echo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: echo
+  template:
+    metadata:
+      labels:
+        app: echo
+    spec:
+      containers:
+      - name: echo
+        image: mendhak/http-https-echo
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:  
+  name: echo-service
+  namespace: echo
+spec:
+  selector:
+    app: echo
+  ports:  
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  # added
+  externalTrafficPolicy: Local
+  type: LoadBalancer
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: echo-ingress
+  namespace: echo
+  annotations:
+    # Force the use of https if the request is http
+    ingress.bluemix.net/redirect-to-https: "True"
+    ingress.bluemix.net/tcp-ports: "serviceName=echo-service ingressPort=80 servicePort=80"
+spec:
+  tls:
+  - hosts:
+    - iks-706860-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+    secretName: iks-706860-483cccd2f0d38128dd40d2b711142ba9-0000
+  rules:
+  - host: iks-706860-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: echo-service
+          servicePort: 80
