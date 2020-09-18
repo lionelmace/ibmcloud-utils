@@ -24,10 +24,11 @@ spec:
     spec:
       containers:
       - name: echo
-        image: mendhak/http-https-echo
+        image: lionelmace/http-https-echo
+        imagePullPolicy: Always
         ports:
-        - containerPort: 80
-        - containerPort: 443
+        - containerPort: 8080
+        - containerPort: 8443
 
 ---
 
@@ -36,39 +37,18 @@ kind: Service
 metadata:  
   name: echo-service
   namespace: echo
+  annotations:
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "proxy-protocol"
 spec:
+  type: LoadBalancer
   selector:
     app: echo
   ports:  
   - name: http
-    port: 80
-    targetPort: 80
     protocol: TCP
-  # added
-  externalTrafficPolicy: Local
-  type: LoadBalancer
-
----
-
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: echo-ingress
-  namespace: echo
-  annotations:
-    # Force the use of https if the request is http
-    ingress.bluemix.net/redirect-to-https: "True"
-    ingress.bluemix.net/tcp-ports: "serviceName=echo-service ingressPort=80 servicePort=80"
-spec:
-  tls:
-  - hosts:
-    - iks-706860-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
-    secretName: iks-706860-483cccd2f0d38128dd40d2b711142ba9-0000
-  rules:
-  - host: iks-706860-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: echo-service
-          servicePort: 80
+    port: 80
+    targetPort: 8080
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 8443

@@ -1,4 +1,0 @@
-data:
-  use-proxy-protocol: "true"
-  real-ip-header: "proxy_protocol"
-  set-real-ip-from: "10.108.0.0/14"
