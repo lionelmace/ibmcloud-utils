@@ -86,8 +86,11 @@ EOF
 
 for email in $EMAIL
 do
+  # Convert email to lowercase otherwise users with uppercase email cannot see Operator Hub. Weird!
+  email=$(echo $email | awk '{print tolower($0)}' )
+
   ## Extract last name from email and convert to lower case
-  lastname=$(echo $email | awk -F'@' '{print $1}' | sed 's?.*\.??g' | sed 's?.*\_??g' | awk '{print tolower($0)}' )
+  lastname=$(echo $email | awk -F'@' '{print $1}' | sed 's?.*\.??g' | sed 's?.*\_??g' )
   project_name="lab-$lastname"
 
   # Create a new openshift project with the last name

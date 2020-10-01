@@ -14,6 +14,8 @@ oc login -u apikey -p ${APIKEY} --server=${MASTER_URL//\"} --insecure-skip-tls-v
 for email in $EMAIL
 
 do
+  email=$(echo $email | awk '{print tolower($0)}' )
+
   # Extract last name from email and convert to lower case
   lastname=$(echo $email | awk -F'@' '{print $1}' | sed 's?.*\.??g' | sed 's?.*\_??g' | awk '{print tolower($0)}' )
   project_name="lab-$lastname"
