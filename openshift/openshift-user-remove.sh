@@ -8,7 +8,7 @@ ibmcloud target -g $RESOURCE_GROUP_NAME
 
 export MASTER_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".masterURL")
 sleep 4
-printf "\n## Logging into OpenShift Cluster $CLUSTER_NAME...\n"
+printf "\n## Logging into OpenShift Cluster \"$CLUSTER_NAME\" ...\n"
 oc login -u apikey -p ${APIKEY} --server=${MASTER_URL//\"} --insecure-skip-tls-verify=true
 
 for email in $EMAIL

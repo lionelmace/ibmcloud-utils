@@ -10,7 +10,7 @@ export MASTER_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq 
 INGRESS_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".ingress.hostname" | tr -d '"')
 CLUSTER_ID=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".id" | tr -d '"')
 sleep 4
-printf "\n## Logging into OpenShift Cluster $CLUSTER_NAME...\n"
+printf "\n## Logging into OpenShift Cluster \"$CLUSTER_NAME\" ...\n"
 oc login -u apikey -p ${APIKEY} --server=${MASTER_URL//\"} --insecure-skip-tls-verify=true
 
 # Give the user a ClusterRoleBinding to the existing aggregate-olm-view ClusterRole
@@ -109,7 +109,7 @@ do
   ibmcloud iam user-policy-create $email --roles Writer --service-name containers-kubernetes --service-instance $CLUSTER_ID --attributes "namespace=$project_name"
 
   # Add edit role to the user so they can work within the project $project_name
-  # Warning: user will appear in OpenShift once the user has logged at least once
+  # Warning: user will only appear in OpenShift once the user has logged at least once
   # iam_email=$(oc get users | grep -i $email | awk '{ print $1}')
   printf "\n## Add Edit role to the user $email so he can work within the project $project_name...\n"
   # oc adm policy add-role-to-user edit IAM#$email -n $project_name
