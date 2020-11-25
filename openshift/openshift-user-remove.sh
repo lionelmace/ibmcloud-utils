@@ -40,4 +40,6 @@ do
   # Remove user from the account and its associated policy
   printf "\n## Removing user $email from the account $ACCOUNT_ID...\n"
   ibmcloud account user-remove $email -f
+
+  printf "\n## ----------------------------------------------------\n"
 done

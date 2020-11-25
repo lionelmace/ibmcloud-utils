@@ -127,4 +127,6 @@ do
   # URL to access the OpenShift Console and enter credentials
   # Example: https://console-openshift-console.iro-541970-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud/topology/ns/lab-mace
   echo https://console-openshift-console.$INGRESS_URL
+
+  printf "\n## ----------------------------------------------------\n"
 done
