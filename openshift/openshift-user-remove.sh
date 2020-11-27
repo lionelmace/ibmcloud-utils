@@ -21,24 +21,24 @@ do
   project_name="lab-$lastname"
 
   # Remove view cluster role binding view role from the user
-  printf "\n## Removing view cluster role binding from the user $email in the project $project_name...\n"
+  printf "\n## Removing view cluster role binding from the user \"$email\" in the project \"$project_name\"...\n"
   oc delete clusterrolebinding operators-view-$lastname
 
   # Remove edit role from the user
-  printf "\n## Removing Edit role from the user $email in the project $project_name...\n"
+  printf "\n## Removing Edit role from the user \"$email\" in the project \"$project_name\"...\n"
   oc adm policy remove-role-from-user edit IAM#$email -n $project_name
 
   # Delete the openshift project
-  printf "\n## Deleting the OpenShift project $project_name...\n"
+  printf "\n## Deleting the OpenShift project \"$project_name\"...\n"
   oc delete project $project_name
 
   # Delete the user from the list of users in OpenShift User Management
-  printf "\n## Deleting the user IAM#$email from OpenShift User Management...\n"
+  printf "\n## Deleting the user \"IAM#$email\" from OpenShift User Management...\n"
   iam_email=$(oc get users | grep -i $email | awk '{ print $1}')
   oc delete user $iam_email
 
   # Remove user from the account and its associated policy
-  printf "\n## Removing user $email from the account $ACCOUNT_ID...\n"
+  printf "\n## Removing user \"$email\" from the account \"$ACCOUNT_ID\"...\n"
   ibmcloud account user-remove $email -f
 
   printf "\n## ----------------------------------------------------\n"

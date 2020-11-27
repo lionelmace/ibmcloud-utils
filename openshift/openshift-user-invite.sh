@@ -94,11 +94,11 @@ do
   project_name="lab-$lastname"
 
   # Create a new openshift project with the last name
-  printf "\n## Creating project $project_name...\n"
+  printf "\n## Creating project \"$project_name\" ...\n"
   oc new-project $project_name
 
   # Invite user to the account
-  printf "\n## Inviting user $email to the account $ACCOUNT_ID...\n"
+  printf "\n## Inviting user \"$email\" to the account \"$ACCOUNT_ID\" ...\n"
   ibmcloud account user-invite $email
 
   # Assign IAM User Policy - Warning: Those 2 independant policies are required.
