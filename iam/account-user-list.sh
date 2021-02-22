@@ -2,14 +2,28 @@
 
 source ../local.env
 
+count=0
+file=account_rh_users.txt
+# Empty file content
+cat /dev/null > $file
+
 for i in `ibmcloud account users | awk '{ print $1}' `
 do
-  #echo "ibmcloud account user-remove -f $i" >> remove_users.sh
-  ALL=$ALL$i,
+  # Extract all IBM Cloud Users
+  # ALL=$ALL$i,
+  # ((count=count+1))
+
+  # Extract only Red Hat users
+  if [[ $i == *"redhat"* ]]; then
+    ALL=$ALL$i,
+    ((count=count+1))
+  fi
+  
 done
 
-echo $ALL >> account_users.txt
-# cat account_users.txt
+echo $count 'users extracted to $file'
+echo $ALL >> $file
+cat $file
 
 # cat remove_users.sh
 # echo "#"
