@@ -53,16 +53,15 @@ assignControlPlaneToLocation(){
 for i in $(seq -w $COUNT_START $COUNT_END)
 do
   createHostsForControlPlane
-  # createHostsForWorkerNode
+  createHostsForWorkerNode
 done
 
 # Location creation takes few minutes and hosts to be visible in this location
 # Wait for 10mins before assigning the hosts
-sleep 10m
-for i in $(seq -w $COUNT_START $COUNT_END)
-do
-  assignControlPlaneToLocation
-done
-
+# sleep 10m
+# for i in $(seq -w $COUNT_START $COUNT_END)
+# do
+#   assignControlPlaneToLocation
+# done
 
 printf "\n## ----------------------------------------------------\n"
