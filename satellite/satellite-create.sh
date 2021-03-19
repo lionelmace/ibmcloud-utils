@@ -40,7 +40,7 @@ createHostsForWorkerNode(){
                               $VPC_ID $VPC_ZONE $VSI_PROFILE \
                               $VPC_SUBNET_ID \
                               --image-id $VSI_IMAGE_ID \
-                              --user-data $assign_host_script
+                              --user-data @$assign_host_script
 }
 
 # Assign hosts to the location
