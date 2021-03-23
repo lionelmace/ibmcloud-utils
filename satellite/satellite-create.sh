@@ -3,7 +3,7 @@
 source satellite.env
 
 # ---------------------------------------------------------------------------
-# Create a Account Structure
+# Create Account Structure
 # ---------------------------------------------------------------------------
 # Create a Resource Group if does not exist
 if [ -z $(ibmcloud resource groups | grep -i $RG_NAME | awk '{ print $1}') ]; then
@@ -15,7 +15,7 @@ fi
 ibmcloud target -g $RG_NAME
 
 # ---------------------------------------------------------------------------
-# Create a VPC if not already there
+# Create VPC if not already there
 # ---------------------------------------------------------------------------
 if [ -z $(ibmcloud is vpcs | grep -i $VPC_NAME | awk '{ print $2}') ]; then
   # Create a VPC
@@ -42,10 +42,10 @@ if [ -z $(ibmcloud is vpcs | grep -i $VPC_NAME | awk '{ print $2}') ]; then
                                         | jq -r '.id')
 
   # Create the security group for your VPC.
-  SG_ID=$(ibmcloud is security-group-create sat-sg $VPC_ID --json | jq -r '.id')
+  # SG_ID=$(ibmcloud is security-group-create sat-sg $VPC_ID --json | jq -r '.id')
 
   # Allow hosts to be attached to a location and assigned to services in the location
-  ibmcloud is security-group-rule-add $SG_ID outbound tcp --port-min 443 --port-max 443 --json
+  # ibmcloud is security-group-rule-add $SG_ID outbound tcp --port-min 443 --port-max 443 --json
 
 else
   printf "\n## VPC \"$VPC_NAME\" already exists. Fetching VPC id...\n"
@@ -59,9 +59,8 @@ printf "\n## ----------------------------------------------------"
 
 
 # ---------------------------------------------------------------------------
-# Satellite
+# Create New Satellite location
 # ---------------------------------------------------------------------------
-# Create a new Satellite location
 printf "\n## Creating new Satellite location \"$SAT_LOCATION_NAME\".\n"
 ibmcloud sat location create --name $SAT_LOCATION_NAME \
                              --managed-from $SAT_MANAGED_FROM \
@@ -85,7 +84,7 @@ printf "\n## ----------------------------------------------------"
 
 
 # ---------------------------------------------------------------------------
-# Infrastructure Hosts to support the satellite location
+# Create Hosts and attach them to the location
 # ---------------------------------------------------------------------------
 printf "\n## Creating 6 hosts required for Satellite...\n"
 
