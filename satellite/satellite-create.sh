@@ -117,11 +117,11 @@ assignControlPlaneToLocation(){
                              --zone zone-$i
 }
 
-# for i in $(seq -w $COUNT_START $COUNT_END)
-# do
-#   createHostsForControlPlane
-#   createHostsForWorkerNode
-# done
+for i in $(seq -w $COUNT_START $COUNT_END)
+do
+  createHostsForControlPlane
+  createHostsForWorkerNode
+done
 
 # Let's wait for few minutes so that location and hosts are visible
 cp_count=$(ibmcloud sat host ls --location $SAT_LOCATION_NAME | grep $SAT_LOCATION_NAME-cp | wc -l)
