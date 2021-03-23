@@ -34,8 +34,7 @@ It will create those resources unless the names you provided match an existing i
 
 1. Edit satellite.env to make the adjustments that you want
 
-1. Make the script executable and run it
+1. Run the script
     ```
-    chmod +x satellite-create.sh
     ./satellite-create.sh
     ```
