@@ -4,13 +4,12 @@ This shell script will prepare for you a Satellite demo environement.
 It will create those resources unless the names you provided match an existing instance:
 
 * Resource Group
-* VPC
-* Subnet
-* Public Gateway
+* VPC, Subnet, Public Gateway
 * Satellite location
 * 6 VSIs in VPC
 * Assign 3 hosts for the location control plane.
 
+> This script does not create the OpenShift cluster in the location.
 
 ## How to run it
 
