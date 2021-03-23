@@ -2,8 +2,65 @@
 
 source satellite.env
 
-ibmcloud target -g $RESOURCE_GROUP_NAME
+# ---------------------------------------------------------------------------
+# Create a Account Structure
+# ---------------------------------------------------------------------------
+# Create a Resource Group if does not exist
+if [ -z $(ibmcloud resource groups | grep -i $RG_NAME | awk '{ print $1}') ]; then
+  ibmcloud resource group-create $RG_NAME
+else
+  printf "\n## Resource Group \"$RG_NAME\" already exists.\n"
+fi
 
+ibmcloud target -g $RG_NAME
+
+# ---------------------------------------------------------------------------
+# Create a VPC if not already there
+# ---------------------------------------------------------------------------
+if [ -z $(ibmcloud is vpcs | grep -i $VPC_NAME | awk '{ print $2}') ]; then
+  # Create a VPC
+  printf "\n## Creating vpc \"$VPC_NAME\".\n"
+  VPC_ID=$(ibmcloud is vpc-create $VPC_NAME \
+                                      --address-prefix-management manual \
+                                      --resource-group-name $RG_NAME --json \
+                                      | jq -r '.id')
+
+  # Create VPC address specific
+  ibmcloud is vpc-addrc sub-01 $VPC_ID eu-de-1 10.243.0.0/18
+
+  # Create Public Gateway for the subnet
+  printf "\n## Creating a public gateway \"$VPC_NAME-subnet-01-pgw\" in \"$VPC_ID\" zone \"$VPC_ZONE-1\".\n"
+  PGW_01_ID=$(ibmcloud is public-gateway-create $VPC_NAME-subnet-01-pgw $VPC_ID $VPC_ZONE-1 --json | jq -r '.id')
+
+  # Create subnet for your VPC.
+  printf "\n## Creating subnet \"$VPC_NAME-subnet-01\" in \"$VPC_ID\".\n"
+  VPC_SUB_01_ID=$(ibmcloud is subnet-create $VPC_NAME-subnet-01 $VPC_ID \
+                                        --zone eu-de-1 \
+                                        --ipv4-cidr-block 10.243.0.0/24 \
+                                        --public-gateway-id $PGW_01_ID \
+                                        --resource-group-name $RG_NAME --json \
+                                        | jq -r '.id')
+
+  # Create the security group for your VPC.
+  SG_ID=$(ibmcloud is security-group-create sat-sg $VPC_ID --json | jq -r '.id')
+
+  # Allow hosts to be attached to a location and assigned to services in the location
+  ibmcloud is security-group-rule-add $SG_ID outbound tcp --port-min 443 --port-max 443 --json
+
+else
+  printf "\n## VPC \"$VPC_NAME\" already exists. Fetching VPC id...\n"
+  # Retrieving existing the VPC and Subnet IDs for hosts creation later
+  export VPC_ID=$(ibmcloud is vpcs | grep -i $VPC_NAME | awk '{ print $1}')
+  export VPC_SUB_01_ID=$(ibmcloud is subnets --resource-group-name $RG_NAME | grep -i $SUBNET_NAME | awk '{ print $1}')
+  printf "VPC ID:    \"$VPC_ID\"\n"
+  printf "Subnet ID: \"$VPC_SUB_01_ID\""
+fi
+printf "\n## ----------------------------------------------------"
+
+
+# ---------------------------------------------------------------------------
+# Satellite
+# ---------------------------------------------------------------------------
 # Create a new Satellite location
 printf "\n## Creating new Satellite location \"$SAT_LOCATION_NAME\".\n"
 ibmcloud sat location create --name $SAT_LOCATION_NAME \
@@ -24,13 +81,20 @@ sed -i "" -e $'18 a\
 subscription-manager refresh\\\n' $assign_host_script
 sed -i "" -e $'19 a\
 subscription-manager repos --enable=*\\\n' $assign_host_script
+printf "\n## ----------------------------------------------------"
+
+
+# ---------------------------------------------------------------------------
+# Infrastructure Hosts to support the satellite location
+# ---------------------------------------------------------------------------
+printf "\n## Creating 6 hosts required for Satellite...\n"
 
 # Create VSIs for Control Plane
 createHostsForControlPlane(){
   printf "\n############# VSI sat-$SAT_LOCATION_NAME-cp$i ##############\n"
   ibmcloud is instance-create sat-$SAT_LOCATION_NAME-cp$i \
-                              $VPC_ID $VPC_ZONE $VSI_PROFILE \
-                              $VPC_SUBNET_ID \
+                              $VPC_ID $VPC_ZONE-1 $VSI_PROFILE \
+                              $VPC_SUB_01_ID \
                               --image-id $VSI_IMAGE_ID \
                               --user-data @$assign_host_script
 }
@@ -39,8 +103,8 @@ createHostsForControlPlane(){
 createHostsForWorkerNode(){
   printf "\n############# VSI sat-$SAT_LOCATION_NAME-wn$i ##############\n"
   ibmcloud is instance-create sat-$SAT_LOCATION_NAME-wn$i \
-                              $VPC_ID $VPC_ZONE $VSI_PROFILE \
-                              $VPC_SUBNET_ID \
+                              $VPC_ID $VPC_ZONE-1 $VSI_PROFILE \
+                              $VPC_SUB_01_ID \
                               --image-id $VSI_IMAGE_ID \
                               --user-data @$assign_host_script
 }
@@ -53,13 +117,13 @@ assignControlPlaneToLocation(){
                              --zone zone-$i
 }
 
-for i in $(seq -w $COUNT_START $COUNT_END)
-do
-  createHostsForControlPlane
-  createHostsForWorkerNode
-done
+# for i in $(seq -w $COUNT_START $COUNT_END)
+# do
+#   createHostsForControlPlane
+#   createHostsForWorkerNode
+# done
 
-# Location creation takes few minutes and hosts to be visible in this location
+# Let's wait for few minutes so that location and hosts are visible
 cp_count=$(ibmcloud sat host ls --location $SAT_LOCATION_NAME | grep $SAT_LOCATION_NAME-cp | wc -l)
 while [ $cp_count -lt $COUNT_END ]
 do

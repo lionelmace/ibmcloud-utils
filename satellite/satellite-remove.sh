@@ -2,7 +2,7 @@
 
 source satellite.env
 
-ibmcloud target -g $RESOURCE_GROUP_NAME
+ibmcloud target -g $RG_NAME
 
 # Create VSIs for Control Plane
 deleteHostsForControlPlane(){
