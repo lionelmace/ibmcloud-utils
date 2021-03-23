@@ -1,9 +1,8 @@
 # Satellite demo
 
-This shell script will generate for you a demo environement.
+This shell script will prepare for you a Satellite demo environement. 
+It will create those resources unless the names you provided match an existing instance:
 
-## What does the script do for you?
-It will create those resources unless the names you provided match an existing instance
 * Resource Group
 * VPC
 * Subnet
@@ -27,7 +26,7 @@ It will create those resources unless the names you provided match an existing i
     cd ibmcloud-utils/satellite
     ```
 
-1. In the root directory, create your custom satellite.env file
+1. Create your custom satellite.env file
     ```
     cp satellite.env.template satellite.env
     ```
@@ -37,4 +36,11 @@ It will create those resources unless the names you provided match an existing i
 1. Run the script
     ```
     ./satellite-create.sh
+    ```
+
+## Clean up to avoid costs
+
+1. Run the script
+    ```
+    ./satellite-remove.sh
     ```
