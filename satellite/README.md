@@ -31,6 +31,9 @@ It will create those resources unless the names you provided match an existing i
     ```
 
 1. Edit satellite.env to make the adjustments that you want
+    ```
+    vi satellite.env
+    ```
 
 1. Run the script
     ```
