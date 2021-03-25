@@ -61,10 +61,19 @@ printf "\n## ----------------------------------------------------"
 # ---------------------------------------------------------------------------
 # Create New Satellite location
 # ---------------------------------------------------------------------------
+# if [ -z $(ic cos bucket-head --bucket cos-satellite-bucket) ]; then
+#   printf "Creating a COS bucket for the location. \n"
+#   ibmcloud resource service-instance-create cos-satellite-test cloud-object-storage standard global
+#   ibmcloud cos bucket-create --bucket $SAT_COS_BUCKET_NAME --region $VPC_ZONE
+# else
+#   printf "Found COS bucket for the location. \n"
+# fi
+
 printf "\n## Creating new Satellite location \"$SAT_LOCATION_NAME\".\n"
 ibmcloud sat location create --name $SAT_LOCATION_NAME \
                              --managed-from $SAT_MANAGED_FROM \
-                             --ha-zone zone-1 --ha-zone zone-2 --ha-zone zone-3
+                             --ha-zone zone-1 --ha-zone zone-2 --ha-zone zone-3 \
+                             --cos-bucket $SAT_COS_BUCKET_NAME
 
 # Retrieve the id of the newly created Satellite location
 export SAT_LOCATION_ID=$(ibmcloud sat location get --location $SAT_LOCATION_NAME --json | jq ".id")
