@@ -4,7 +4,7 @@
 
 source ../local.env
 
-ibmcloud target -g $RESOURCE_GROUP_NAME
+ibmcloud target -r $IBMCLOUD_REGION -g $RESOURCE_GROUP_NAME
 
 export MASTER_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".masterURL")
 INGRESS_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".ingress.hostname" | tr -d '"')
