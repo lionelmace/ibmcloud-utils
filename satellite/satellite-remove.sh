@@ -2,31 +2,42 @@
 
 source satellite.env
 
+# Easy run
+# if [ ! -z $SATELLITE_LOCATION_NAME ]; then
+  SAT_LOCATION_NAME=sat-$LOCATION_NAME
+  RG_NAME=$SAT_LOCATION_NAME-rg
+  VPC_NAME=$SAT_LOCATION_NAME-vpc
+  VPC_SUBNET_NAME=$SAT_LOCATION_NAME-subnet
+  COS_INSTANCE_NAME=$SAT_LOCATION_NAME-cos
+  COS_BUCKET_NAME=$SAT_LOCATION_NAME-bucket
+# fi
+
+
 ibmcloud target -g $RG_NAME
 
 # Create VSIs for Control Plane
 deleteHostsForControlPlane(){
-  printf "\n############# VSI sat-$SAT_LOCATION_NAME-cp$i ##############\n"
-  ibmcloud is instance-delete --force $(ibmcloud is instances | grep sat-$SAT_LOCATION_NAME-cp$i  | awk '{print $1}') 
+  printf "\n############# VSI $SAT_LOCATION_NAME-cp$i \n"
+  ibmcloud is instance-delete --force $(ibmcloud is instances | grep $SAT_LOCATION_NAME-cp$i  | awk '{print $1}') 
 }
 
 # Create VSIs for Worker Node
 deleteHostsForWorkerNode(){
-  printf "\n############# VSI sat-$SAT_LOCATION_NAME-wn$i ##############\n"
-  ibmcloud is instance-delete --force $(ibmcloud is instances | grep sat-$SAT_LOCATION_NAME-wn$i  | awk '{print $1}')
+  printf "\n############# VSI $SAT_LOCATION_NAME-wn$i \n"
+  ibmcloud is instance-delete --force $(ibmcloud is instances | grep $SAT_LOCATION_NAME-wn$i  | awk '{print $1}')
 }
 
 # Assign hosts to the location
 detachControlPlaneFromLocation(){
-  printf "\n############# Detach Controlplane host sat-$SAT_LOCATION_NAME-cp$i ##############\n"
+  printf "\n############# Detach Controlplane host $SAT_LOCATION_NAME-cp$i \n"
     ibmcloud sat host rm -f --location $SAT_LOCATION_NAME \
-                        --host sat-$SAT_LOCATION_NAME-cp$i
+                        --host $SAT_LOCATION_NAME-cp$i
 }
 
 detachWokerNodeFromLocation(){
-  printf "\n############# Detach Worker host sat-$SAT_LOCATION_NAME-cp$i ##############\n"
+  printf "\n############# Detach Worker host $SAT_LOCATION_NAME-cp$i \n"
     ibmcloud sat host rm -f --location $SAT_LOCATION_NAME \
-                        --host sat-$SAT_LOCATION_NAME-wn$i
+                        --host $SAT_LOCATION_NAME-wn$i
 }
 
 for i in $(seq -w $COUNT_START $COUNT_END)
@@ -65,6 +76,21 @@ do
   deleteHostsForWorkerNode
 done
 
+# Delete Public Gateway
+export VPC_PUBLIC_GTW=$(ibmcloud is pubgws --resource-group-name $RG_NAME | grep -i $SAT_LOCATION_NAME | awk 'FNR > 1 { print $1}')
+ibmcloud is pubgwd $VPC_PUBLIC_GTW -f
 
+# Delete Subnet
+export VPC_SUBNET_ID=$(ibmcloud is subnets --resource-group-name $RG_NAME | grep -i $VPC_SUBNET_NAME | awk '{ print $1}')
+# export VPC_SUBNET_ID=$(ibmcloud is subnets --resource-group-name $RG_NAME | awk 'FNR > 2 { print $1 }')
+ibmcloud is subnetd $VPC_SUBNET_ID -f
+  
+# Delete VPC
+export VPC_ID=$(ibmcloud is vpcs | grep -i $VPC_NAME | awk '{ print $1}')
+ibmcloud is vpcd $VPC_ID -f
 
-printf "\n## ----------------------------------------------------\n"
+# Delete COS instance and attached resource keys
+ibmcloud resource service-instance-delete $COS_INSTANCE_NAME -f --recursive
+
+# Delete Resource Group
+ibmcloud resource group-delete $RG_NAME -f

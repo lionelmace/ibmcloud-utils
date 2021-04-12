@@ -11,7 +11,14 @@ It will create those resources unless the names you provided match an existing i
 
 > This script does not create the OpenShift cluster in the location.
 
-## How to run it
+## Pre Requisites
+
+* IBM Cloud CLI
+* COS Plugin
+
+## How to run it?
+
+> Approximate Duration time: 10-12 mins
 
 1. Launch [IBM Cloud Shell](http://cloud.ibm.com/shell)
 
@@ -30,9 +37,9 @@ It will create those resources unless the names you provided match an existing i
     cp satellite.env.template satellite.env
     ```
 
-1. Edit satellite.env to make the adjustments that you want
+1. Edit satellite.env to edit the name of your location
     ```
-    vi satellite.env
+    export LOCATION_NAME=YOUR_LOCATION_NAME
     ```
 
 1. Run the script
