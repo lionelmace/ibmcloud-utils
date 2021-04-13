@@ -17,6 +17,7 @@ VPC_NAME=$SAT_LOCATION_NAME-vpc
 VPC_SUBNET_NAME=$SAT_LOCATION_NAME-subnet
 COS_INSTANCE_NAME=$SAT_LOCATION_NAME-cos
 COS_BUCKET_NAME=$SAT_LOCATION_NAME-bucket
+SAT_LOG_ANALYSIS=$SAT_LOCATION_NAME-log
 
 
 # ---------------------------------------------------------------------------
@@ -84,9 +85,15 @@ fi
 # fi
 
 # ---------------------------------------------------------------------------
-# Create New Satellite location
+# Create a Platform Log Analysis service
 # ---------------------------------------------------------------------------
-printf "\n### Creating new Satellite location \"$SAT_LOCATION_NAME\".\n"
+# printf "\n### Creating a Log Analysis service \"$SAT_LOG_ANALYSIS\".\n"
+# LOG_ID=$(ibmcloud resource service-instance-create $SAT_LOG_ANALYSIS logdna 7-day $VPC_ZONE)
+
+# ---------------------------------------------------------------------------
+# Create a Satellite location
+# ---------------------------------------------------------------------------
+printf "\n### Creating the Satellite location \"$SAT_LOCATION_NAME\".\n"
 ibmcloud sat location create --name $SAT_LOCATION_NAME \
                              --managed-from $SAT_MANAGED_FROM \
                              --ha-zone zone-1 --ha-zone zone-2 --ha-zone zone-3 \
@@ -167,9 +174,15 @@ do
    assignControlPlaneToLocation
 done
 
-printf "\n### ----------------------------------------------------\n"
 end_time="$(date -u +%s)"
 echo "Ended at $(date +"%H:%M")"
 
 elapsed_in_secs="$(($end_time-$start_time))"
 echo "Total of $(($elapsed_in_secs / 60)) mins and $(($elapsed_in_secs % 60)) secs elapsed."
+
+printf "\n### ----------------------------------------------------\n"
+printf "Wait for 30-40mins while Satellite sets up the location control plane.\n"
+printf "Location status will be \"Action required\"... until it changes to \"Normal\"."
+printf "Check the status on the Satellite page:\n"
+printf 'https://cloud.ibm.com/satellite/locations/$SAT_LOCATION_ID/hosts'
+printf "### ----------------------------------------------------\n"
