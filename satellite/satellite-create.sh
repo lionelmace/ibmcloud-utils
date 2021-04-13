@@ -73,11 +73,11 @@ fi
 # COS is required for Satellite
 # ---------------------------------------------------------------------------
 # if [ -z $(ibmcloud cos bucket-head --bucket cos-satellite-bucket) ]; then
-  printf "\n### Creating a COS bucket for the location \"$COS_INSTANCE_NAME\". \n"
+  printf "\n### Creating a COS service for the location \"$COS_INSTANCE_NAME\". \n"
   ibmcloud resource service-instance-create $COS_INSTANCE_NAME cloud-object-storage standard global
   export COS_CRN=$(ibmcloud resource service-instance $COS_INSTANCE_NAME --id | grep crn | awk '{print $1}')
 
-  printf "\n### Creating a COS bucket for the location \"$COS_BUCKET_NAME\". \n"
+  printf "\n### Creating a COS bucket \"$COS_BUCKET_NAME\". \n"
   ibmcloud cos bucket-create --bucket $COS_BUCKET_NAME \
                              --class Standard \
                              --ibm-service-instance-id $COS_CRN \
@@ -163,8 +163,7 @@ echo "Started at $(date +"%H:%M")"
 cp_count=$(ibmcloud sat host ls --location $SAT_LOCATION_NAME | grep $SAT_LOCATION_NAME-cp | wc -l)
 while [ $cp_count -lt $COUNT_END ]
 do
-  echo "Waiting 1 min for $COUNT_END control plane hosts to be attached..."
-  # if [ $cp_count -ne 0 ] then echo "Number of cp hosts currently attached : $cp_count" fi
+  echo "Checking every minute for $COUNT_END control plane hosts to be attached..."
   echo "Number of cp hosts currently attached : $cp_count"
   cp_count=$(ibmcloud sat host ls --location $SAT_LOCATION_NAME | grep $SAT_LOCATION_NAME-cp | wc -l)
   sleep 60
@@ -183,8 +182,9 @@ elapsed_in_secs="$(($end_time-$start_time))"
 echo "Total of $(($elapsed_in_secs / 60)) mins and $(($elapsed_in_secs % 60)) secs elapsed."
 
 printf "\n### ----------------------------------------------------\n"
-printf "You now need to wait for 30-40 mins while Satellite sets up the location control plane.\n"
+printf "You no need to wait for 30-40 mins while Satellite sets up the location control plane.\n"
 printf "Location Status will remain \"Action required\"... until it changes to \"Normal\". \n"
 printf "Check the Status on the Satellite page:\n"
-echo 'https://cloud.ibm.com/satellite/locations/$SAT_LOCATION_ID/hosts'
-printf "\n### ----------------------------------------------------\n"
+export LOC_ID=$(echo "$SAT_LOCATION_ID" | tr -d '"')
+echo https://cloud.ibm.com/satellite/locations/$LOC_ID/hosts
+printf "### ----------------------------------------------------\n"

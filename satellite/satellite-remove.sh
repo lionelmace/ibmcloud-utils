@@ -95,6 +95,7 @@ fi
 # ---------------------------------------------------------------------------
 # Delete Subnet
 # ---------------------------------------------------------------------------
+printf "\n### Deleting Subnet \"$VPC_SUBNET_NAME\".\n"
 export VPC_SUBNET_ID=$(ibmcloud is subnets --resource-group-name $RG_NAME | grep -i $VPC_SUBNET_NAME | awk '{ print $1}')
 # export VPC_SUBNET_ID=$(ibmcloud is subnets --resource-group-name $RG_NAME | awk 'FNR > 2 { print $1 }')
 ibmcloud is subnetd $VPC_SUBNET_ID -f
@@ -102,18 +103,21 @@ ibmcloud is subnetd $VPC_SUBNET_ID -f
 # ---------------------------------------------------------------------------
 # Delete Public Gateway
 # ---------------------------------------------------------------------------
+printf "\n### Deleting Public Gateway.\n"
 export VPC_PUBLIC_GTW=$(ibmcloud is pubgws --resource-group-name $RG_NAME | grep -i $SAT_LOCATION_NAME | awk 'FNR > 1 { print $1}')
 ibmcloud is pubgwd $VPC_PUBLIC_GTW -f
   
 # ---------------------------------------------------------------------------
 # Delete VPC
 # ---------------------------------------------------------------------------
+printf "\n### Deleting VPC \"$VPC_NAME\".\n"
 export VPC_ID=$(ibmcloud is vpcs | grep -i $VPC_NAME | awk '{ print $1}')
 ibmcloud is vpcd $VPC_ID -f
 
 # ---------------------------------------------------------------------------
 # Delete COS instance and attached resource keys
 # ---------------------------------------------------------------------------
+printf "\n### Deleting COS \"$COS_INSTANCE_NAME\".\n"
 cos_tbd=$(ibmcloud resource service-instances | grep $COS_INSTANCE_NAME | awk '{print $1}')
 if [ ! -z $cos_tbd ]; then
   ibmcloud resource service-instance-delete $cos_tbd -f --recursive
@@ -122,6 +126,9 @@ fi
 # ---------------------------------------------------------------------------
 # Delete Resource Group
 # ---------------------------------------------------------------------------
+# Let's wait 10 secs that all instances are deleted before removing the group
+sleep 10
+printf "\n### Deleting Resource Group \"$RG_NAME\".\n"
 ibmcloud resource group-delete $RG_NAME -f
 
 # Display duration time
