@@ -15,9 +15,17 @@ It will create all the resources below. All those resources will be created with
 
 ## Pre Requisites
 
-* IBM Cloud CLI available [here](https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases)
-* Install VPC Infrastructure plugin `ibmcloud plugin install infrastructure-service`
-* Install COS Plugin `ibmcloud plugin install cloud-object-storage`
+1. IBM Cloud CLI available [here](https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases)
+
+1. Install VPC Infrastructure plugin
+    ```
+    ibmcloud plugin install infrastructure-service
+    ```
+
+1. Install COS Plugin
+    ```
+    ibmcloud plugin install cloud-object-storage
+    ```
 
 ## How to run it?
 
