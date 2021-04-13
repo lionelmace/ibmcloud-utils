@@ -88,7 +88,9 @@ fi
 # Create a Platform Log Analysis service
 # ---------------------------------------------------------------------------
 # printf "\n### Creating a Log Analysis service \"$SAT_LOG_ANALYSIS\".\n"
-# LOG_ID=$(ibmcloud resource service-instance-create $SAT_LOG_ANALYSIS logdna 7-day $VPC_ZONE)
+# Not used yet as there is no way to check wherever there is already a platform logs instance
+# LOG_ID=$(ibmcloud resource service-instance-create $SAT_LOG_ANALYSIS logdna 7-day $SAT_MANAGED_FROM -g $RG_NAME -p '{"default_receiver": true}')
+
 
 # ---------------------------------------------------------------------------
 # Create a Satellite location
@@ -182,7 +184,7 @@ echo "Total of $(($elapsed_in_secs / 60)) mins and $(($elapsed_in_secs % 60)) se
 
 printf "\n### ----------------------------------------------------\n"
 printf "Wait for 30-40 mins while Satellite sets up the location control plane.\n"
-printf "Location status will be \"Action required\"... until it changes to \"Normal\"."
+printf "Location status will be \"Action required\"... until it changes to \"Normal\" \n."
 printf "Check the status on the Satellite page:\n"
 printf 'https://cloud.ibm.com/satellite/locations/$SAT_LOCATION_ID/hosts'
-printf "### ----------------------------------------------------\n"
+printf "\n### ----------------------------------------------------\n"
