@@ -21,7 +21,12 @@ It will create those resources unless the names you provided match an existing i
 
 > Approximate Duration time: 10-12 mins
 
-1. Launch [IBM Cloud Shell](http://cloud.ibm.com/shell)
+1. Launch a terminal.
+
+1. Connection to IBM Cloud
+    ```
+    ibmcloud login
+    ```
 
 1. Clone this repo
     ```

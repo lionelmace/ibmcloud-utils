@@ -6,8 +6,10 @@ start_time="$(date -u +%s)"
 echo "Started at $(date +"%H:%M")"
 
 if [ -z $SATELLITE_LOCATION_NAME ]; then
+  # Use name set in the satellite.env
   SAT_LOCATION_NAME=sat-$LOCATION_NAME
 else
+  # Override the location name set in satellite.env if set externally
   SAT_LOCATION_NAME=sat-$SATELLITE_LOCATION_NAME
 fi
 RG_NAME=$SAT_LOCATION_NAME-rg
