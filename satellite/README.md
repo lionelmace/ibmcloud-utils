@@ -63,6 +63,7 @@ It will create all the resources below. All those resources will be created with
     ```
     ./satellite-create.sh
     ```
+    > Once the script is complete, the Location will be fully available (Status: Normal) 30-40 minutes later.
 
 ## Clean up to avoid costs
 

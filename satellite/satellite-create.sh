@@ -181,7 +181,7 @@ elapsed_in_secs="$(($end_time-$start_time))"
 echo "Total of $(($elapsed_in_secs / 60)) mins and $(($elapsed_in_secs % 60)) secs elapsed."
 
 printf "\n### ----------------------------------------------------\n"
-printf "Wait for 30-40mins while Satellite sets up the location control plane.\n"
+printf "Wait for 30-40 mins while Satellite sets up the location control plane.\n"
 printf "Location status will be \"Action required\"... until it changes to \"Normal\"."
 printf "Check the status on the Satellite page:\n"
 printf 'https://cloud.ibm.com/satellite/locations/$SAT_LOCATION_ID/hosts'
