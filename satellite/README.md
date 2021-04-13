@@ -47,7 +47,7 @@ It will create those resources unless the names you provided match an existing i
     ```
     export SATELLITE_LOCATION_NAME=YOUR_LOCATION_NAME
     ```
-    > You can also set your location name by editing satellite.env.
+    > This is optional if you have set the location name in the satellite.env. Othwerise, this will override the location name
 
 1. Run the script
     ```
@@ -55,6 +55,8 @@ It will create those resources unless the names you provided match an existing i
     ```
 
 ## Clean up to avoid costs
+
+> Approximate Duration time: 2-3 mins
 
 1. Run the script
     ```
