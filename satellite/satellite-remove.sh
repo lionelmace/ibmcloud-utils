@@ -126,8 +126,8 @@ fi
 # ---------------------------------------------------------------------------
 # Delete Resource Group
 # ---------------------------------------------------------------------------
-# Let's wait 10 secs that all instances are deleted before removing the group
-sleep 10
+# Let's wait 20 secs that all instances are deleted before removing the group
+sleep 20
 printf "\n### Deleting Resource Group \"$RG_NAME\".\n"
 ibmcloud resource group-delete $RG_NAME -f
 
