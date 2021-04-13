@@ -1,15 +1,14 @@
 # Satellite demo
 
-This shell script will prepare for you a Satellite demo environement. 
-It will create those resources unless the names you provided match an existing instance:
+This shell script will prepare for you a Satellite demo environment. 
+It will create all the resources below. All those resources will be created with the prefix **sat**.
 
-* Resource Group
-* VPC, Subnet, Public Gateway
-* Satellite location
+* A Resource Group
+* A VPC with one Subnet and its Public Gateway
+* A Satellite location
 * 6 VSIs in VPC
 * Assign 3 hosts for the location control plane.
 
-> All the resources will be created with the prefix **sat**.
 > The script does not provision the OpenShift cluster in the location.
 
 ## Pre Requisites
