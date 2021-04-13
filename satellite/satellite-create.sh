@@ -5,14 +5,17 @@ source satellite.env
 start_time="$(date -u +%s)"
 echo "Started at $(date +"%H:%M")"
 
-# if [ ! -z $SAT_LOCATION_NAME ]; then
+if [ -z $SATELLITE_LOCATION_NAME ]; then
   SAT_LOCATION_NAME=sat-$LOCATION_NAME
-  RG_NAME=$SAT_LOCATION_NAME-rg
-  VPC_NAME=$SAT_LOCATION_NAME-vpc
-  VPC_SUBNET_NAME=$SAT_LOCATION_NAME-subnet
-  COS_INSTANCE_NAME=$SAT_LOCATION_NAME-cos
-  COS_BUCKET_NAME=$SAT_LOCATION_NAME-bucket
-# fi
+else
+  SAT_LOCATION_NAME=sat-$SATELLITE_LOCATION_NAME
+fi
+RG_NAME=$SAT_LOCATION_NAME-rg
+VPC_NAME=$SAT_LOCATION_NAME-vpc
+VPC_SUBNET_NAME=$SAT_LOCATION_NAME-subnet
+COS_INSTANCE_NAME=$SAT_LOCATION_NAME-cos
+COS_BUCKET_NAME=$SAT_LOCATION_NAME-bucket
+
 
 # ---------------------------------------------------------------------------
 # Create Resource Group
@@ -156,7 +159,7 @@ do
   sleep 60
 done
 
-printf "\n### Assigning control plante to the location \"$SAT_LOCATION_NAME\"... \n"
+printf "\n### Assigning control plane to the location \"$SAT_LOCATION_NAME\"... \n"
 for i in $(seq -w $COUNT_START $COUNT_END)
 do
    assignControlPlaneToLocation

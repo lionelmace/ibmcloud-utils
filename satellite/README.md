@@ -13,8 +13,9 @@ It will create those resources unless the names you provided match an existing i
 
 ## Pre Requisites
 
-* IBM Cloud CLI
-* COS Plugin
+* IBM Cloud CLI available [here](https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases)
+* Install VPC Infrastructure plugin `ibmcloud plugin install infrastructure-service`
+* Install COS Plugin `ibmcloud plugin install cloud-object-storage`
 
 ## How to run it?
 
@@ -32,15 +33,16 @@ It will create those resources unless the names you provided match an existing i
     cd ibmcloud-utils/satellite
     ```
 
-1. Create your custom satellite.env file
+1. Copy the environnement variables
     ```
     cp satellite.env.template satellite.env
     ```
 
-1. Edit satellite.env to edit the name of your location
+1. Set your location name
     ```
-    export LOCATION_NAME=YOUR_LOCATION_NAME
+    export SATELLITE_LOCATION_NAME=YOUR_LOCATION_NAME
     ```
+    > You can also set your location name by editing satellite.env.
 
 1. Run the script
     ```
