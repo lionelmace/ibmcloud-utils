@@ -67,7 +67,7 @@ It will create all the resources below. All those resources will be created with
 
 ## Clean up to avoid costs
 
-> Approximate Duration time: 2-3 mins
+> Approximate Duration time: 3 mins
 
 1. Run the script
     ```
