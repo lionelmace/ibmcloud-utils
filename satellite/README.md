@@ -9,7 +9,8 @@ It will create those resources unless the names you provided match an existing i
 * 6 VSIs in VPC
 * Assign 3 hosts for the location control plane.
 
-> This script does not create the OpenShift cluster in the location.
+> All the resources will be created with the prefix **sat**.
+> The script does not provision the OpenShift cluster in the location.
 
 ## Pre Requisites
 
