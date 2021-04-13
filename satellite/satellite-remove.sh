@@ -79,7 +79,6 @@ done
 
 for i in $(seq -w $COUNT_START $COUNT_END)
 do
-  echo "Deleting cp and wn $i"
   deleteHostsForControlPlane
   deleteHostsForWorkerNode
 done
