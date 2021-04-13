@@ -3,7 +3,7 @@
 This shell script will prepare for you a Satellite demo environment. 
 It will create all the resources below. All those resources will be created with the prefix **sat**.
 
-![](./architecture.png)
+![](./sat-architecture.png)
 
 * A Resource Group
 * A VPC with one Subnet and its Public Gateway
