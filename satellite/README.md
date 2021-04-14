@@ -27,6 +27,8 @@ It will create all the resources below. All those resources will be created with
     ibmcloud plugin install cloud-object-storage
     ```
 
+1. Install [jq](https://stedolan.github.io/jq/download/) - command line JSON processor
+
 ## How to run it?
 
 > Approximate Duration time: 10-12 mins
@@ -53,9 +55,9 @@ It will create all the resources below. All those resources will be created with
     cp satellite.env.template satellite.env
     ```
 
-1. Set your location name
+1. Set your location name in lower case
     ```
-    export SATELLITE_LOCATION_NAME=YOUR_LOCATION_NAME
+    export SATELLITE_LOCATION_NAME=your_location_name
     ```
     > This is optional if you have set the location name in the satellite.env. Othwerise, this will override the location name
 
