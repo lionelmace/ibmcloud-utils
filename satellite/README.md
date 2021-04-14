@@ -15,7 +15,7 @@ It will create all the resources below. All those resources will be created with
 
 ## Pre Requisites
 
-1. IBM Cloud CLI available [here](https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases)
+1. Install [IBM Cloud CLI](https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases)
 
 1. Install VPC Infrastructure plugin
     ```
