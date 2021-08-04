@@ -153,6 +153,12 @@
     kubectl patch volumeattachment $VOL_ATTACHMENT_ID -p '{"metadata":{"finalizers":null}}'
     ```
 
+1. Delete the pod
+
+    ```sh
+    kubectl delete pod <pod_id>
+    ```
+
 1. Restart the controler
 
     ```sh
