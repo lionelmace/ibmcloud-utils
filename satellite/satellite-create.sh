@@ -185,6 +185,7 @@ printf "\n### ----------------------------------------------------\n"
 printf "You no need to wait for 30-40 mins while Satellite sets up the location control plane.\n"
 printf "Location Status will remain \"Action required\"... until it changes to \"Normal\". \n"
 printf "Check the Status on the Satellite page:\n"
+export ACCOUNT_ID=$(ibmcloud account show | grep "Account ID" | awk '{print $3}')
 export LOC_ID=$(echo "$SAT_LOCATION_ID" | tr -d '"')
-echo https://cloud.ibm.com/satellite/locations/$LOC_ID/hosts
+echo https://cloud.ibm.com/satellite/locations/$LOC_ID/hosts?bss_account=$ACCOUNT_ID
 printf "### ----------------------------------------------------\n"
