@@ -30,4 +30,6 @@
     kubectl get pods -n ibm-observe
     ```
 
-1. 
+## Resources
+
+* [Deploying a monitoring agent in a standard Kubernetes cluster manually](https://cloud.ibm.com/docs/monitoring?topic=monitoring-config_agent#config_agent_kube_manually)
