@@ -1,5 +1,7 @@
 # Install Node Image Analyser in Sysdig Secure
 
+![Secure](./sysdig-img-analyzer.png)
+
 1. Apply the config map for Sysdig Image Analyzer to the cluster.
 
     ```sh
