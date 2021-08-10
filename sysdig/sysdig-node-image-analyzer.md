@@ -31,6 +31,7 @@
     ```
 
     You should see 3 containers (3/3) running for Sysdig Node Analyzer:
+
     ```sh
     NAME                         READY   STATUS    RESTARTS   AGE
     logdna-agent-bhrt5           1/1     Running   0          21h
@@ -40,6 +41,7 @@
     sysdig-node-analyzer-8rgc9   3/3     Running   0          19m
     sysdig-node-analyzer-tqff7   3/3     Running   0          19m
     ```
+
 ## Debug
 
 1. View logs of the Sysdig Node Analyzer
