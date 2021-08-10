@@ -14,4 +14,4 @@ data:
 
   # The endpoint to the Scanning Analysis collector
   # Required: yes
-  collector_endpoint: ingest.eu-de.monitoring.cloud.ibm.com/internal/scanning/scanning-analysis-collector
+  collector_endpoint: https://eu-de.monitoring.cloud.ibm.com/internal/scanning/scanning-analysis-collector
