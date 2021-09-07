@@ -67,17 +67,17 @@ You need an instance of the managed service [Certificate Manager](https://cloud.
     * Select the Region such as Frankfurt
     * Select the VPC
     * Client IPv4 address pool: `192.168.4.0/22`
-    > This range must be different from your local range and IBM Cloud IP ranges.
+        > This range must be different from your local range and IBM Cloud IP ranges.
     * Select either high-availability (two subnets) or stand-alone (one subnet) mode.
     * Configure the client authentication with the `Client certificate` option and make sure to select the correct certificate from the list.
     * Select the Security Groups and potentialy the one created by IKS.
     * Keep the default for Additional Configuration.
     * Make sure to select the `Split Tunnel` for the Tunnel mode
-    > Split tunnel: Private traffic flows through the VPN interface to the VPN tunnel, and public traffic flows through the existing LAN interface.
+        > Split tunnel: Private traffic flows through the VPN interface to the VPN tunnel, and public traffic flows through the existing LAN interface.
 
-1. Note the Transport protocol `UDP` and `VPN port` 443. You will add an inbound rule with those values in the VPC Security Group.
+1. Note the Transport protocol `UDP` and `VPN port` 443. You will add an inbound rule with those values in the VPC Security Group later.
 
-1. Download client profile from the VPN you created. You should have a ..ovpn file.
+1. Download the client profile from the VPN you created. You should have a .ovpn file.
 
 ## Install and Configure a local VPN
 
@@ -96,7 +96,7 @@ We'll use Tunnelblick as a local VPN.
 
 1. Import the modified .ovpn in the Configurations panel of Tunnelblick.
 
-1. Click `Connect`. You should see a Connected confirmation
+1. Click `Connect`. You should see a `Connected` confirmation message
 
     ![VPN](./tunnelblick-connected.png)
 
@@ -113,4 +113,4 @@ We'll use Tunnelblick as a local VPN.
 
 ## Contributors
 
-Thank you to [Vann Lam](https://github.com/vannlam) to testing the full workflow and certification generation.
+Thank you to [Vann Lam](https://github.com/vannlam) for testing the full workflow and the certificates generation.
