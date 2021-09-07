@@ -46,11 +46,11 @@
 
 1. Go the [VPN Gateways](https://cloud.ibm.com/vpc-ext/network/vpnServers).
 
-1. Enter Client IPv4 address pool `192.168.4.0/22`
+    * Enter Client IPv4 address pool `192.168.4.0/22`
 
     > This range must be different from your local range and IBM Cloud IP ranges.
 
-1. Make sure to select the `Split Tunnel` option at the bottom of the form
+    * Make sure to select the `Split Tunnel` option at the bottom of the form
 
     > Split tunnel: Private traffic flows through the VPN interface to the VPN tunnel, and public traffic flows through the existing LAN interface.
 
