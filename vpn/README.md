@@ -109,4 +109,8 @@ We'll use Tunnelblick as a local VPN.
     2021-09-07 15:39:15.949726 TLS Error: TLS handshake failed
     ```
 
-    >> Update your VPC Security Groups
+    > Make sure to update your VPC Security Groups.
+
+## Contributors
+
+Thank you to [Vann Lam](https://github.com/vannlam) to testing the full workflow and certification generation.
