@@ -6,9 +6,9 @@ source ../local.env
 
 ibmcloud target -r $IBMCLOUD_REGION -g $RESOURCE_GROUP_NAME
 
-export MASTER_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".masterURL")
-INGRESS_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".ingress.hostname" | tr -d '"')
-CLUSTER_ID=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq ".id" | tr -d '"')
+export MASTER_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq -r .masterURL)
+INGRESS_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq -r .ingress.hostname)
+CLUSTER_ID=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq -r .id)
 sleep 4
 printf "\n## Logging into OpenShift Cluster \"$CLUSTER_NAME\" ...\n"
 oc login -u apikey -p ${APIKEY} --server=${MASTER_URL//\"} --insecure-skip-tls-verify=true
