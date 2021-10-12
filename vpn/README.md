@@ -54,6 +54,12 @@ You need an instance of the managed service [Certificate Manager](https://cloud.
 
 ## Create a VPN
 
+1. Create an IAM service-to-service authorization to authorize VPN to read certificates in Certificate Manager
+
+    ```sh
+    ibmcloud iam authorization-policy-create is cloudcerts Writer --source-resource-type vpn-server
+    ```
+
 1. Go the [VPN Gateways](https://cloud.ibm.com/vpc-ext/network/vpnServers).
 
 1. Click `Create`. Make sure to select `Client-tp-site server` currently in Beta.
@@ -77,7 +83,9 @@ You need an instance of the managed service [Certificate Manager](https://cloud.
 
 1. Note the Transport protocol `UDP` and `VPN port` 443. You will add an inbound rule with those values in the VPC Security Group later.
 
-1. Download the client profile from the VPN you created. You should have a .ovpn file.
+1. Click `Download client profile` from the VPN you created to get the generated .ovpn file.
+
+    ![Download](./vpn-download.png)
 
 ## Install and Configure a local VPN
 
