@@ -77,7 +77,7 @@ You need an instance of the managed service [Certificate Manager](https://cloud.
     * Select either high-availability (two subnets) or stand-alone (one subnet) mode.
     * Configure the client authentication with the `Client certificate` option and make sure to select the correct certificate from the list.
     * Select the Security Groups and potentialy the one created by IKS.
-    * Keep the default for Additional Configuration.
+    * In Additional Configuration, add the IBM DNS server 1 `161.26.0.10` and DNS sever 2 `161.26.0.11`
     * Make sure to select the `Split Tunnel` for the Tunnel mode
         > Split tunnel: Private traffic flows through the VPN interface to the VPN tunnel, and public traffic flows through the existing LAN interface.
 

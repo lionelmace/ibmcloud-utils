@@ -2,12 +2,12 @@
 #
 # Loop to delete file and block storage
 
-for i in `ic sl file volume-list | awk '{ print $1 }' `
+for i in `ibmcloud sl file volume-list | awk '{ print $1 }' `
 do
-  ic sl file volume-cancel $i -f
+  ibmcloud sl file volume-cancel $i -f
 done
 
-for i in `ic sl block volume-list | awk '{ print $1 }' `
+for i in `ibmcloud sl block volume-list | awk '{ print $1 }' `
 do
-  ic sl block volume-cancel $i -f
+  ibmcloud sl block volume-cancel $i -f
 done

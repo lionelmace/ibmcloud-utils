@@ -3,23 +3,24 @@
 source ../local.env
 
 count=0
-file=account_ibm_users.txt
+file=account_rh_users.txt
 # Empty file content
 cat /dev/null > $file
 
 for i in `ibmcloud account users | awk '{ print $1}' `
 do
   # Extract all IBM Cloud Users
-  if [[ $i == *"ibm"* ]]; then
-    ALL=$ALL$i,
-    ((count=count+1))
-  fi
-
-  # Extract only Red Hat users
-  # if [[ $i == *"redhat"* ]]; then
+  # if [[ $i == *"ibm"* ]]; then
   #   ALL=$ALL$i,
   #   ((count=count+1))
   # fi
+
+  # Extract only Red Hat users
+  if [[ $i == *"redhat"* ]]; then
+    # ALL=$ALL$i,
+    ibmcloud account user-remove $i -f
+    ((count=count+1))
+  fi
   
 done
 
