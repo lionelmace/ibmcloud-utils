@@ -4,3 +4,9 @@ iam/account-user-parent-list.csv
 iam/account-user-parent-list-rh.csv
 iam/account_users.txt
 satellite/satellite.env
+
+# Local .terraform directories
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.terraform.lock.hcl
