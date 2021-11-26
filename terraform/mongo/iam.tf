@@ -4,5 +4,5 @@
 resource "ibm_iam_authorization_policy" "mongo-kms" {
   source_service_name = "databases-for-mongodb"
   target_service_name = "kms"
-  roles               = ["Reader"]
+  roles               = ["Reader", "Authorization Delegator"]
 }
