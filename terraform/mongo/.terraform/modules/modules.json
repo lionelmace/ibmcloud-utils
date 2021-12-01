@@ -1,1 +1,0 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"database_mongo","Source":"terraform-ibm-modules/database/ibm//modules/mongo","Version":"1.2.2","Dir":".terraform/modules/database_mongo/modules/mongo"}]}
