@@ -14,4 +14,5 @@ resource "ibm_kp_key" "my_kp_key" {
   key_protect_id = ibm_resource_instance.kp_instance.guid
   key_name       = "${var.prefix}-encryption-key"
   standard_key   = false
+  # force_delete   = true
 }
