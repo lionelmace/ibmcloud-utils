@@ -6,8 +6,7 @@ iam/account-user-*.csv
 
 satellite/satellite.env
 
-# Local .terraform directories
 **/.terraform/*
-terraform/mongo/terraform.tfstate
-*.tfstate.*
+*.tfstate
+*.tfstate.backup
 *.terraform.lock.hcl
