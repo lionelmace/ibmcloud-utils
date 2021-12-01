@@ -1,2 +1,13 @@
-newfile.md
+# te
 local.env
+
+iam/account*users.txt
+iam/account-user-*.csv
+
+satellite/satellite.env
+
+# Local .terraform directories
+**/.terraform/*
+terraform/mongo/terraform.tfstate
+*.tfstate.*
+*.terraform.lock.hcl
