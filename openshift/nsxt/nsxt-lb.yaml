@@ -1,0 +1,35 @@
+# NSX-T, Kubernetes and Microsegmentation
+# https://www.virtualthoughts.co.uk/2018/08/01/nsx-t-kubernetes-and-microsegmentation/
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-loadbalancer
+  # labels:
+  namespace: vt-web
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: web-frontend
+    tier: frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: app-loadbalancer
+ labels:
+   namespace: vt-web
+spec:
+ type: LoadBalancer
+ ports:
+ - port: 8080
+ protocol: TCP
+ targetPort: 80
+ selector:
+   app: web-midtier
+   tier: midtier

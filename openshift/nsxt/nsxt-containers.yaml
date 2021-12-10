@@ -1,0 +1,51 @@
+# NSX-T, Kubernetes and Microsegmentation
+# https://www.virtualthoughts.co.uk/2018/08/01/nsx-t-kubernetes-and-microsegmentation/
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-frontend
+  namespace: vt-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: vt-webapp
+      tier: webtier
+  template:
+    metadata:
+      labels:
+        app: vt-webapp
+        tier: webtier
+    spec:
+      containers:
+      - name: web-frontend
+        # image: nginx:latest
+        image: nginxinc/nginx-unprivileged 
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: web-midtier
+ namespace: vt-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web-midtier
+      tier: apptier
+  template:
+    metadata:
+      labels:
+        app: web-midtier
+        tier: apptier
+    spec:
+      containers:
+      - name: web-midtier
+        # image: nginx:latest
+        image: nginxinc/nginx-unprivileged 
+        ports:
+        - containerPort: 80
