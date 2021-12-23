@@ -5,7 +5,7 @@
 ##############################################################################
 #ibmcloud_api_key = ""      # Set the variable export TF_VAR_ibmcloud_api_key=
 prefix         = "tf"
-region         = "ca-tor" # eu-de for Frankfurt MZR
+region         = "eu-de" # eu-de for Frankfurt MZR
 resource_group = "tf-mysql"
 tags           = ["tf", "mysql"]
 
