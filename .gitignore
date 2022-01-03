@@ -6,7 +6,7 @@ iam/account-user-*.csv
 
 satellite/satellite.env
 
-**/.terraform/*
+**/.terraform
 *.tfstate
 *.tfstate.backup
 *.terraform.lock.hcl
