@@ -9,12 +9,16 @@ resource "ibm_database" "icd_mysql" {
   service           = "databases-for-mysql"
   resource_group_id = ibm_resource_group.resource_group.id
   tags              = var.tags
-  # key_protect_instance      = ibm_resource_instance.kp_instance.id
-  # key_protect_key           = ibm_kp_key.my_kp_key.id
-  # backup_encryption_key_crn = ibm_kp_key.my_kp_key.id
-  # depends_on = [ # require when using encryption key otherwise provisioning failed
-  #   ibm_iam_authorization_policy.mysql-kms,
-  # ]
+  
+  # Encrypt DB (comment to use IBM-provided Automatic Key)
+  key_protect_instance      = ibm_resource_instance.kp_instance.id
+  key_protect_key           = ibm_kp_key.my_kp_key.id
+  backup_encryption_key_crn = ibm_kp_key.my_kp_key.id
+  depends_on = [ # require when using encryption key otherwise provisioning failed
+    ibm_iam_authorization_policy.mysql-kms,
+  ]
+  
+  # DB Settings
   adminpassword                = var.icd_mysql_adminpassword
   members_memory_allocation_mb = 3072  # 1GB  per member
   members_disk_allocation_mb   = 61440 # 20GB per member
