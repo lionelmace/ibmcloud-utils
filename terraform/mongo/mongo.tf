@@ -12,12 +12,12 @@ resource "ibm_database" "icd_mongo" {
   tags              = var.tags
 
   # Encrypt DB (comment to use IBM-provided Automatic Key)
-  key_protect_instance      = ibm_resource_instance.key-protect.id
-  key_protect_key           = ibm_kp_key.key.id
-  backup_encryption_key_crn = ibm_kp_key.key.id
-  depends_on = [ # require when using encryption key otherwise provisioning failed
-    ibm_iam_authorization_policy.mongo-kms,
-  ]
+  # key_protect_instance      = ibm_resource_instance.key-protect.id
+  # key_protect_key           = ibm_kp_key.key.id
+  # backup_encryption_key_crn = ibm_kp_key.key.id
+  # depends_on = [ # require when using encryption key otherwise provisioning failed
+  #   ibm_iam_authorization_policy.mongo-kms,
+  # ]
 
   # DB Settings
   adminpassword                = var.icd_mongo_adminpassword
@@ -33,6 +33,22 @@ resource "ibm_database" "icd_mongo" {
   # }
 }
 
+# VPE can only be created once the Mongo DB is fully registered
+resource "time_sleep" "wait_for_mongo_initialization" {
+  # count = tobool(var.use_vpe) ? 1 : 0
+
+  depends_on = [
+    ibm_database.icd_mongo
+  ]
+
+  create_duration = "15m"
+}
+
+# VPE (Virtual Private Endpoint) for Mongo
+##############################################################################
+# Make sure your Cloud Databases deployment's private endpoint is enabled
+# otherwise you'll face this error: "Service does not support VPE extensions."
+##############################################################################
 resource "ibm_is_virtual_endpoint_gateway" "vpe_mongo" {
   name           = "${var.prefix}-mongo-vpe"
   resource_group = ibm_resource_group.resource_group.id
@@ -51,6 +67,10 @@ resource "ibm_is_virtual_endpoint_gateway" "vpe_mongo" {
       name   = "${ips.value.name}-ip"
     }
   }
+
+  depends_on = [
+    time_sleep.wait_for_mongo_initialization
+  ]
 
   tags = var.tags
 }
