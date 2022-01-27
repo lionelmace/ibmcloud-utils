@@ -11,9 +11,9 @@ resource "ibm_database" "icd_mysql" {
   tags              = var.tags
   
   # Encrypt DB (comment to use IBM-provided Automatic Key)
-  key_protect_instance      = ibm_resource_instance.kp_instance.id
-  key_protect_key           = ibm_kp_key.my_kp_key.id
-  backup_encryption_key_crn = ibm_kp_key.my_kp_key.id
+  key_protect_instance      = ibm_resource_instance.key-protect.id
+  key_protect_key           = ibm_kp_key.key.id
+  backup_encryption_key_crn = ibm_kp_key.key.id
   depends_on = [ # require when using encryption key otherwise provisioning failed
     ibm_iam_authorization_policy.mysql-kms,
   ]

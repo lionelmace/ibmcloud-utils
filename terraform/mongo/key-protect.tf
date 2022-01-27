@@ -10,7 +10,7 @@ resource "ibm_resource_instance" "key-protect" {
   tags              = var.tags
 }
 
-resource "ibm_kp_key" "my_kp_key" {
+resource "ibm_kp_key" "key" {
   key_protect_id = ibm_resource_instance.key-protect.guid
   key_name       = "${var.prefix}-encryption-key"
   standard_key   = false
