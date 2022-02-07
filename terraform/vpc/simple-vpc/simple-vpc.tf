@@ -1,9 +1,16 @@
+resource "ibm_resource_group" "resource_group" {
+  name = "simple-group"
+}
+
 resource "ibm_is_vpc" "vpc" {
   name = "simple-vpc"
+  resource_group = ibm_resource_group.resource_group.id
 }
+
 resource "ibm_is_network_acl" "example" {
   name = "simple-acl"
   vpc  = ibm_is_vpc.vpc.id
+  resource_group = ibm_resource_group.resource_group.id
 
   rules {
     name        = "outbound"
@@ -15,9 +22,6 @@ resource "ibm_is_network_acl" "example" {
       code = 1
       type = 1
     }
-    # Optionals :
-    # port_max =
-    # port_min =
   }
   rules {
     name        = "inbound"
@@ -29,9 +33,6 @@ resource "ibm_is_network_acl" "example" {
       code = 1
       type = 1
     }
-    # Optionals :
-    # port_max =
-    # port_min =
   }
 }
 
