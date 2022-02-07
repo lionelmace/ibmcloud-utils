@@ -1,18 +1,17 @@
 provider "ibm" {
   ibmcloud_api_key = var.ibmcloud_api_key
-  generation       = 2
-  region           = "us-south"
+  region           = "eu-de"
 }
 
 #This file will create a VPC, 2 Subnets, 3 Security Groups and Rules, 2 VSIs, and a Gateway
 #This file creates a VPC identical to the VPC we created in the VPC Product Tour
 
-#Create a VPC 
+# Create a VPC 
 resource "ibm_is_vpc" "vpc1" {
   name = "vpcdte"
 }
 
-#Eric let's create default subnet with VPC
+# Let's create default subnet with VPC
 resource "ibm_is_subnet" "subnet1" {
   name            = "vpc-pubpriv-backend-subnet"
   vpc             = ibm_is_vpc.vpc1.id
@@ -20,7 +19,7 @@ resource "ibm_is_subnet" "subnet1" {
   ipv4_cidr_block = "10.240.0.0/24"
 }
 
-#Eric let's create 2nd Subnet for Bastion VSI
+# Let's create 2nd Subnet for Bastion VSI
 resource "ibm_is_subnet" "bastion-subnet" {
   name            = "vpc-secure-bastion-subnet"
   vpc             = ibm_is_vpc.vpc1.id
@@ -29,20 +28,20 @@ resource "ibm_is_subnet" "bastion-subnet" {
   public_gateway  = ibm_is_public_gateway.dte_gateway.id
 }
 
-#Eric let's create Public Gateway
+# Create Public Gateway
 resource "ibm_is_public_gateway" "dte_gateway" {
   name = "dte_gateway"
   vpc  = ibm_is_vpc.vpc1.id
   zone = var.zone1
 }
 
-#Eric let's create Security Group
+# Create Security Group
 resource "ibm_is_security_group" "vpc-secure-bastion-sg" {
   name = "vpc-secure-bastion-sg"
   vpc  = ibm_is_vpc.vpc1.id
 }
 
-#Eric let's create 2 Inbound Security Group Rules
+# Create 2 Inbound Security Group Rules
 resource "ibm_is_security_group_rule" "bastion_security_group_rule_tcp" {
   group     = ibm_is_security_group.vpc-secure-bastion-sg.id
   direction = "inbound"

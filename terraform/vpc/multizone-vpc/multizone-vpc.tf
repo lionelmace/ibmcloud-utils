@@ -1,24 +1,11 @@
 
-##############################################################################
-# Create a VPC
-##############################################################################
-
 resource "ibm_is_vpc" "vpc" {
   name                      = "${var.prefix}-vpc"
-  resource_group            = ibm_resource_group.resource_group.id
   address_prefix_management = var.vpc_address_prefix_management
+  # default_network_acl_name  = "${var.prefix}-acl"
   classic_access            = var.vpc_classic_access
   tags                      = var.tags
 }
-
-output "vpc_id" {
-  description = "ID of VPC created"
-  value       = ibm_is_vpc.vpc.id
-}
-
-##############################################################################
-# Prefixes and subnets for zone 1
-##############################################################################
 
 resource "ibm_is_vpc_address_prefix" "subnet_prefix" {
 
@@ -29,11 +16,6 @@ resource "ibm_is_vpc_address_prefix" "subnet_prefix" {
   cidr  = element(var.vpc_cidr_blocks, count.index)
 }
 
-
-##############################################################################
-# Public Gateways
-##############################################################################
-
 resource "ibm_is_public_gateway" "pgw" {
 
   count = var.vpc_enable_public_gateway ? 3 : 0
@@ -43,13 +25,6 @@ resource "ibm_is_public_gateway" "pgw" {
 
 }
 
-# Security Groups
-##############################################################################
-
-# Rules required to allow necessary inbound traffic to your cluster (IKS/OCP)
-##############################################################################
-# To expose apps by using load balancers or Ingress, allow traffic through VPC 
-# load balancers. For example, for Ingress listening on TCP/443
 resource "ibm_is_security_group_rule" "sg-rule-inbound-icmp" {
   group     = ibm_is_vpc.vpc.default_security_group
   direction = "inbound"
@@ -72,7 +47,6 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-https" {
   }
 }
 
-##############################################################################
 resource "ibm_is_security_group_rule" "sg-rule-inbound-ssh" {
   group     = ibm_is_vpc.vpc.default_security_group
   direction = "inbound"
@@ -84,12 +58,9 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-ssh" {
   }
 }
 
-
-# Network ACLs
-##############################################################################
 resource "ibm_is_network_acl" "multizone_acl" {
 
-  name = "${var.prefix}-multizone-acl"
+  name = "${var.prefix}-acl"
   vpc  = ibm_is_vpc.vpc.id
 
   dynamic "rules" {
@@ -106,15 +77,6 @@ resource "ibm_is_network_acl" "multizone_acl" {
   }
 }
 
-output "acl_id" {
-  description = "ID of ACL created"
-  value       = ibm_is_network_acl.multizone_acl.id
-}
-
-##############################################################################
-# Create Subnets
-##############################################################################
-
 resource "ibm_is_subnet" "subnet" {
 
   count           = 3
@@ -124,4 +86,10 @@ resource "ibm_is_subnet" "subnet" {
   ipv4_cidr_block = element(ibm_is_vpc_address_prefix.subnet_prefix.*.cidr, count.index)
   network_acl     = ibm_is_network_acl.multizone_acl.id
   public_gateway  = var.vpc_enable_public_gateway ? element(ibm_is_public_gateway.pgw.*.id, count.index) : null
+}
+
+resource "ibm_is_subnet_network_acl_attachment" attach {
+  count       = 3
+  subnet      = element(ibm_is_subnet.subnet.*.id, count.index)
+  network_acl = ibm_is_network_acl.multizone_acl.id
 }

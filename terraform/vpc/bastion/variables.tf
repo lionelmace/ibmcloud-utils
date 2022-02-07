@@ -1,5 +1,5 @@
 variable "zone1" {
-  default = "us-south-1"
+  default = "eu-de-1"
 }
 
 variable "ssh_public_key" {
