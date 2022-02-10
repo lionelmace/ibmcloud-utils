@@ -4,11 +4,13 @@
 ##############################################################################
 
 resource "ibm_is_vpc" "vpc" {
-  name                      = "${var.prefix}-vpc"
-  resource_group            = ibm_resource_group.resource_group.id
-  address_prefix_management = var.vpc_address_prefix_management
-  classic_access            = var.vpc_classic_access
-  tags                      = var.tags
+  name                        = "${var.prefix}-vpc"
+  resource_group              = ibm_resource_group.resource_group.id
+  address_prefix_management   = var.vpc_address_prefix_management
+  default_security_group_name = "${var.prefix}-vpc-sg"
+  default_network_acl_name    = "${var.prefix}-vpc-acl"
+  classic_access              = var.vpc_classic_access
+  tags                        = var.tags
 }
 
 
