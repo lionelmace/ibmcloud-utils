@@ -1,7 +1,7 @@
 # te
 local.env
 
-iam/account*users.txt
+*.txt
 iam/account-user-*.csv
 
 satellite/satellite.env
