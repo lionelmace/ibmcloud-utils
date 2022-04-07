@@ -1,4 +1,4 @@
-# Cloud Native Reference Architecture with Cloud Services
+# IBM Cloud Native Reference Architecture
 
 ![Cloud Natitve Architecture](./ibmcloud-vpc-iks-architecture.png)
 
