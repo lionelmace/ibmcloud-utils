@@ -1,8 +1,10 @@
 # IBM Cloud Native Reference Architecture
 
-![Cloud Natitve Architecture](./ibmcloud-vpc-iks-architecture.png)
+![Cloud Natitve Architecture](./ibmcloud-vpc-iks-architecture.svg)
+Cloud Natitve Architecture Diagram
 
-![Observability](./ibmcloud-observability.png)
+![Observability](./ibmcloud-observability.svg)
+Observability Architecture Diagram
 
 ## PaaS
 
