@@ -1,6 +1,8 @@
 # te
 local.env
 
+settings.json
+**/*.DS_Store
 *.txt
 iam/account-user-*.csv
 

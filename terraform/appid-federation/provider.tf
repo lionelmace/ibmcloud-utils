@@ -1,13 +1,14 @@
 ##############################################################################
 # IBM Cloud Provider
+# > Remove for use in schematics
 ##############################################################################
 
 terraform {
-  required_version = ">=1.0"
+  required_version = ">= 1.0.11"
   required_providers {
     ibm = {
       source  = "IBM-Cloud/ibm"
-      version = "1.39.1"
+      version = "1.42.0"
     }
   }
 }

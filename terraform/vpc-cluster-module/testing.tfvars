@@ -31,3 +31,12 @@ kubernetes_wait_till             = "OneWorkerNodeReady"
 # worker_pools=[ { name = "dev" machine_type = "cx2.8x16" workers_per_zone = 2 },
 #                { name = "test" machine_type = "mx2.4x32" workers_per_zone = 2 } ]
 
+##############################################################################
+## Cluster OpenShift
+##############################################################################
+openshift_cluster_name       = "iro"
+openshift_worker_pool_flavor = "bx2.4x16"
+openshift_version            = "4.9.17_openshift"
+# Possible values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
+openshift_wait_till          = "OneWorkerNodeReady"
+
