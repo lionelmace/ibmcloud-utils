@@ -6,7 +6,15 @@
     oc apply -f nlb-udp.yaml
     ```
 
-1. Within a minute, then check that there is Load Balancer of type Network creating in the [console](https://cloud.ibm.com/vpc-ext/network/loadBalancers)
+1. Check the status of your service.
+
+    ```sh
+    oc describe service nlb-udp
+    ```
+
+    > It takes a few minutes for the the Load Balancer to be provisioning. 
+
+1. You can check the status in the [console](https://cloud.ibm.com/vpc-ext/network/loadBalancers)
 
 1. You can also see the list of VPC Load Balancers using the CLI
 

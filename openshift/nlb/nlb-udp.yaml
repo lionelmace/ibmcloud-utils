@@ -8,6 +8,7 @@ metadata:
     service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "nlb"
     service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: "public"
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-node-selector: "<key>=<value>"
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-node-selector: "ibm-cloud.kubernetes.io/internal-ip=10.242.64.15"
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-subnets: "0797-91785612-96be-48eb-a42b-448c79975ef7"
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: "eu-gb-2"
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-health-check-udp: "<tcp_port"
