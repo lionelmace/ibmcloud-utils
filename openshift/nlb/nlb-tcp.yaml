@@ -2,8 +2,8 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: udp-nlb-lon02
-  namespace: lionel-nlb
+  name: nlb-tcp
+  namespace: default
   annotations:
     service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "nlb"
     service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: "public"
@@ -20,7 +20,7 @@ spec:
     app: mytodo
     tier: frontend
   ports:
-  - name: 4500-udp
+  - name: 8p80-tcp
     port: 8080
     protocol: TCP
     targetPort: 8080
