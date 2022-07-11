@@ -26,4 +26,3 @@ spec:
     port: 4500
     protocol: UDP
     targetPort: 4500
-  # externalTrafficPolicy: Local
