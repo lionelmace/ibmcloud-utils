@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: udp-nlb-4500
+  namespace: lionel-nlb
+  annotations:
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "nlb"
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: "public"
+    #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-node-selector: "<key>=<value>"
+    #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-subnets: "0797-91785612-96be-48eb-a42b-448c79975ef7"
+    #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: "eu-gb-2"
+    #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-health-check-udp: "<tcp_port"
+  labels:
+    app: mytodo
+    tier: frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: mytodo
+    tier: frontend
+  ports:
+  - name: 4500-udp
+    port: 4500
+    protocol: UDP
+    targetPort: 4500
