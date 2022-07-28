@@ -36,7 +36,7 @@ resource "ibm_iam_access_group_policy" "iam-continuous-delivery" {
 }
 
 # DevOps - Toolchain
-resource "ibm_iam_access_group_policy" "iam-continuous-delivery" {
+resource "ibm_iam_access_group_policy" "iam-toochain" {
   access_group_id = ibm_iam_access_group.accgrp.id
   roles           = ["Editor", "Operator", "Viewer"]
 
