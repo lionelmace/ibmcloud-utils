@@ -23,3 +23,13 @@ resource "ibm_iam_access_group_policy" "policy-k8s" {
     resource_group_id = ibm_resource_group.resource_group.id
   }
 }
+
+resource "ibm_iam_access_group_policy" "iam-continuous-delivery" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Manager", "Writer", "Editor", "Operator", "Viewer"]
+
+  resources {
+    service           = "continuous-delivery"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
