@@ -56,7 +56,7 @@ resource "ibm_iam_access_group_policy" "iam-logdna" {
   }
 }
 
-resource "ibm_iam_access_group_policy" "iam-logdna" {
+resource "ibm_iam_access_group_policy" "iam-sysdig" {
   access_group_id = ibm_iam_access_group.accgrp.id
   roles           = ["Writer", "Editor"]
 
