@@ -21,8 +21,23 @@ resource "ibm_database" "icd_mongo" {
 
   # DB Settings
   adminpassword                = var.icd_mongo_adminpassword
-  members_memory_allocation_mb = 3072  # 1GB  per member
-  members_disk_allocation_mb   = 61440 # 20GB per member
+  group {
+    group_id = "member"
+
+    memory { 
+      # 1GB  per member
+      allocation_mb = 1024
+    }
+
+    disk { 
+      # 20GB per member
+      allocation_mb = 20480
+    }
+
+    cpu {
+      allocation_count = 0
+    }
+  }
   # users {
   #   name     = "user123"
   #   password = "password12"
