@@ -9,7 +9,7 @@ resource "ibm_database" "icd_mongo" {
   service_endpoints = var.icd_mongo_service_endpoints
   location          = var.region
   resource_group_id = ibm_resource_group.resource_group.id
-  tags              = var.global_tags
+  tags              = var.tags
 
   # Encrypt DB (comment to use IBM-provided Automatic Key)
   key_protect_instance      = ibm_resource_instance.key-protect.id

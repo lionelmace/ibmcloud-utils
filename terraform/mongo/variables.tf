@@ -27,7 +27,7 @@ variable "resource_group" {
   }
 }
 
-variable "global_tags" {
+variable "tags" {
   description = "List of Tags"
   type        = list(string)
   default     = ["tf", "utils"]

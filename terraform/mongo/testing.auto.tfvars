@@ -7,7 +7,7 @@
 prefix         = "utils"
 region         = "eu-de" # eu-de for Frankfurt MZR
 resource_group = "tf-mongo"
-global_tags    = ["tf", "mongo"]
+tags           = ["tf", "mongo"]
 
 
 ##############################################################################
