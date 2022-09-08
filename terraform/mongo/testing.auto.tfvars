@@ -4,10 +4,10 @@
 ## Global Variables
 ##############################################################################
 #ibmcloud_api_key = ""      # Set the variable export TF_VAR_ibmcloud_api_key=
-prefix         = "tf-mongo"
+prefix         = "utils"
 region         = "eu-de" # eu-de for Frankfurt MZR
 resource_group = "tf-mongo"
-tags           = ["tf", "mongo"]
+global_tags    = ["tf", "mongo"]
 
 
 ##############################################################################
