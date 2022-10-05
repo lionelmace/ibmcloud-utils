@@ -4,10 +4,10 @@
 ## Global Variables
 ##############################################################################
 #ibmcloud_api_key = ""      # Set the variable export TF_VAR_ibmcloud_api_key=
-prefix         = "phenisys"
+prefix         = "mace"
 region         = "eu-de" # eu-de for Frankfurt MZR
-resource_group = "phenisys"
-tags           = ["tf", "phenisys"]
+resource_group = "mace"
+tags           = ["tf", "mace"]
 
 
 ##############################################################################
@@ -21,7 +21,7 @@ vpc_enable_public_gateway     = true
 ## Cluster OpenShift
 ##############################################################################
 openshift_worker_pool_flavor = "bx2.4x16"
-openshift_version            = "4.8.46_openshift"
+openshift_version            = "4.11.4_openshift"
 # Possible values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
 openshift_wait_till          = "IngressReady"
 openshift_update_all_workers = false
