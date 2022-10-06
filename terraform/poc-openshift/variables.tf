@@ -10,7 +10,7 @@ variable "ibmcloud_api_key" {
 variable "prefix" {
   description = "A unique identifier need to provision resources. Must begin with a letter"
   type        = string
-  default     = "mytodo"
+  default     = "bivwak"
 }
 
 variable "region" {
@@ -20,7 +20,7 @@ variable "region" {
 
 variable "resource_group" {
   description = "Name of resource group where all infrastructure will be provisioned"
-  default     = "mytodo"
+  default     = "bivwak"
 
   validation {
     error_message = "Unique ID must begin and end with a letter and contain only letters, numbers, and - characters."
@@ -31,7 +31,7 @@ variable "resource_group" {
 variable "tags" {
   description = "List of Tags"
   type        = list(string)
-  default     = ["tf", "mytodo"]
+  default     = ["tf", "bivwak"]
 }
 
 
