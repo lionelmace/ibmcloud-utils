@@ -65,3 +65,24 @@ resource "ibm_iam_access_group_policy" "iam-sysdig" {
     resource_group_id = ibm_resource_group.resource_group.id
   }
 }
+
+# AUTHORIZATIONS
+
+# Authorization policy between Mongo and Key Protect
+# Require to encrypt Mongo DB with Key in Key Protect
+# https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_services/main.tf
+resource "ibm_iam_authorization_policy" "mongo-kms" {
+  source_service_name         = "databases-for-mongodb"
+  target_service_name         = "kms"
+  target_resource_instance_id = ibm_resource_instance.key-protect.guid
+  roles                       = ["Reader", "Authorization Delegator"]
+}
+
+# Authorization policy between IKS and Secrets Manager
+resource "ibm_iam_authorization_policy" "iks-sm" {
+  source_service_name         = "containers-kubernetes"
+  source_resource_instance_id = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
+  target_service_name         = "secrets-manager"
+  target_resource_instance_id = ibm_resource_instance.secrets-manager.guid
+  roles                       = ["Manager"]
+}
