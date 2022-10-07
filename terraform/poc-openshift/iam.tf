@@ -86,3 +86,11 @@ resource "ibm_iam_authorization_policy" "iks-sm" {
   target_resource_instance_id = ibm_resource_instance.secrets-manager.guid
   roles                       = ["Manager"]
 }
+
+resource "ibm_iam_authorization_policy" "roks-sm" {
+  source_service_name         = "containers-kubernetes"
+  source_resource_instance_id = module.vpc_openshift_cluster.vpc_openshift_cluster_id
+  target_service_name         = "secrets-manager"
+  target_resource_instance_id = ibm_resource_instance.secrets-manager.guid
+  roles                       = ["Manager"]
+}

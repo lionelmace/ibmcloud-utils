@@ -44,6 +44,8 @@ resource "null_resource" "attach-secrets-manager-to-cluster" {
   #     SECRETS_MANAGER_ID = self.triggers.SECRETS_MANAGER_ID
   #   }
   # }
+
+  depends_on = [ ibm_iam_authorization_policy.iks-sm, ]
 }
 
 resource "null_resource" "attach-secrets-manager-to-openshift" {
@@ -74,4 +76,6 @@ resource "null_resource" "attach-secrets-manager-to-openshift" {
   #     SECRETS_MANAGER_ID = self.triggers.SECRETS_MANAGER_ID
   #   }
   # }
+
+  depends_on = [ ibm_iam_authorization_policy.roks-sm, ]
 }
