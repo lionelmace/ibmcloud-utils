@@ -2,12 +2,14 @@
 
 ![Cloud Natitve Architecture](./ibmcloud-vpc-iks-architecture.svg)
 Cloud Natitve Architecture Diagram
+Download [drawio](ibmcloud-vpc-iks-architecture.drawio) file.
 
 ![Observability](./ibmcloud-observability.svg)
 Observability Architecture Diagram
+Download [drawio](ibmcloud-observability.drawio) file.
 
 ![Secrets Manager](./ibmcloud-iks-secrets-manager.png)
-Single Secrets Manager instance shared across Clusters and Accounts Architecture Diagram
+Single Secrets Manager instance shared across Clusters and Accounts Architecture Diagram. Download [drawio](ibmcloud-iks-secrets-manager.drawio) file.
 
 ## PaaS
 
