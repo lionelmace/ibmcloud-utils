@@ -3,19 +3,18 @@
 ## Container as a Service Reference Architecture
 
 ![Cloud Natitve Architecture](./ibmcloud-vpc-iks-architecture.svg)
-Architecture Diagram
 Download [drawio](ibmcloud-vpc-iks-architecture.drawio) file.
 
 ## Observability Reference Architecture
 
 ![Observability](./ibmcloud-observability.svg)
-Observability Architecture Diagram
 Download [drawio](ibmcloud-observability.drawio) file.
 
 ## Secrets Manager Reference Architecture
 
+Single Secrets Manager instance shared across Clusters and Accounts Architecture Diagram.
 ![Secrets Manager](./ibmcloud-iks-secrets-manager.png)
-Single Secrets Manager instance shared across Clusters and Accounts Architecture Diagram. Download [drawio](ibmcloud-iks-secrets-manager.drawio) file.
+Download [drawio](ibmcloud-iks-secrets-manager.drawio) file.
 
 ## PaaS
 
