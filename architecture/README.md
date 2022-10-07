@@ -6,6 +6,9 @@ Cloud Natitve Architecture Diagram
 ![Observability](./ibmcloud-observability.svg)
 Observability Architecture Diagram
 
+![Secrets Manager](./ibmcloud-iks-secrets-manager.svg)
+Single Secrets Manager instance shared across Clusters and Accounts Architecture Diagram
+
 ## PaaS
 
 * [Internet Services](https://cloud.ibm.com/catalog/services/internet-services)
