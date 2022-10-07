@@ -34,6 +34,11 @@ variable "tags" {
   default     = ["tf", "bivwak"]
 }
 
+variable "schematics_version" {
+  description = "Workaround to get the version in schematics after a pull"
+  default     = "20221007-0919"
+}
+
 
 ##############################################################################
 # VPC Variables
