@@ -35,6 +35,10 @@ ibmcloud ks ingress instance ls --cluster $CLUSTER_ID
 # echo $SM_GROUP_ID
 
 # Create a secret
+#export SECRET_ID=`ibmcloud secrets-manager secret-create --secret-type username_password  --resources '[{"name":"example_username_password","description":"Extended description for my secret.","secret_group_id":"'"$SECRET_GROUP_ID"'","username":"user123","password":"cloudy-rainy-coffee-book","labels":["my-test-cluster","tutorial"]}]' --output json | jq -r ".resources[].id"`; echo $SECRET_ID
+ibmcloud secrets-manager secret-create --secret-type username_password \
+  --resources '[{"name":"mongodb-credentials","description":"Mongo DB Credentials","username":"user123","password":"cloudy-rainy-coffee-book","labels":["my-test-cluster","tutorial"]}]'
+
 # ibmcloud secrets-manager secret-create \
 #     --secret-type=arbitrary \
 #     --resources='[{"name": "example-arbitrary-secret", "description": "Extended description for this secret.", "labels": ["dev","us-south"], "custom_metadata": {"anyKey": "anyValue"}, "version_custom_metadata": {"anyKey": "anyValue"}, "expiration_date": "2030-01-01T00:00:00Z", "payload": "secret-data"}]'

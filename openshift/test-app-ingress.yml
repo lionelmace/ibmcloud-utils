@@ -1,0 +1,91 @@
+---
+# Create a namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ns-1
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test
+  namespace: ns-1
+  labels:
+    app: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      containers:
+      - name: mtls-test
+        image: ibmcom/hello
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 250m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 384Mi
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test
+  namespace: ns-1
+  labels:
+    app: test
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: test
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: test
+  labels:
+    app: test
+  namespace: ns-1
+spec:
+  tls:
+    - hosts:
+        - iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+      secretName: iro-483cccd2f0d38128dd40d2b711142ba9-0000
+  rules:
+    - host: iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: test
+                port:
+                  number: 80

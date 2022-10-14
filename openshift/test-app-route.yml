@@ -1,0 +1,80 @@
+---
+# Create a namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lionel
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test
+  namespace: lionel
+  labels:
+    app: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      containers:
+      - name: mtls-test
+        image: ibmcom/hello
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 250m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 384Mi
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test
+  namespace: lionel
+  labels:
+    app: test
+spec:
+  # type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: test
+
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    haproxy.router.openshift.io/hsts_header: max-age=31536000;includeSubDomains;preload
+  labels:
+    app: test
+  name: test
+  namespace: lionel
+spec:
+  host: hello-lionel.iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: test
+    weight: 100
+  wildcardPolicy: None
