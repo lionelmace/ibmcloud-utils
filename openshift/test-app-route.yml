@@ -3,14 +3,14 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: lionel
+  name: ns-route
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: test
-  namespace: lionel
+  namespace: ns-route
   labels:
     app: test
 spec:
@@ -25,7 +25,8 @@ spec:
     spec:
       containers:
       - name: mtls-test
-        image: ibmcom/hello
+        # image: ibmcom/hello
+        image: openshift/hello-openshift
         imagePullPolicy: Always
         resources:
           requests:
@@ -44,7 +45,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: test
-  namespace: lionel
+  namespace: ns-route
   labels:
     app: test
 spec:
@@ -67,9 +68,9 @@ metadata:
   labels:
     app: test
   name: test
-  namespace: lionel
+  namespace: ns-route
 spec:
-  host: hello-lionel.iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+  host: hello-ns-route.iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
   port:
     targetPort: 8080
   tls:
