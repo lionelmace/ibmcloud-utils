@@ -130,8 +130,8 @@
     The output will be similar to
 
     ```bash
-    persistentvolumeclaim/test-claim created
-    pod/test-pod created
+    persistentvolumeclaim/odf-pvc created
+    pod/odf-test created
     ```
 
 1. To verify that the pod is deployed, wait for your app to get into a Running status.
