@@ -169,3 +169,7 @@
     ```sh
     exit
     ```
+
+## Resources
+
+[Deploying an app on OpenShift Data Foundation](https://cloud.ibm.com/docs/openshift?topic=openshift-odf-deploy-app)
