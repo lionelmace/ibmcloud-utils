@@ -71,6 +71,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: hello-openshift
+  annotations:
+    route.openshift.io/termination: "edge"
   labels:
     app: test
   namespace: ns-ingress
