@@ -59,7 +59,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 80
+    - port: 8080
       targetPort: 8080
       protocol: TCP
       name: http
@@ -77,12 +77,12 @@ metadata:
     app: test
   namespace: ns-ingress
 spec:
-  tls:
-    - hosts:
-        - iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
-      secretName: iro-483cccd2f0d38128dd40d2b711142ba9-0000
+  # tls:
+  #   - hosts:
+  #       - mycluster-410-vpc-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+  #     secretName: mycluster-410-vpc-483cccd2f0d38128dd40d2b711142ba9-0000
   rules:
-    - host: iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+    - host: mycluster-410-vpc-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
       http:
         paths:
           - path: /
