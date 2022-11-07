@@ -57,7 +57,8 @@ variable "machine_type" {
 variable "kube_version" {
   description = "Specify the Kubernetes version, including the major.minor version. To see available versions, run `ibmcloud ks versions`."
   type        = string
-  default     = "4.10.32_openshift"
+  # default     = "4.11.8_openshift"
+  default = "1.25.3"
 }
 
 variable "worker_count" {
@@ -71,51 +72,51 @@ variable "is_openshift_cluster" {
   default = true
 }
 
-variable worker_pools {
-    description = "List of maps describing worker pools"
+variable "worker_pools" {
+  description = "List of maps describing worker pools"
 
-    type        = list(object({
-        pool_name        = string
-        machine_type     = string
-        workers_per_zone = number
-    }))
+  type = list(object({
+    pool_name        = string
+    machine_type     = string
+    workers_per_zone = number
+  }))
 
-    default     = [
-        {
-            pool_name        = "dev"
-            machine_type     = "bx2.4x16"
-            workers_per_zone = 2
-        # },
-        # {
-        #     pool_name        = "odf"
-        #     machine_type     = "bx2.16x64"
-        #     workers_per_zone = 1
-        }
-    ]
-
-    validation  {
-        error_message = "Worker pool names must match the regex `^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$`."
-        condition     = length([
-            for pool in var.worker_pools:
-            false if !can(regex("^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$", pool.pool_name))
-        ]) == 0
+  default = [
+    {
+      pool_name        = "dev"
+      machine_type     = "bx2.4x16"
+      workers_per_zone = 2
+      # },
+      # {
+      #     pool_name        = "odf"
+      #     machine_type     = "bx2.16x64"
+      #     workers_per_zone = 1
     }
+  ]
 
-    validation {
-        error_message = "Worker pools cannot have duplicate names."
-        condition     = length(distinct([
-            for pool in var.worker_pools:
-            pool.pool_name
-        ])) == length(var.worker_pools)
-    }
+  validation {
+    error_message = "Worker pool names must match the regex `^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$`."
+    condition = length([
+      for pool in var.worker_pools :
+      false if !can(regex("^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$", pool.pool_name))
+    ]) == 0
+  }
 
-    validation {
-        error_message = "Worker pools must have at least two workers per zone."
-        condition     = length([
-            for pool in var.worker_pools:
-            false if pool.workers_per_zone < 2
-        ]) == 0
-    }
+  validation {
+    error_message = "Worker pools cannot have duplicate names."
+    condition = length(distinct([
+      for pool in var.worker_pools :
+      pool.pool_name
+    ])) == length(var.worker_pools)
+  }
+
+  validation {
+    error_message = "Worker pools must have at least two workers per zone."
+    condition = length([
+      for pool in var.worker_pools :
+      false if pool.workers_per_zone < 2
+    ]) == 0
+  }
 
 }
 
@@ -130,14 +131,17 @@ variable "entitlement" {
 # VPC Variables
 ##############################################################################
 
-variable subnet_zone_list {
-    description = "A map containing cluster subnet IDs and subnet zones"
-    type        = list(object({
-        id   = string
-        zone = string
-    }))
-    default = []
-}
+# variable subnet_zone_list {
+#     description = "A map containing cluster subnet IDs and subnet zones"
+#     type        = list(
+#       object(
+#         {
+#           id   = string
+#           zone = string
+#       }
+#     )
+#   )
+# }
 
 variable "create_vpc" {
   description = "True to create new VPC. False if VPC is already existing and subnets or address prefixies are to be added"
@@ -189,7 +193,7 @@ variable "subnet_cidr_blocks" {
   default = [
     "10.243.0.0/24",
     "10.243.64.0/24",
-    "10.243.128.0/24"]
+  "10.243.128.0/24"]
 }
 
 variable "vpc_enable_public_gateway" {

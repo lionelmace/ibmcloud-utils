@@ -124,12 +124,12 @@ resource "ibm_is_subnet" "subnet" {
   depends_on = [ibm_is_vpc_address_prefix.address_prefix]
 }
 
-output subnet_zone_list {
-  description = "A list containing cluster subnet IDs and subnet zones"
-  value       = [
-    for subnet in ibm_is_subnet.subnet: {
-      id   = subnet.id
-      zone = subnet.zone
-    }
-  ]
-}
+# output subnet_zone_list {
+#   description = "A list containing cluster subnet IDs and subnet zones"
+#   value       = [
+#     for subnet in ibm_is_subnet.subnet[*] : {
+#       id   = subnet.id
+#       zone = subnet.zone
+#     }
+#   ]
+# }
