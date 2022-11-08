@@ -4,10 +4,10 @@
 ## Global Variables
 ##############################################################################
 #ibmcloud_api_key = ""      # Set the variable export TF_VAR_ibmcloud_api_key=
-prefix         = "bivwak"
+prefix         = "iks-std"
 region         = "eu-de" # eu-de for Frankfurt MZR
-resource_group = "bivwak"
-tags           = ["tf", "bivwak"]
+resource_group = "iks-std"
+tags           = ["tf", "iks-std"]
 
 
 ##############################################################################
