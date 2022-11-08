@@ -61,14 +61,12 @@ resource "ibm_container_vpc_worker_pool" "worker_pools" {
 
 data "ibm_container_cluster_config" "cluster_config" {
   cluster_name_id = ibm_container_vpc_cluster.cluster.id
-  # resource_group_id = var.resource_group_id
   resource_group_id = ibm_resource_group.resource_group.id
 }
 
 resource "ibm_resource_instance" "openshift_cos_instance" {
   count = var.is_openshift_cluster ? 1 : 0
   name  = join("-", [var.environment_id, "roks-backup"])
-  # resource_group_id = var.resource_group_id
   resource_group_id = ibm_resource_group.resource_group.id
   service           = "cloud-object-storage"
   plan              = "standard"
