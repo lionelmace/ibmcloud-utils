@@ -4,10 +4,10 @@
 ## Global Variables
 ##############################################################################
 #ibmcloud_api_key = ""      # Set the variable export TF_VAR_ibmcloud_api_key=
-prefix         = "iks-std"
+prefix         = "showme"
 region         = "eu-de" # eu-de for Frankfurt MZR
-resource_group = "iks-std"
-tags           = ["tf", "iks-std"]
+resource_group = "showme"
+tags           = ["tf", "showme"]
 
 
 ##############################################################################
@@ -30,13 +30,6 @@ kube_version = "1.25.3"
 # kubernetes_update_all_workers = false
 # worker_pools=[ { name = "dev" machine_type = "cx2.8x16" workers_per_zone = 2 },
 #                { name = "test" machine_type = "mx2.4x32" workers_per_zone = 2 } ]
-
-
-##############################################################################
-## COS
-##############################################################################
-cos_plan   = "standard"
-cos_region = "global"
 
 
 ##############################################################################

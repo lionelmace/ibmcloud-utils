@@ -14,7 +14,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
   dynamic "zones" {
     for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
     content {
-      name = zones.value.zone
+      name      = zones.value.zone
       subnet_id = zones.value.id
     }
   }
@@ -36,12 +36,12 @@ EOT
 }
 
 resource "ibm_container_vpc_worker_pool" "worker_pools" {
-  for_each = { for pool in var.worker_pools : pool.pool_name => pool }
-  cluster  = ibm_container_vpc_cluster.cluster.id
+  for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
+  cluster           = ibm_container_vpc_cluster.cluster.id
   resource_group_id = ibm_resource_group.resource_group.id
   worker_pool_name  = each.key
   flavor            = lookup(each.value, "machine_type", null)
-  vpc_id = ibm_is_vpc.vpc.id
+  vpc_id            = ibm_is_vpc.vpc.id
   # worker_count = lookup(each.value, "min_size", null)
   worker_count = each.value.workers_per_zone
 
@@ -50,7 +50,7 @@ resource "ibm_container_vpc_worker_pool" "worker_pools" {
   dynamic "zones" {
     for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
     content {
-      name = zones.value.zone
+      name      = zones.value.zone
       subnet_id = zones.value.id
     }
   }
@@ -60,13 +60,13 @@ resource "ibm_container_vpc_worker_pool" "worker_pools" {
 
 
 data "ibm_container_cluster_config" "cluster_config" {
-  cluster_name_id = ibm_container_vpc_cluster.cluster.id
+  cluster_name_id   = ibm_container_vpc_cluster.cluster.id
   resource_group_id = ibm_resource_group.resource_group.id
 }
 
 resource "ibm_resource_instance" "openshift_cos_instance" {
-  count = var.is_openshift_cluster ? 1 : 0
-  name  = join("-", [var.environment_id, "roks-backup"])
+  count             = var.is_openshift_cluster ? 1 : 0
+  name              = join("-", [var.environment_id, "roks-backup"])
   resource_group_id = ibm_resource_group.resource_group.id
   service           = "cloud-object-storage"
   plan              = "standard"
