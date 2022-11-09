@@ -4,8 +4,10 @@
 
 export RG_NAME="mytodo"
 
-ibmcloud target -g $RG_NAME
+echo "Enter the Resource Group name: "
+read rg_name
 
+ibmcloud target -g $rg_name
 
 # List all resource reclamations under account 0b5a00334eaf9eb9339d2ab48f7326b4 as lionel.mace@fr.ibm.com...
 # OK
