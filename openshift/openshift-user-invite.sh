@@ -93,13 +93,17 @@ do
   lastname=$(echo $email | awk -F'@' '{print $1}' | sed 's?.*\.??g' | sed 's?.*\_??g' )
   project_name="lab-$lastname"
 
-  # Create a new openshift project with the last name
+  # Create a new OpenShift project with the last name
   printf "\n## Creating project \"$project_name\".\n"
   oc new-project $project_name
 
-  # Invite user to the account
+  # Invite user to the Account
   printf "\n## Inviting user \"$email\" to the account id \"$ACCOUNT_ID\".\n"
   ibmcloud account user-invite $email
+
+  # Invite user to the IAM Access Group
+  printf "\n## Inviting user \"$email\" to the Acces Group \"$ACCESS_GROUP_NAME\".\n"
+  ibmcloud iam access-group-user-add $ACCESS_GROUP_NAME $email
 
   # Assign IAM User Policy - Warning: Those 2 independant policies are required.
   printf "\n## Assigning IAM Viewer policy to allow the user to view the cluster in the IBM Cloud Console.\n"
