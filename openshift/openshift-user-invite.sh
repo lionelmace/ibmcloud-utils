@@ -4,6 +4,7 @@
 
 source ../local.env
 
+# ibmcloud login --apikey $APIKEY 
 ibmcloud target -r $IBMCLOUD_REGION -g $RESOURCE_GROUP_NAME
 
 export MASTER_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq -r .masterURL)
@@ -117,6 +118,7 @@ do
   # iam_email=$(oc get users | grep -i $email | awk '{ print $1}')
   printf "\n## Add Edit role to the user $email so he can work within the project \"$project_name\".\n"
   # oc adm policy add-role-to-user edit IAM#$email -n $project_name
+  oc adm policy add-role-to-user admin IAM#$email -n $project_name
 
   # Enable user to install Operator from OperatorHub
   printf "\n## Enabling user to install Operator from OperatorHub.\n"
