@@ -83,6 +83,57 @@ roleRef:
   name: aggregate-olm-edit2
 EOF
 }
+
+# Required for Tekton labs
+enableClusterRoleTekton()
+{
+  cat <<EOF | oc apply -f -
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: aggregate-olm-edit-tekton
+  labels:
+    rbac.authorization.k8s.io/aggregate-to-admin: 'true'
+    rbac.authorization.k8s.io/aggregate-to-edit: 'true'
+rules:
+  - verbs:
+      - create
+      - get
+      - list
+    apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - clusterrolebindings
+      - clusterroles
+  ## Tekton labs
+  - apiGroups:
+      - triggers.tekton.dev
+    resources:
+      - clusterinterceptors
+    verbs:
+      - get
+      - list
+      - watch
+EOF
+}
+
+enableRoleBindingTekton() {
+  cat <<EOF | oc apply -f -
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: cluster-role-tekton
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: IAM#$1
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: aggregate-olm-edit-tekton
+EOF
+}
+
 # --------- END
 
 for email in $EMAIL
@@ -125,6 +176,12 @@ do
   enableClusterRoleBinding $lastname $email
   enableClusterRole
   enableRoleBinding $project_name $email
+
+  # Tekton Role
+  printf "\n## Enabling roles for Tekton lab.\n"
+  enableClusterRoleTekton
+  enableRoleBindingTekton $email
+  oc label namespace $project_name argocd.argoproj.io/managed-by=openshift-gitops
 
   # Access has been granted
   printf "\n## Link to access the Cluster Overview in IBM Cloud:\n"
