@@ -1,5 +1,5 @@
 resource "ibm_iam_access_group" "accgrp" {
-  name = "test-ag"
+  name = "vpc-vsi"
 }
 
 # resource "ibm_iam_access_group_policy" "policy-cos" {
