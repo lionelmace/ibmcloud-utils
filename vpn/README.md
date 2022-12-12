@@ -19,11 +19,53 @@ This solution is useful for telecommuters who want to connect to the IBM Cloud f
     cd easy-rsa/easyrsa3
     ```
 
-1. Create a new PKI and CA:
+1. Create a new PKI.
 
     ```sh
     ./easyrsa init-pki
+    ```
+
+    Output:
+
+    ```
+    You are about to remove the EASYRSA_PKI at:
+    * /Users/lionelmace/Git/easy-rsa/easyrsa3/pki
+
+    and initialize a fresh PKI here.
+
+    Type the word 'yes' to continue, or any other input to abort.
+    Confirm removal: yes
+
+
+    Notice
+    ------
+    'init-pki' complete; you may now create a CA or requests.
+
+    Your newly created PKI dir is:
+    * /Users/lionelmace/Git/easy-rsa/easyrsa3/pki
+
+    * Using Easy-RSA configuration:
+
+    * IMPORTANT: Easy-RSA 'vars' template file has been created in your new PKI.
+                Edit this 'vars' file to customise the settings for your PKI.
+                To use a global vars file, use global option --vars=<YOUR_VARS>
+
+    * Using x509-types directory: /Users/lionelmace/Git/easy-rsa/easyrsa3/x509-types
+    ```
+
+1. Create a new CA.
+
+    ```sh
     ./easyrsa build-ca nopass
+    ```
+
+    Output:
+
+    ```sh
+    ...
+    CA creation complete and you may now import and sign cert requests.
+    Your new CA certificate file for publishing is at:
+    /Users/lionelmace/Git/easy-rsa/easyrsa3/pki/ca.crt
     ```
 
 1. Generate a VPN server certificate.
@@ -32,37 +74,65 @@ This solution is useful for telecommuters who want to connect to the IBM Cloud f
     ./easyrsa build-server-full vpn-server.vpn.ibm.com nopass
     ```
 
+    Output
+
+    ```sh
+    ...
+    Certificate created at: /Users/lionelmace/Git/easy-rsa/easyrsa3/pki/issued/vpn-server.vpn.ibm.com.crt
+    ```
+
 1. Generate a VPN client certificate.
 
     ```sh
     ./easyrsa build-client-full client1.vpn.ibm.com nopass
     ```
 
-## Import the certificates into Certificate Manager
+    Output
 
-You need an instance of the managed service [Certificate Manager](https://cloud.ibm.com/catalog/services/certificate-manager).
+    ```sh
+    ...
+    Certificate created at: /Users/lionelmace/Git/easy-rsa/easyrsa3/pki/issued/client1.vpn.ibm.com.crt
+    ```
+
+## Import the certificates into Secrets Manager
+
+You need an instance of the managed service [Secrets Manager](https://cloud.ibm.com/catalog/services/secrets-manager).
 
 1. You can create the service from the UI or using the command line:
 
     ```sh
-    ibmcloud resource service-instance-create <service-name> cloudcerts "free" <region>
+    ibmcloud resource service-instance-create <service-name> secrets-manager "trial" <region>
     ```
 
-1. Import the certificates into this instance
+1. Import the certificates, click the button **Add +**, then **TLS Certificates** and finally **Import a certificate**
 
-    ![Certificate Manager](./cert-mgr.png)
+    ![Secrets Manager](./sm-import1.png)
+
+    Below are the inputs for each field:
+
+    | Syntax | File |
+    | ----------- | ----------- |
+    | Certificate | easy-rsa/easyrsa3/pki/issued/vpn-server.vpn.ibm.com.crt |
+    | Private Key (Optional) | easy-rsa/easyrsa3/pki/private/vpn-server.vpn.ibm.com.key |
+    | Intermediate Security (Optional) | easy-rsa/easyrsa3/pki/ca.crt |
+
+    ![Secrets Manager](./sm-import2.png)
+
+1. Click **Create**. You should get a confirmation like the following:
+
+    ![Secrets Manager](./sm-import3.png)
 
 ## Create a VPN
 
-1. Create an IAM service-to-service authorization to authorize VPN to read certificates in Certificate Manager
+1. Create an **IAM Authorization** to authorize the service VPN to read certificates in the service Secrets Manager
 
     ```sh
-    ibmcloud iam authorization-policy-create is cloudcerts Writer --source-resource-type vpn-server
+    ibmcloud iam authorization-policy-create is secrets-manager SecretsReader --source-resource-type vpn-server
     ```
 
 1. Go the [VPN Gateways](https://cloud.ibm.com/vpc-ext/network/vpnServers).
 
-1. Click `Create`. Make sure to select `Client-tp-site server` currently in Beta.
+1. Click `Create`. Make sure to select `Client-to-site servers`.
 
     ![VPN](./vpn-ui.png)
 
