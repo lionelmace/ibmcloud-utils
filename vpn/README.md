@@ -136,7 +136,7 @@ You need an instance of the managed service [Secrets Manager](https://cloud.ibm.
 
     ![VPN](./vpn-ui.png)
 
-1. Enter the following values
+1. Enter the **Details** values
 
     * VPN server name
     * Select a Resource Group
@@ -144,18 +144,42 @@ You need an instance of the managed service [Secrets Manager](https://cloud.ibm.
     * Select the VPC
     * Client IPv4 address pool: `192.168.4.0/22`
         > This range must be different from your local range and IBM Cloud IP ranges.
+
+    ![VPN](./vpn-create1.png)
+
+1. Enter the **Subnets** values
+
     * Select either high-availability (two subnets) or stand-alone (one subnet) mode.
-    * Configure the client authentication with the `Client certificate` option and make sure to select the correct certificate from the list.
+
+    ![VPN](./vpn-create2.png)
+
+1. Enter the **Authentication** values
+
+    * For the certificate source, select **Secrets Manager**.
+    * Locate the instance you created earlier.
+    * Make sure to select the correct certificate from the list.
+    * Redo those steps for the client certificate.
+
+    ![VPN](./vpn-create3.png)
+
+1. Enter the **Security Group** values
+
     * Select the Security Groups and potentialy the one created by IKS.
-    * In Additional Configuration, add the IBM DNS server 1: `161.26.0.10` and DNS server 2: `161.26.0.11`
+
+    ![VPN](./vpn-create4.png)
+
+1. Enter the **Additional Configuration** values
+
+    * Add the IBM DNS server 1: `161.26.0.10` and DNS server 2: `161.26.0.11`
+    * Set the Transport protocol `UDP` and `VPN port` 443. You will add an inbound rule with those values in the VPC Security Group later.
     * Make sure to select the `Split Tunnel` for the Tunnel mode
         > Split tunnel: Private traffic flows through the VPN interface to the VPN tunnel, and public traffic flows through the existing LAN interface.
 
-1. Note the Transport protocol `UDP` and `VPN port` 443. You will add an inbound rule with those values in the VPC Security Group later.
+    ![VPN](./vpn-create5.png)
 
-1. Click `Download client profile` from the VPN you created to get the generated .ovpn file.
+1. Create VPN Server. It will take a few minutes for your VPN to become Stable.
 
-    ![Download](./vpn-download.png)
+    ![VPN](./vpn-create6.png)
 
 ## Install and Configure a local VPN
 
@@ -165,7 +189,21 @@ We'll use Tunnelblick as a local VPN.
 
 1. Download client profile from the VPN you created. You should have a .ovpn file.
 
-1. Edit the .ovpn file and update the last two lines to reflect you client public and private keys. For example, I added the following lines
+    ![Download](./vpn-download.png)
+
+1. Edit the .ovpn file.
+
+1. Uncomment the following lines
+
+    ```
+    # Uncomment the next two lines if certificate-based client authentication is enabled.
+    #  Ask your VPN administrator provides your client certificate and replace client_public_key
+    #  with your client certificate filename.
+    #cert client_public_key.crt
+    #key client_private_key.key
+    ```
+
+1. Update the last two lines to reflect you client public and private keys. For example, I added the following lines
 
     ```sh
     cert ./pki/issued/client1.vpn.ibm.com.crt

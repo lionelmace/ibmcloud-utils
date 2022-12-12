@@ -1,6 +1,9 @@
 # te
 local.env
 
+# VPN Certificates
+*.ovpn
+
 settings.json
 **/*.DS_Store
 *.txt
