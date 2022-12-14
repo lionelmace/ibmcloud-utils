@@ -2,8 +2,9 @@
 
 The IBM Cloud VPN for VPC service supportes two types of connectivity:
 
-    * site-to-site connectivity, which connects your on-premises network to the IBM Cloud VPC network.
-    * client-to-site connectivity, which allows clients from the internet, such as a laptop, to connect to the VPC network while still maintaining secure connectivity.
+* site-to-site connectivity, which connects your on-premises network to the IBM Cloud VPC network.
+
+* client-to-site connectivity, which allows clients from the internet, such as a laptop, to connect to the VPC network while still maintaining secure connectivity.
 
 The latter  is useful for telecommuters who want to connect to the IBM Cloud from a remote location, such as a home office. Let's set it up.
 
@@ -148,7 +149,7 @@ You need an instance of the managed service [Secrets Manager](https://cloud.ibm.
 
 1. Enter the **Subnets** values
 
-    * Select either high-availability (two subnets) or stand-alone (one subnet) mode.
+    * Select either **High-availability mode** (two subnets) or **Stand-alone mode** (one subnet).
 
     ![VPN](./images/vpn-create2.png)
 
@@ -169,8 +170,8 @@ You need an instance of the managed service [Secrets Manager](https://cloud.ibm.
 
 1. Enter the **Additional Configuration** values
 
-    * Add the IBM DNS server 1: `161.26.0.10` and DNS server 2: `161.26.0.11`
     * Set the Transport protocol `UDP` and `VPN port` 443. You will add an inbound rule with those values in the VPC Security Group later.
+
     * Make sure to select the `Split Tunnel` for the Tunnel mode
         > Split tunnel: Private traffic flows through the VPN interface to the VPN tunnel, and public traffic flows through the existing LAN interface.
 
