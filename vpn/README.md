@@ -1,14 +1,13 @@
 # VPN
 
-Until now, the IBM Cloud VPN for VPC service supported only site-to-site connectivity, which connects your on-premises network to the IBM Cloud VPC network.
+The IBM Cloud VPN for VPC service supportes two types of connectivity:
 
-This beta release adds client-to-site connectivity, which allows clients from the internet, such as a laptop, to connect to the VPC network while still maintaining secure connectivity.
+    * site-to-site connectivity, which connects your on-premises network to the IBM Cloud VPC network.
+    * client-to-site connectivity, which allows clients from the internet, such as a laptop, to connect to the VPC network while still maintaining secure connectivity.
 
-This solution is useful for telecommuters who want to connect to the IBM Cloud from a remote location, such as a home office.
+The latter  is useful for telecommuters who want to connect to the IBM Cloud from a remote location, such as a home office. Let's set it up.
 
-[Full documentation](https://cloud.ibm.com/docs/vpc?topic=vpc-vpn-client-to-site-overview)
-
-![VPN](./vpn-ui.png)
+![VPN](./images/vpn-ui.png)
 
 ## Generate Certificates
 
@@ -106,7 +105,7 @@ You need an instance of the managed service [Secrets Manager](https://cloud.ibm.
 
 1. Import the certificates, click the button **Add +**, then **TLS Certificates** and finally **Import a certificate**
 
-    ![Secrets Manager](./sm-import1.png)
+    ![Secrets Manager](./images/sm-import1.png)
 
     Below are the inputs for each field:
 
@@ -116,11 +115,11 @@ You need an instance of the managed service [Secrets Manager](https://cloud.ibm.
     | Private Key (Optional) | easy-rsa/easyrsa3/pki/private/vpn-server.vpn.ibm.com.key |
     | Intermediate Security (Optional) | easy-rsa/easyrsa3/pki/ca.crt |
 
-    ![Secrets Manager](./sm-import2.png)
+    ![Secrets Manager](./images/sm-import2.png)
 
 1. Click **Create**. You should get a confirmation like the following:
 
-    ![Secrets Manager](./sm-import3.png)
+    ![Secrets Manager](./images/sm-import3.png)
 
 ## Create a VPN
 
@@ -134,7 +133,7 @@ You need an instance of the managed service [Secrets Manager](https://cloud.ibm.
 
 1. Click `Create`. Make sure to select `Client-to-site servers`.
 
-    ![VPN](./vpn-ui.png)
+    ![VPN](./images/vpn-ui.png)
 
 1. Enter the **Details** values
 
@@ -145,13 +144,13 @@ You need an instance of the managed service [Secrets Manager](https://cloud.ibm.
     * Client IPv4 address pool: `192.168.4.0/22`
         > This range must be different from your local range and IBM Cloud IP ranges.
 
-    ![VPN](./vpn-create1.png)
+    ![VPN](./images/vpn-create1.png)
 
 1. Enter the **Subnets** values
 
     * Select either high-availability (two subnets) or stand-alone (one subnet) mode.
 
-    ![VPN](./vpn-create2.png)
+    ![VPN](./images/vpn-create2.png)
 
 1. Enter the **Authentication** values
 
@@ -160,13 +159,13 @@ You need an instance of the managed service [Secrets Manager](https://cloud.ibm.
     * Make sure to select the correct certificate from the list.
     * Redo those steps for the client certificate.
 
-    ![VPN](./vpn-create3.png)
+    ![VPN](./images/vpn-create3.png)
 
 1. Enter the **Security Group** values
 
     * Select the Security Groups and potentialy the one created by IKS.
 
-    ![VPN](./vpn-create4.png)
+    ![VPN](./images/vpn-create4.png)
 
 1. Enter the **Additional Configuration** values
 
@@ -175,11 +174,11 @@ You need an instance of the managed service [Secrets Manager](https://cloud.ibm.
     * Make sure to select the `Split Tunnel` for the Tunnel mode
         > Split tunnel: Private traffic flows through the VPN interface to the VPN tunnel, and public traffic flows through the existing LAN interface.
 
-    ![VPN](./vpn-create5.png)
+    ![VPN](./images/vpn-create5.png)
 
 1. Create VPN Server. It will take a few minutes for your VPN to become Stable.
 
-    ![VPN](./vpn-create6.png)
+    ![VPN](./images/vpn-create6.png)
 
 ## Install and Configure a local VPN
 
@@ -189,7 +188,7 @@ We'll use Tunnelblick as a local VPN.
 
 1. Download client profile from the VPN you created. You should have a .ovpn file.
 
-    ![Download](./vpn-download.png)
+    ![Download](./images/vpn-download.png)
 
 1. Edit the .ovpn file.
 
@@ -214,18 +213,28 @@ We'll use Tunnelblick as a local VPN.
 
 1. Click `Connect`. You should see a `Connected` confirmation message
 
-    ![VPN](./tunnelblick-connected.png)
+    ![VPN](./images/tunnelblick-connected.png)
+
+1. TODO Add a screenshot of the connected in VPN
+
+## Test
+
+1. TODO: Let's create a VSI and ping the private IP address.
 
 ## Errors
 
 1. TLS Error: TLS handshake failed
 
     ```sh
-    2021-09-07 15:39:15.949622 TLS Error: TLS key negotiation failed to occur within 60 seconds (check your network connectivity)
-    2021-09-07 15:39:15.949726 TLS Error: TLS handshake failed
+    2022-09-07 15:39:15.949622 TLS Error: TLS key negotiation failed to occur within 60 seconds (check your network connectivity)
+    2022-09-07 15:39:15.949726 TLS Error: TLS handshake failed
     ```
 
     > Make sure to update your VPC Security Groups.
+
+## Resources
+
+    * [Full documentation](https://cloud.ibm.com/docs/vpc?topic=vpc-vpn-client-to-site-overview)
 
 ## Contributors
 
