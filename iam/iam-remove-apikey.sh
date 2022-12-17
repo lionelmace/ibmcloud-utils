@@ -7,7 +7,7 @@ source ../local.env
 
 count=0
 
-for i in `ibmcloud iam api-keys | grep containers-kubernetes-key | awk 'NR>5 { print $NF}' `
+for i in `ibmcloud iam api-keys | grep containers-kubernetes-key | awk '{ print $NF}' `
 do
   # Delete API Key
   ibmcloud iam api-key-delete $i -f
