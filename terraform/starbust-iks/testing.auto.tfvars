@@ -4,10 +4,10 @@
 ## Global Variables
 ##############################################################################
 #ibmcloud_api_key = ""      # Set the variable export TF_VAR_ibmcloud_api_key=
-prefix         = "showme"
+prefix         = "starbust"
 region         = "eu-de" # eu-de for Frankfurt MZR
-resource_group = "showme"
-tags           = ["tf", "showme"]
+resource_group = "starbust"
+tags           = ["tf", "starbust"]
 
 
 ##############################################################################
@@ -22,14 +22,31 @@ vpc_enable_public_gateway     = true
 ## Cluster Kubernetes
 ##############################################################################
 cluster_name = "iks"
-machine_type = "bx2.4x16"
+# machine_type = "bx2.4x16"
+machine_type = "bx2.8x32"
 worker_count = 1
-kube_version = "1.25.3"
+kube_version = "1.23.15"
 # Possible values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
 # kubernetes_wait_till          = "OneWorkerNodeReady"
 # kubernetes_update_all_workers = false
-# worker_pools=[ { name = "dev" machine_type = "cx2.8x16" workers_per_zone = 2 },
-#                { name = "test" machine_type = "mx2.4x32" workers_per_zone = 2 } ]
+
+
+##############################################################################
+## ICD Postgres
+##############################################################################
+icd_dbaas_plan = "standard"
+# expected length in the range (10 - 32) - must not contain special characters
+icd_dbaas_adminpassword     = "Passw0rd01"
+icd_dbaas_version        = "11"
+icd_dbaas_service_endpoints = "public"
+# icd_dbaas_users = [{
+#   name     = "user123"
+#   password = "password12"
+# }]
+# icd_dbaas_whitelist = [{
+#   address     = "172.168.1.1/32"
+#   description = "desc"
+# }]
 
 
 ##############################################################################
@@ -39,7 +56,8 @@ kube_version = "1.25.3"
 logdna_plan                 = "7-day"
 logdna_enable_platform_logs = false
 
-sysdig_plan                    = "graduated-tier-sysdig-secure-plus-monitor"
+sysdig_plan                    = "graduated-tier"
+# sysdig_plan                    = "graduated-tier-sysdig-secure-plus-monitor"
 sysdig_enable_platform_metrics = false
 
 
