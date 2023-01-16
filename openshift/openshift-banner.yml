@@ -1,0 +1,10 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleNotification
+metadata:
+  name: banner-main
+spec:
+  backgroundColor: blue
+  color: ‘#fff’
+  location: BannerTop
+  text: >-
+    You are logged on a Sandbox (Non Production) cluster.
