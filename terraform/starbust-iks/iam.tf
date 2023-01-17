@@ -5,7 +5,7 @@ resource "ibm_iam_access_group" "accgrp" {
 
 resource "ibm_iam_access_group_policy" "policy-cos" {
   access_group_id = ibm_iam_access_group.accgrp.id
-  roles           = ["Viewer"]
+  roles           = ["Reader", "Writer", "Manager", "Content Reader", "Object Reader", "Object Writer", "Viewer"]
  
   resources {
     service           = "cloud-object-storage"
@@ -50,7 +50,7 @@ resource "ibm_iam_access_group_policy" "iam-key-protect" {
   roles           = ["Writer", "Editor"]
 
   resources {
-    service           = "key-protect"
+    service           = "kms"
     resource_group_id = ibm_resource_group.resource_group.id
   }
 }
