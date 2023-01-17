@@ -1,3 +1,62 @@
+resource "ibm_iam_access_group" "accgrp" {
+  name = format("%s-%s", var.prefix, "ag")
+  tags = var.tags
+}
+
+resource "ibm_iam_access_group_policy" "policy-cos" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Viewer"]
+ 
+  resources {
+    service           = "cloud-object-storage"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
+
+
+# Create a policy to all Kubernetes instances within the Resource Group
+resource "ibm_iam_access_group_policy" "policy-k8s" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Manager", "Writer", "Editor", "Operator", "Viewer"]
+
+  resources {
+    service           = "containers-kubernetes"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
+
+resource "ibm_iam_access_group_policy" "iam-logdna" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Manager", "Viewer", "Standard Member"]
+
+  resources {
+    service           = "logdna"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
+
+resource "ibm_iam_access_group_policy" "iam-sysdig" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Writer", "Editor"]
+
+  resources {
+    service           = "sysdig-monitor"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
+
+resource "ibm_iam_access_group_policy" "iam-key-protect" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Writer", "Editor"]
+
+  resources {
+    service           = "key-protect"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
+
+
+
 # AUTHORIZATIONS
 
 # Authorization policy between DBaaS and Key Protect
