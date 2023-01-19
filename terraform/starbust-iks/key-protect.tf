@@ -17,3 +17,13 @@ resource "ibm_kp_key" "key" {
   standard_key   = false
   force_delete   = true
 }
+
+resource "ibm_iam_access_group_policy" "iam-key-protect" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Writer", "Editor"]
+
+  resources {
+    service           = "kms"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}

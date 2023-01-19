@@ -44,6 +44,20 @@ variable "logdna_enable_platform_logs" {
   default     = false
 }
 
+## IAM
+##############################################################################
+resource "ibm_iam_access_group_policy" "iam-logdna" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Manager", "Viewer", "Standard Member"]
+
+  resources {
+    service           = "logdna"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
+
+## Resources
+##############################################################################
 module "logging_instance" {
   source = "terraform-ibm-modules/observability/ibm//modules/logging-instance"
 

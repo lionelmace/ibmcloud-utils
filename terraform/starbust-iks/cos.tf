@@ -15,6 +15,20 @@ variable "cos_region" {
   default     = "global"
 }
 
+## IAM
+##############################################################################
+resource "ibm_iam_access_group_policy" "policy-cos" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Reader", "Writer", "Manager", "Content Reader", "Object Reader", "Object Writer", "Viewer"]
+ 
+  resources {
+    service           = "cloud-object-storage"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
+
+## Resources
+##############################################################################
 resource "ibm_resource_instance" "cos" {
   name              = "${var.prefix}-cos"
   service           = "cloud-object-storage"

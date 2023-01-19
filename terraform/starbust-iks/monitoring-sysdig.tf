@@ -40,6 +40,21 @@ variable "sysdig_enable_platform_metrics" {
   default     = false
 }
 
+## IAM
+##############################################################################
+resource "ibm_iam_access_group_policy" "iam-sysdig" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Writer", "Editor"]
+
+  resources {
+    service           = "sysdig-monitor"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
+
+
+## Resources
+##############################################################################
 module "monitoring_instance" {
   source = "terraform-ibm-modules/observability/ibm//modules/monitoring-sysdig"
 
