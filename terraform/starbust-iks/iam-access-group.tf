@@ -3,6 +3,7 @@ resource "ibm_iam_access_group" "accgrp" {
   tags = var.tags
 }
 
+# Visibility on the Resource Group
 resource "ibm_iam_access_group_policy" "iam-rg-viewer" {
   access_group_id = ibm_iam_access_group.accgrp.id
   roles           = ["Viewer"]
