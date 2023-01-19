@@ -3,6 +3,15 @@ resource "ibm_iam_access_group" "accgrp" {
   tags = var.tags
 }
 
+resource "ibm_iam_access_group_policy" "iam-rg-viewer" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Viewer"]
+  resources {
+    resource_type = "resource-group"
+    resource      = ibm_resource_group.resource_group.id
+  }
+}
+
 # AUTHORIZATIONS
 
 # Authorization policy between DBaaS and Key Protect
