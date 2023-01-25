@@ -21,8 +21,7 @@ resource "ibm_is_vpc" "vpc" {
 resource "ibm_is_vpc_address_prefix" "address_prefix" {
 
   count = 3
-  # name  = "${var.prefix}-prefix-zone-${count.index + 1}"
-  name  = format("%s-%s", var.prefix, "prefix-zone", count.index + 1)
+  name  = "${var.prefix}-prefix-zone-${count.index + 1}"
   zone  = "${var.region}-${(count.index % 3) + 1}"
   vpc   = ibm_is_vpc.vpc.id
   cidr  = element(var.vpc_cidr_blocks, count.index)
@@ -36,8 +35,7 @@ resource "ibm_is_vpc_address_prefix" "address_prefix" {
 resource "ibm_is_public_gateway" "pgw" {
 
   count = var.vpc_enable_public_gateway ? 3 : 0
-  # name  = "${var.prefix}-pgw-${count.index + 1}"
-  name  = format("%s-%s", var.prefix, "pgw", count.index + 1)
+  name  = "${var.prefix}-pgw-${count.index + 1}"
   vpc   = ibm_is_vpc.vpc.id
   zone  = "${var.region}-${count.index + 1}"
 
@@ -115,8 +113,7 @@ resource "ibm_is_network_acl" "multizone_acl" {
 resource "ibm_is_subnet" "subnet" {
 
   count = 3
-  # name  = "${var.prefix}-subnet-${count.index + 1}"
-  name = format("%s-%s", var.prefix, "subnet", count.index + 1)
+  name  = "${var.prefix}-subnet-${count.index + 1}"
   vpc   = ibm_is_vpc.vpc.id
   # zone  = "${var.region}-${count.index + 1}"
   zone = format("%s-%s", var.region, count.index + 1)
