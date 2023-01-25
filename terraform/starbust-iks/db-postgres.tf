@@ -33,6 +33,21 @@ variable "icd_dbaas_service_endpoints" {
   description = "Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'."
 }
 
+## IAM
+##############################################################################
+# Doc at https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-iam
+resource "ibm_iam_access_group_policy" "iam-dbaas" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Editor"]
+
+  resources {
+    service           = "databases-for-postgresql"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
+
+## Resource
+##############################################################################
 resource "ibm_database" "icd_postgres" {
   name              = format("%s-%s", var.prefix, "postgres")
   service           = "databases-for-postgresql"
