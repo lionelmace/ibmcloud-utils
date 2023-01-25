@@ -34,7 +34,7 @@ variable "icd_dbaas_service_endpoints" {
 }
 
 resource "ibm_database" "icd_postgres" {
-  name              = "${var.prefix}-postgres"
+  name              = format("%s-%s", var.prefix, "postgres")
   service           = "databases-for-postgresql"
   plan              = var.icd_dbaas_plan
   version           = var.icd_dbaas_version

@@ -3,7 +3,7 @@
 ##############################################################################
 resource "ibm_resource_instance" "key-protect" {
   resource_group_id = ibm_resource_group.resource_group.id
-  name              = "${var.prefix}-key-protect"
+  name              = format("%s-%s", var.prefix, "key-protect")
   service           = "kms"
   plan              = "tiered-pricing"
   location          = var.region

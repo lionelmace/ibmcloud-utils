@@ -59,7 +59,7 @@ module "monitoring_instance" {
   source = "terraform-ibm-modules/observability/ibm//modules/monitoring-sysdig"
 
   resource_group_id       = ibm_resource_group.resource_group.id
-  name                    = "${var.prefix}-monitoring"
+  name                    = format("%s-%s", var.prefix, "monitoring")
   plan                    = var.sysdig_plan
   service_endpoints       = var.sysdig_service_endpoints
   enable_platform_metrics = var.sysdig_enable_platform_metrics

@@ -62,7 +62,7 @@ module "logging_instance" {
   source = "terraform-ibm-modules/observability/ibm//modules/logging-instance"
 
   resource_group_id    = ibm_resource_group.resource_group.id
-  name                 = "${var.prefix}-logs"
+  name                 = format("%s-%s", var.prefix, "logs")
   is_sts_instance      = false
   service_endpoints    = var.logdna_service_endpoints
   bind_key             = var.logdna_bind_key

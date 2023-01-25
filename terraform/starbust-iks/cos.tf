@@ -30,7 +30,7 @@ resource "ibm_iam_access_group_policy" "policy-cos" {
 ## Resources
 ##############################################################################
 resource "ibm_resource_instance" "cos" {
-  name              = "${var.prefix}-cos"
+  name              = format("%s-%s", var.prefix, "cos")
   service           = "cloud-object-storage"
   plan              = var.cos_plan
   location          = var.cos_region
