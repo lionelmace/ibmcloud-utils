@@ -1,4 +1,4 @@
-resource "ibm_cr_namespace" "registry-namespace" {
+resource "ibm_cr_namespace" "cr-namespace" {
   name              = format("%s-%s", var.prefix, "registry")
   resource_group_id = ibm_resource_group.resource_group.id
   tags              = var.tags
@@ -15,6 +15,6 @@ resource "ibm_iam_access_group_policy" "iam-registry" {
     service           = "container-registry"
     resource_group_id = ibm_resource_group.resource_group.id
     resource_type     = "namespace"
-    resource          = ibm_cr_namespace.registry-namespace.name
+    resource          = ibm_cr_namespace.cr-namespace.name
   }
 }
