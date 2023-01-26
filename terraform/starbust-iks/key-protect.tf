@@ -18,6 +18,8 @@ resource "ibm_kp_key" "key" {
   force_delete   = true
 }
 
+## IAM
+##############################################################################
 resource "ibm_iam_access_group_policy" "iam-key-protect" {
   access_group_id = ibm_iam_access_group.accgrp.id
   roles           = ["Writer", "Editor"]
