@@ -17,9 +17,10 @@ variable "cos_region" {
 
 ## IAM
 ##############################################################################
+# Platform Role "Operator" enables to create Service Credentials
 resource "ibm_iam_access_group_policy" "policy-cos" {
   access_group_id = ibm_iam_access_group.accgrp.id
-  roles           = ["Reader", "Writer", "Manager", "Content Reader", "Object Reader", "Object Writer", "Viewer"]
+  roles           = ["Reader", "Writer", "Manager", "Content Reader", "Object Reader", "Object Writer", "Operator"]
  
   resources {
     service           = "cloud-object-storage"
