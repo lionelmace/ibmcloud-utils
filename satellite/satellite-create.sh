@@ -114,7 +114,9 @@ printf "\n### Updating the Register host script.\n"
 sed -i "" -e $'18 a\
 subscription-manager refresh\\\n' $assign_host_script
 sed -i "" -e $'19 a\
-subscription-manager repos --enable=*\\\n' $assign_host_script
+subscription-manager repos --enable rhel-8-for-x86_64-appstream-rpms\\\n' $assign_host_script
+sed -i "" -e $'20 a\
+subscription-manager repos --enable rhel-8-for-x86_64-baseos-rpms\\\n' $assign_host_script
 
 
 # ---------------------------------------------------------------------------
@@ -128,7 +130,7 @@ createHostsForControlPlane(){
   ibmcloud is instance-create $SAT_LOCATION_NAME-cp$i \
                               $VPC_ID $VPC_ZONE-1 $VSI_PROFILE \
                               $VPC_SUB_01_ID \
-                              --image-id $VSI_IMAGE_ID \
+                              --image $VSI_IMAGE_ID \
                               --user-data @$assign_host_script \
                               --resource-group-name $RG_NAME
 }
@@ -139,7 +141,7 @@ createHostsForWorkerNode(){
   ibmcloud is instance-create $SAT_LOCATION_NAME-wn$i \
                               $VPC_ID $VPC_ZONE-1 $VSI_PROFILE \
                               $VPC_SUB_01_ID \
-                              --image-id $VSI_IMAGE_ID \
+                              --image $VSI_IMAGE_ID \
                               --user-data @$assign_host_script \
                               --resource-group-name $RG_NAME
 }
