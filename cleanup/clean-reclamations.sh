@@ -2,8 +2,6 @@
 
 # Remove the service reclamations
 
-source ../local.env
-
 count=0
 
 for i in `ibmcloud resource reclamations | awk 'NR>4 {print $1}' `

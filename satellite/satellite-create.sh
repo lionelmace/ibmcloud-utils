@@ -55,16 +55,19 @@ if [ -z $(ibmcloud is vpcs | grep -i $VPC_NAME | awk '{ print $2}') ]; then
   VPC_SUB_01_ID=$(ibmcloud is subnet-create $VPC_SUBNET_NAME-01 $VPC_ID \
                                         --zone eu-de-1 \
                                         --ipv4-cidr-block 10.243.0.0/24 \
-                                        --public-gateway-id $PGW_01_ID \
+                                        --pgw $PGW_01_ID \
                                         --resource-group-name $RG_NAME \
                                         --output json \
                                         | jq -r '.id')
 
   # Create the security group for your VPC.
-  # SG_ID=$(ibmcloud is security-group-create sat-sg $VPC_ID --json | jq -r '.id')
+  SG_ID=$(ibmcloud is security-group-create sat-sg $VPC_ID --json | jq -r '.id')
 
   # Allow hosts to be attached to a location and assigned to services in the location
   # ibmcloud is security-group-rule-add $SG_ID outbound tcp --port-min 443 --port-max 443 --json
+
+  # Allow SSH access to the VSI
+  ibmcloud is security-group-rule-add $SG_ID inbound tcp --port-min 22 --port-max 22 --json
 fi
 
 
@@ -132,7 +135,8 @@ createHostsForControlPlane(){
                               $VPC_SUB_01_ID \
                               --image $VSI_IMAGE_ID \
                               --user-data @$assign_host_script \
-                              --resource-group-name $RG_NAME
+                              --resource-group-name $RG_NAME \
+                              --keys r010-af38b1e5-243f-47a8-a878-5c5fbc95009c
 }
 
 # Create VSIs for Worker Node
