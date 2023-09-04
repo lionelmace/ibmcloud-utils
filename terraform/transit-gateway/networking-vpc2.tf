@@ -2,25 +2,25 @@
 # VPC Variables
 ##############################################################################
 
-variable "create_vpc" {
+variable "create_vpc2" {
   description = "True to create new VPC. False if VPC is already existing and subnets or address prefixies are to be added"
   type        = bool
   default     = true
 }
 
-variable "vpc_classic_access" {
+variable "vpc_classic_access2" {
   description = "Classic Access to the VPC"
   type        = bool
   default     = false
 }
 
-variable "vpc_address_prefix_management" {
+variable "vpc_address_prefix_management2" {
   description = "Default address prefix creation method"
   type        = string
   default     = "manual"
 }
 
-variable "vpc_acl_rules" {
+variable "vpc_acl_rules2" {
   default = [
     {
       name        = "egress"
@@ -39,7 +39,7 @@ variable "vpc_acl_rules" {
   ]
 }
 
-variable "vpc_cidr_blocks" {
+variable "vpc_cidr_blocks2" {
   description = "List of CIDR blocks for Address Prefix"
   default = [
     "10.243.0.0/18",
@@ -47,7 +47,7 @@ variable "vpc_cidr_blocks" {
   "10.243.128.0/18"]
 }
 
-variable "subnet_cidr_blocks" {
+variable "subnet_cidr_blocks2" {
   description = "List of CIDR blocks for subnets"
   default = [
     "10.243.0.0/24",
@@ -55,12 +55,12 @@ variable "subnet_cidr_blocks" {
   "10.243.128.0/24"]
 }
 
-variable "vpc_enable_public_gateway" {
+variable "vpc_enable_public_gateway2" {
   description = "Enable public gateways, true or false"
   default     = true
 }
 
-variable "floating_ip" {
+variable "floating_ip2" {
   description = "Floating IP `id`'s or `address`'es that you want to assign to the public gateway"
   type        = map(any)
   default     = {}
@@ -73,10 +73,10 @@ variable "floating_ip" {
 resource "ibm_is_vpc" "vpc2" {
   name                        = format("%s-%s", local.basename, "vpc2")
   resource_group              = ibm_resource_group.group.id
-  address_prefix_management   = var.vpc_address_prefix_management
-  default_security_group_name = "${local.basename}-vpc-sg"
-  default_network_acl_name    = "${local.basename}-vpc-acl"
-  classic_access              = var.vpc_classic_access
+  address_prefix_management   = var.vpc_address_prefix_management2
+  default_security_group_name = "${local.basename}-vpc-sg2"
+  default_network_acl_name    = "${local.basename}-vpc-acl2"
+  classic_access              = var.vpc_classic_access2
   tags                        = var.tags
 }
 
@@ -85,13 +85,13 @@ resource "ibm_is_vpc" "vpc2" {
 # Prefixes and subnets for zone
 ##############################################################################
 
-resource "ibm_is_vpc_address_prefix" "address_prefix" {
+resource "ibm_is_vpc_address_prefix" "address_prefix2" {
 
   count = 3
   name  = "${local.basename}-prefix-zone-${count.index + 1}"
   zone  = "${var.region}-${(count.index % 3) + 1}"
-  vpc   = ibm_is_vpc.vpc.id
-  cidr  = element(var.vpc_cidr_blocks, count.index)
+  vpc   = ibm_is_vpc.vpc2.id
+  cidr  = element(var.vpc_cidr_blocks2, count.index)
 }
 
 
@@ -99,11 +99,11 @@ resource "ibm_is_vpc_address_prefix" "address_prefix" {
 # Public Gateways
 ##############################################################################
 
-resource "ibm_is_public_gateway" "pgw" {
+resource "ibm_is_public_gateway" "pgw2" {
 
-  count = var.vpc_enable_public_gateway ? 3 : 0
+  count = var.vpc_enable_public_gateway2 ? 3 : 0
   name  = "${local.basename}-pgw-${count.index + 1}"
-  vpc   = ibm_is_vpc.vpc.id
+  vpc   = ibm_is_vpc.vpc2.id
   zone  = "${var.region}-${count.index + 1}"
   resource_group = ibm_resource_group.group.id
 }
@@ -111,15 +111,15 @@ resource "ibm_is_public_gateway" "pgw" {
 
 # Network ACLs
 ##############################################################################
-resource "ibm_is_network_acl" "multizone_acl" {
+resource "ibm_is_network_acl" "multizone_acl2" {
 
-  name           = "${local.basename}-multizone-acl"
-  vpc            = ibm_is_vpc.vpc.id
+  name           = "${local.basename}-multizone-acl2"
+  vpc            = ibm_is_vpc.vpc2.id
   resource_group = ibm_resource_group.group.id
 
   dynamic "rules" {
 
-    for_each = var.vpc_acl_rules
+    for_each = var.vpc_acl_rules2
 
     content {
       name        = rules.value.name
@@ -136,17 +136,17 @@ resource "ibm_is_network_acl" "multizone_acl" {
 # Create Subnets
 ##############################################################################
 
-resource "ibm_is_subnet" "subnet" {
+resource "ibm_is_subnet" "subnet2" {
 
   count           = 3
   name            = "${local.basename}-subnet-${count.index + 1}"
-  vpc             = ibm_is_vpc.vpc.id
+  vpc             = ibm_is_vpc.vpc2.id
   zone            = "${var.region}-${count.index + 1}"
-  ipv4_cidr_block = element(var.subnet_cidr_blocks, count.index)
-  network_acl     = ibm_is_network_acl.multizone_acl.id
-  public_gateway  = var.vpc_enable_public_gateway ? element(ibm_is_public_gateway.pgw.*.id, count.index) : null
+  ipv4_cidr_block = element(var.subnet_cidr_blocks2, count.index)
+  network_acl     = ibm_is_network_acl.multizone_acl2.id
+  public_gateway  = var.vpc_enable_public_gateway2 ? element(ibm_is_public_gateway.pgw2.*.id, count.index) : null
   tags            = var.tags
   resource_group  = ibm_resource_group.group.id
 
-  depends_on = [ibm_is_vpc_address_prefix.address_prefix]
+  depends_on = [ibm_is_vpc_address_prefix.address_prefix2]
 }
