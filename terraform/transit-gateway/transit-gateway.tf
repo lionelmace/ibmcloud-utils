@@ -13,7 +13,7 @@ resource "ibm_tg_connection" "test_ibm_tg_connection" {
   network_id   = ibm_is_vpc.vpc.crn
 }
 
-resource "ibm_tg_connection" "test_ibm_tg_connection" {
+resource "ibm_tg_connection" "test_ibm_tg_connection2" {
   gateway      = ibm_tg_gateway.my_tgw.id
   network_type = "vpc"
   name         = "myconnection2"
