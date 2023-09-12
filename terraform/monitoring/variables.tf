@@ -23,7 +23,7 @@ resource "random_string" "random" {
 }
 
 locals {
-  basename = lower(var.prefix == "" ? "icd-${random_string.random.0.result}" : var.prefix)
+  basename = lower(var.prefix == "" ? "mon-${random_string.random.0.result}" : var.prefix)
 }
 
 variable "region" {
@@ -34,11 +34,5 @@ variable "region" {
 variable "tags" {
   description = "List of Tags"
   type        = list(string)
-  default     = ["tf", "cn"]
-}
-
-variable "emails" {
-  description = "List of Emails to invite"
-  type        = list(string)
-  default     = []
+  default     = ["tf", "tgw"]
 }
