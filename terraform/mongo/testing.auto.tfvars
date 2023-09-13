@@ -20,7 +20,7 @@ icd_mongo_plan = "standard"
 # expected length in the range (10 - 32) - must not contain special characters
 icd_mongo_adminpassword     = "Passw0rd01"
 icd_mongo_db_version        = "5.0"
-icd_mongo_service_endpoints = "public"
+icd_mongo_service_endpoints = "private"
 
 # Minimum parameter for Enterprise Edition
 # icd_mongo_ram_allocation = 14336

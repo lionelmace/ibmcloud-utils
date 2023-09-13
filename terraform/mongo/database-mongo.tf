@@ -43,8 +43,10 @@ variable "icd_mongo_users" {
   description = "Database Users. It is set of username and passwords"
 }
 
+# MongoDB cannot support both public and private endpoints simultaneously.
+# This cannot be changed after provisioning.
 variable "icd_mongo_service_endpoints" {
-  default     = "private"
+  default     = "public"
   type        = string
   description = "Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'."
 }
