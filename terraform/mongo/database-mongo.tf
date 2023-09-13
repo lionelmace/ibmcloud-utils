@@ -1,3 +1,55 @@
+
+# Variables
+##############################################################################
+variable "icd_mongo_plan" {
+  type        = string
+  description = "The plan type of the Database instance"
+  default     = "standard"
+}
+
+variable "icd_mongo_adminpassword" {
+  type        = string
+  description = "The admin user password for the instance"
+  default     = "Passw0rd01"
+}
+
+variable "icd_mongo_ram_allocation" {
+  type        = number
+  description = "RAM (GB/data member)"
+  default     = 1024
+}
+
+variable "icd_mongo_disk_allocation" {
+  type        = number
+  description = "Disk Usage (GB/data member)"
+  default     = 20480
+}
+
+variable "icd_mongo_core_allocation" {
+  type        = number
+  description = "Dedicated Cores (cores/data member)"
+  default     = 0
+}
+
+variable "icd_mongo_db_version" {
+  type        = string
+  description = "The database version to provision if specified"
+  default     = "5.0"
+}
+
+variable "icd_mongo_users" {
+  default     = null
+  type        = set(map(string))
+  description = "Database Users. It is set of username and passwords"
+}
+
+variable "icd_mongo_service_endpoints" {
+  default     = "private"
+  type        = string
+  description = "Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'."
+}
+
+
 ##############################################################################
 ## ICD Mongo
 ##############################################################################
@@ -152,56 +204,6 @@ output "mongo_vpe_ips" {
   value = data.ibm_is_virtual_endpoint_gateway_ips.mongo_vpe_ips
 }
 
-
-# Variables
-##############################################################################
-variable "icd_mongo_plan" {
-  type        = string
-  description = "The plan type of the Database instance"
-  default     = "standard"
-}
-
-variable "icd_mongo_adminpassword" {
-  type        = string
-  description = "The admin user password for the instance"
-  default     = "Passw0rd01"
-}
-
-variable "icd_mongo_ram_allocation" {
-  type        = number
-  description = "RAM (GB/data member)"
-  default     = 1024
-}
-
-variable "icd_mongo_disk_allocation" {
-  type        = number
-  description = "Disk Usage (GB/data member)"
-  default     = 20480
-}
-
-variable "icd_mongo_core_allocation" {
-  type        = number
-  description = "Dedicated Cores (cores/data member)"
-  default     = 0
-}
-
-variable "icd_mongo_db_version" {
-  type        = string
-  description = "The database version to provision if specified"
-  default     = "5.0"
-}
-
-variable "icd_mongo_users" {
-  default     = null
-  type        = set(map(string))
-  description = "Database Users. It is set of username and passwords"
-}
-
-variable "icd_mongo_service_endpoints" {
-  default     = "public"
-  type        = string
-  description = "Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'."
-}
 
 # AUTHORIZATIONS
 ##############################################################################
