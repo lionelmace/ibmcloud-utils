@@ -151,7 +151,7 @@ resource "ibm_iam_access_group_policy" "iam-mongo" {
   roles           = ["Editor"]
 
   resources {
-    service           = "databases-for-postgresql"
+    service           = "databases-for-mongodb"
     resource_group_id = ibm_resource_group.group.id
   }
 }
@@ -159,7 +159,7 @@ resource "ibm_iam_access_group_policy" "iam-mongo" {
 locals {
   endpoints = [
     {
-      name     = "redis",
+      name     = "mongo",
       crn      = ibm_database.icd_mongo.id
       hostname = ibm_resource_key.icd_mongo_key.credentials["connection.mongodb.hosts.0.hostname"]
     }
