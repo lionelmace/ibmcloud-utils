@@ -1,27 +1,38 @@
+##############################################################################
+# Account Variables
+##############################################################################
+
 variable "ibmcloud_api_key" {
-  type = "string"
+  description = "APIkey that's associated with the account to provision resources to"
+  type        = string
+  default     = ""
+  sensitive   = true
 }
 
-variable "plan" {
-  default = "30-day"
+variable "prefix" {
+  type        = string
+  default     = ""
+  description = "A prefix for all resources to be created. If none provided a random prefix will be created"
+}
+
+resource "random_string" "random" {
+  count = var.prefix == "" ? 1 : 0
+
+  length  = 6
+  special = false
+}
+
+locals {
+  basename = lower(var.prefix == "" ? "cn-${random_string.random.0.result}" : var.prefix)
 }
 
 variable "region" {
-  default = "eu-de"
+  description = "IBM Cloud region where all resources will be provisioned (e.g. eu-de)"
+  default     = "eu-de"
 }
 
-variable "instance_name" {
-  default = "Schematics-Prod-LogDNA-EU-DE"
-}
-
-variable "rg_name" {
-  default = "schematics-prod"
-}
-
-variable "service_name" {
-  default = "schematics"
-}
-
-variable "provision_key" {
-  default = ""
+variable "tags" {
+  description = "List of Tags"
+  type        = list(string)
+  default     = ["tf", "cn"]
 }
