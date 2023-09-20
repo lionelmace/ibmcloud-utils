@@ -2,25 +2,25 @@
 ## SCC Profiles
 ##############################################################################
 
-data "ibm_scc_profile" "list_profiles" {
-}
+# data "ibm_scc_profile" "list_profiles" {
+# }
 
-data "ibm_scc_posture_profile" "profile_security_bestpractices" {
-  profile_id   = data.ibm_scc_profile.list_profiles.profiles[index(data.ibm_scc_profile.list_profiles.profiles.*.name, "IBM Cloud Security Best Practices v1.2.0")].id
+data "ibm_scc_profile" "profile_security_bestpractices" {
+  profile_name = "IBM Cloud Security Best Practices v1.2.0"
   profile_type = "predefined"
 }
 
-data "ibm_scc_posture_profile" "profile_fscloud" {
-  profile_id   = data.ibm_scc_profile.list_profiles.profiles[index(data.ibm_scc_profile.list_profiles.profiles.*.name, "IBM Cloud for Financial Services v1.4.0")].id
-  profile_type = "predefined"
-}
+# data "ibm_scc_profile" "profile_fscloud" {
+#   profile_id   = data.ibm_scc_profile.list_profiles.profiles[index(data.ibm_scc_profile.list_profiles.profiles.*.name, "IBM Cloud for Financial Services v1.4.0")].id
+#   profile_type = "predefined"
+# }
 
 
 ## SCC Profile Attachment
 ##############################################################################
 resource "ibm_scc_profile_attachment" "scc_profile_attachment_instance" {
   # profiles_id = ibm_scc_profile.scc_profile_instance.id
-  profile_id = data.ibm_scc_posture_profile.profile_security_bestpractices.profile_id
+  profile_id = data.ibm_scc_profile.profile_security_bestpractices.id
 }
 
 ## SCC XX

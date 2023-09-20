@@ -17,24 +17,6 @@ variable "log_service_endpoints" {
   default     = "private"
 }
 
-variable "log_role" {
-  description = "Type of role"
-  type        = string
-  default     = "Administrator"
-}
-
-variable "log_bind_key" {
-  description = "Flag indicating that key should be bind to log instance"
-  type        = bool
-  default     = true
-}
-
-variable "log_key_name" {
-  description = "Name of the instance key"
-  type        = string
-  default     = "log-ingestion-key"
-}
-
 variable "log_private_endpoint" {
   description = "Add this option to connect to your LogDNA service instance through the private service endpoint"
   type        = bool
@@ -69,21 +51,18 @@ module "log_analysis" {
   }
 
   resource_group_id    = ibm_resource_group.group.id
-  name                 = format("%s-%s", local.basename, "logs")
-  is_sts_instance      = false
+  instance_name        = format("%s-%s", local.basename, "logs")
   service_endpoints    = var.log_service_endpoints
-  bind_key             = var.log_bind_key
-  key_name             = var.log_key_name
   plan                 = var.log_plan
   enable_platform_logs = var.log_enable_platform_logs
   region               = var.region
+  manager_key_tags     = var.tags
   tags                 = var.tags
-  key_tags             = var.tags
 }
 
-output "log_analysis_id" {
-  description = "The ID of the Log Analysis instance"
-  value       = module.log_analysis.id
+output "log_analysis_crn" {
+  description = "The CRN of the Log Analysis instance"
+  value       = module.log_analysis.crn
 }
 
 ## IAM
