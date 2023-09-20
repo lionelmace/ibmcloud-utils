@@ -32,7 +32,7 @@ resource "ibm_iam_access_group_policy" "policy-k8s-identity-administrator" {
   roles           = ["Administrator", "User API key creator", "Service ID creator"]
 
   resources {
-    service           = "iam-identity"
+    service = "iam-identity"
   }
 }
 

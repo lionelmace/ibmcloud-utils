@@ -23,7 +23,7 @@ resource "random_string" "random" {
 }
 
 locals {
-  basename = lower(var.prefix == "" ? "cn-${random_string.random.0.result}" : var.prefix)
+  basename = lower(var.prefix == "" ? "scc-${random_string.random.0.result}" : var.prefix)
 }
 
 variable "region" {
