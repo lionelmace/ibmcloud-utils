@@ -25,12 +25,12 @@ resource "ibm_scc_profile_attachment" "scc_profile_attachment_instance" {
 
 ## IAM
 ##############################################################################
-resource "ibm_iam_access_group_policy" "iam-scc" {
-  access_group_id = ibm_iam_access_group.accgrp.id
-  roles           = ["Reader", "Viewer"]
+# resource "ibm_iam_access_group_policy" "iam-scc" {
+#   access_group_id = ibm_iam_access_group.accgrp.id
+#   roles           = ["Reader", "Viewer"]
 
-  resources {
-    service           = "compliance"
-    resource_group_id = ibm_resource_group.group.id
-  }
-}
+#   resources {
+#     service           = "compliance"
+#     resource_group_id = ibm_resource_group.group.id
+#   }
+# }
