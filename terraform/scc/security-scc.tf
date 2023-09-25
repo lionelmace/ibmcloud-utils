@@ -52,7 +52,7 @@ resource "ibm_scc_profile_attachment" "scc_profile_attachment_instance" {
 
 resource "null_resource" "set-scc-api-endpoint" {
   provisioner "local-exec" {
-   command = "IBMCLOUD_SCC_API_ENDPOINT=https://${var.region}.compliance.cloud.ibm.com/instances/${ibm_resource_instance.scc_instance.guid}/v3/"
+   command = "export IBMCLOUD_SCC_API_ENDPOINT=https://${var.region}.compliance.cloud.ibm.com/instances/${ibm_resource_instance.scc_instance.guid}/v3/"
   }
   depends_on = [
     ibm_resource_instance.scc_instance
