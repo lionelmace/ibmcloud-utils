@@ -8,9 +8,15 @@ terraform {
     ibm = {
       source = "IBM-Cloud/ibm"
       version = "1.58.0-beta0"
+      # version = "1.57.0"
+    }
+    http-full = {
+      source = "salrashid123/http-full"
     }
   }
 }
+
+provider "http-full" {}
 
 provider "ibm" {
   ibmcloud_api_key = var.ibmcloud_api_key
