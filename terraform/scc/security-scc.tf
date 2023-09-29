@@ -1,4 +1,5 @@
-# Account ID is required for CBR Rule and Zone
+# Account ID is required for the SCC Scope
+##############################################################################
 data "ibm_iam_account_settings" "account_settings" {
 }
 
@@ -21,6 +22,7 @@ resource "ibm_resource_instance" "scc_instance" {
 resource "ibm_scc_profile_attachment" "scc_profile_attachment_instance" {
   name       = format("%s-%s", local.basename, "cis")
   profile_id = "a0bd1ee2-1ed3-407e-a2f4-ce7a1a38f54d" # CIS IBM Foundations v1.0.0
+  instance_id = ibm_resource_instance.scc_instance.guid
   scope {
     environment = "ibm-cloud"
     properties {
@@ -87,19 +89,6 @@ resource "ibm_scc_profile_attachment" "scc_profile_attachment_instance" {
   }
 }
 
-resource "null_resource" "set-scc-api-endpoint" {
-  provisioner "local-exec" {
-   command = "export IBMCLOUD_SCC_API_ENDPOINT=https://${var.region}.compliance.cloud.ibm.com/instances/${ibm_resource_instance.scc_instance.guid}/v3/"
-  }
-  depends_on = [
-    ibm_resource_instance.scc_instance
-  ]
-}
-
-output "IBMCLOUD_SCC_API_ENDPOINT" {
-  description = "The SCC API ENDPOINT"
-  value       = "export IBMCLOUD_SCC_API_ENDPOINT=https://${var.region}.compliance.cloud.ibm.com/instances/${ibm_resource_instance.scc_instance.guid}/v3/"
-}
 
 ## Workaround to connect a COS bucket to the SCC instance
 ##############################################################################
