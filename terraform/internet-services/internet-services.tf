@@ -23,7 +23,7 @@ output "cis_instance_status" {
   value = data.ibm_cis_domain.cis_instance_domain.status
 }
 
-## Workaround to connect a COS bucket to the SCC instance
+## Workaround to order advanced certificate by API
 ##############################################################################
 data "ibm_iam_auth_token" "tokendata" {}
 
