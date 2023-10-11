@@ -21,6 +21,8 @@ resource "ibm_tg_connection" "test_ibm_tg_connection2" {
 }
 
 ## Workaround to tag transit gateway
+## To be removed once TGW supports tagging via Terraform
+## RFE: https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4856
 ##############################################################################
 data "ibm_iam_auth_token" "tokendata" {}
 
