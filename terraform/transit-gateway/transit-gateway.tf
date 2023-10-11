@@ -19,3 +19,27 @@ resource "ibm_tg_connection" "test_ibm_tg_connection2" {
   name         = "myconnection2"
   network_id   = ibm_is_vpc.vpc2.crn
 }
+
+## Workaround to tag transit gateway
+##############################################################################
+data "ibm_iam_auth_token" "tokendata" {}
+
+data "http" "tag_resource" {
+  provider = http-full
+
+  url    = "https://tags.global-search-tagging.cloud.ibm.com/v3/tags/attach?tag_type=user"
+  method = "POST"
+
+  request_headers = {
+    authorization = data.ibm_iam_auth_token.tokendata.iam_access_token
+    content-type  = "application/json"
+    accept        = "application/json"
+  }
+
+  request_body = jsonencode(
+    { 
+      resources = [{ resource_id = "${ibm_tg_gateway.my_tgw.crn}" }]
+      tag_names = ["tf", "tag_2"]
+    }
+  )
+}
