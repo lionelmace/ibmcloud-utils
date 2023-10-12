@@ -36,3 +36,12 @@ variable "tags" {
   type        = list(string)
   default     = ["tf", "cn"]
 }
+
+# Account ID is required for the SCC Scope
+##############################################################################
+data "ibm_iam_account_settings" "account_settings" {
+}
+
+locals {
+  account_id = data.ibm_iam_account_settings.account_settings.account_id
+}

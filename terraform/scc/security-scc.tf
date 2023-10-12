@@ -1,11 +1,3 @@
-# Account ID is required for the SCC Scope
-##############################################################################
-data "ibm_iam_account_settings" "account_settings" {
-}
-
-locals {
-  account_id = data.ibm_iam_account_settings.account_settings.account_id
-}
 
 ## SCC Instance
 ##############################################################################
@@ -27,11 +19,13 @@ resource "ibm_scc_profile_attachment" "scc_profile_attachment_instance" {
     environment = "ibm-cloud"
     properties {
       name = "scope_id"
-      value = local.account_id
+      # value = local.account_id
+      value = ibm_resource_group.group.id
     }
     properties {
       name  = "scope_type"
-      value = "account"
+      # value = "account"
+      value = "account.resource_group"
     }
     # properties {
     #   name = "exclusions"

@@ -40,6 +40,12 @@ resource "ibm_cos_bucket" "scc-bucket" {
   bucket_name           = format("%s-%s", local.basename, "cos-bucket-scc")
   resource_instance_id  = ibm_resource_instance.cos.id
   storage_class         = "smart"
+
+  # SCC Control 2.1.1.2
+  # Ensure Cloud Object Storage encryption is enabled with BYOK
+  # Key management services can only be added during bucket creation.
+  kms_key_crn           = ibm_kms_key.key.key_id
+
   cross_region_location = "eu"
   # region_location      = "eu-de"
   # activity_tracking {
@@ -52,6 +58,8 @@ resource "ibm_cos_bucket" "scc-bucket" {
   #   request_metrics_enabled = true
   #   metrics_monitoring_crn  = module.cloud_monitoring.id
   # }
+  ## SCC Control 2.1.3
+  ## Ensure network access for Cloud Object Storage is set to be exposed only on private endpoints
   endpoint_type = "public"
 }
 
