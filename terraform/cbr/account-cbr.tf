@@ -2,15 +2,14 @@
 # Resources
 ##############################################################################
 
-# Demo - Uncomment after
-# resource "ibm_cbr_zone" "zone_vpc" {
-#   name       = "${local.basename}-zone-vpc"
-#   account_id = local.account_id
-#   addresses {
-#     type  = "vpc"
-#     value = ibm_is_vpc.vpc.crn
-#   }
-# }
+resource "ibm_cbr_zone" "zone_vpc" {
+  name       = "${local.basename}-zone-vpc"
+  account_id = local.account_id
+  addresses {
+    type  = "vpc"
+    value = ibm_is_vpc.vpc.crn
+  }
+}
 
 resource "ibm_cbr_zone" "zone_home" {
   name       = "${local.basename}-zone-home"
@@ -32,32 +31,31 @@ resource "ibm_cbr_zone" "cbr_zone_pgw" {
   }
 }
 
-# Demo - Uncomment after
-# resource "ibm_cbr_rule" "cbr_rule_cos" {
-#   description      = format("%s-%s", local.basename, "rule-cos")
-#   enforcement_mode = "report"
-#   contexts {
-#     attributes {
-#       name  = "networkZoneId"
-#       value = ibm_cbr_zone.zone_vpc.id
-#     }
-#   }
-#   resources {
-#     attributes {
-#       name  = "accountId"
-#       value = data.ibm_iam_account_settings.account_settings.account_id
-#     }
-#     attributes {
-#       name  = "serviceName"
-#       value = "cloud-object-storage"
-#     }
-#     attributes {
-#       name     = "serviceInstance"
-#       operator = "stringEquals"
-#       value    = ibm_resource_instance.cos.guid
-#     }
-#   }
-# }
+resource "ibm_cbr_rule" "cbr_rule_cos" {
+  description      = format("%s-%s", local.basename, "rule-cos")
+  enforcement_mode = "report"
+  contexts {
+    attributes {
+      name  = "networkZoneId"
+      value = ibm_cbr_zone.zone_vpc.id
+    }
+  }
+  resources {
+    attributes {
+      name  = "accountId"
+      value = data.ibm_iam_account_settings.account_settings.account_id
+    }
+    attributes {
+      name  = "serviceName"
+      value = "cloud-object-storage"
+    }
+    attributes {
+      name     = "serviceInstance"
+      operator = "stringEquals"
+      value    = ibm_resource_instance.cos.guid
+    }
+  }
+}
 
 resource "ibm_cbr_rule" "cbr_rule" {
   description      = format("%s-%s", local.basename, "rule")
