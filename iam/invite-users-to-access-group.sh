@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# export EMAIL="first1.name1@fr.ibm.com first2.name2@fr.ibm.com first3.name3@fr.ibm.com"
+
 ACCESS_GROUP_NAME="workshop"
 
 for email in $EMAIL
