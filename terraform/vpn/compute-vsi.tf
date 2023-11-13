@@ -47,7 +47,7 @@ resource "ibm_is_instance" "vsi" {
   tags           = var.tags
 
   primary_network_interface {
-    subnet = ibm_is_subnet.subnet.id
+    subnet = ibm_is_subnet.subnet[0].id
   }
 
   boot_volume {
