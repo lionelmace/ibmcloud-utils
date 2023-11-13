@@ -153,3 +153,16 @@ resource "ibm_is_subnet" "subnet" {
 
   depends_on = [ibm_is_vpc_address_prefix.address_prefix]
 }
+
+# Enable SSH Inbound Rule
+##############################################################################
+resource "ibm_is_security_group_rule" "sg-rule-inbound-ssh" {
+  group     = ibm_is_vpc.vpc.default_security_group
+  direction = "inbound"
+  remote    = "0.0.0.0/0"
+
+  tcp {
+    port_min = 22
+    port_max = 22
+  }
+}
