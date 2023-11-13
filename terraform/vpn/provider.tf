@@ -16,6 +16,10 @@ terraform {
     http-full = {
       source = "salrashid123/http-full"
     }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "~> 4.0.4"
+    }
   }
 }
 
