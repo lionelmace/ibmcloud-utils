@@ -51,10 +51,10 @@ resource "ibm_is_security_group_rule" "vpn_ssh_outbound" {
   }
 }
 
-# allow clients to use SSH to ping
+# allow clients to ping
 resource "ibm_is_security_group_rule" "vpn_icmp_outbound" {
   group     = ibm_is_security_group.vpn.id
-  direction = "outbound"
+  direction = "inbound"
   icmp {
     type = 8
     code = 0
@@ -67,6 +67,14 @@ resource "ibm_is_security_group_rule" "vpn_cse_outbound" {
   direction = "outbound"
   # remote    = "166.9.0.0/16"
   remote    = "166.8.0.0/14"
+}
+
+# NATing
+resource "ibm_is_vpn_server_route" "route_nating" {
+  vpn_server  = ibm_is_vpn_server.vpn.id
+  action      = "translate"
+  destination = "10.243.0.0/16"
+  name        = "nating-frankfurt"
 }
 
 resource "ibm_is_vpn_server_route" "route_cse_to_vpc" {
