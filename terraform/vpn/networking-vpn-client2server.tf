@@ -21,6 +21,7 @@ resource "ibm_is_vpn_server" "vpn" {
     # ibm_is_subnet.subnet.id
   ]
   security_groups = [
+    ibm_is_vpc.vpc.default_security_group.id,
     ibm_is_security_group.vpn.id
   ]
   resource_group = ibm_resource_group.group.id
@@ -69,7 +70,6 @@ resource "ibm_is_security_group_rule" "vpn_icmp_inbound" {
     code = 0
   }
 }
-
 
 # allow clients to reach cloud service endpoints
 resource "ibm_is_security_group_rule" "vpn_cse_outbound" {
