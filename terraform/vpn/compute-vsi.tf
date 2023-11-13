@@ -39,7 +39,7 @@ resource "ibm_is_ssh_key" "generated_ssh_key" {
 resource "ibm_is_instance" "vsi" {
   name           = "${local.basename}-vsi"
   vpc            = ibm_is_vpc.vpc.id
-  zone           = ibm_is_subnet.subnet.zone
+  zone           = ibm_is_subnet.subnet[0].zone
   profile        = var.profile_name
   image          = data.ibm_is_image.image.id
   keys           = [ibm_is_ssh_key.generated_ssh_key.id]
