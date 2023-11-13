@@ -54,12 +54,22 @@ resource "ibm_is_security_group_rule" "vpn_ssh_outbound" {
 # allow clients to ping
 resource "ibm_is_security_group_rule" "vpn_icmp_outbound" {
   group     = ibm_is_security_group.vpn.id
+  direction = "outbound"
+  icmp {
+    type = 8
+    code = 0
+  }
+}
+# allow clients to ping
+resource "ibm_is_security_group_rule" "vpn_icmp_inbound" {
+  group     = ibm_is_security_group.vpn.id
   direction = "inbound"
   icmp {
     type = 8
     code = 0
   }
 }
+
 
 # allow clients to reach cloud service endpoints
 resource "ibm_is_security_group_rule" "vpn_cse_outbound" {
