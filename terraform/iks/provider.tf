@@ -11,7 +11,7 @@ terraform {
     }
     logdna = {
       source  = "logdna/logdna"
-      version = ">= 1.14.0"
+      version = ">= 1.14.2"
     }
     http-full = {
       source = "salrashid123/http-full"
