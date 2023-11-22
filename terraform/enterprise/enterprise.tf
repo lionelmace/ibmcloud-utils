@@ -1,5 +1,4 @@
 data "ibm_enterprises" "enterprise" {
-    name = "Enterprise Account"
 }
 
 resource "ibm_enterprise_account" "enterprise_account" {
