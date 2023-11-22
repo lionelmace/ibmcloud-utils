@@ -1,4 +1,4 @@
-data "ibm_enterprise" "enterprise" {
+data "ibm_enterprises" "enterprise" {
     name = "Enterprise Account"
 }
 

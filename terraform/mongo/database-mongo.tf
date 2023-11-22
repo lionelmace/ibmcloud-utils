@@ -68,9 +68,9 @@ resource "ibm_database" "icd_mongo" {
   tags              = var.tags
 
   # Encrypt DB (comment to use IBM-provided Automatic Key)
-  key_protect_instance = ibm_resource_instance.key-protect.id
-  key_protect_key      = ibm_kms_key.key.id
-  backup_encryption_key_crn = ibm_kms_key.key.id
+  # key_protect_instance = ibm_resource_instance.key-protect.id
+  # key_protect_key      = ibm_kms_key.key.id
+  # backup_encryption_key_crn = ibm_kms_key.key.id
   depends_on = [ # require when using encryption key otherwise provisioning failed
     ibm_iam_authorization_policy.mongo-kms,
   ]
