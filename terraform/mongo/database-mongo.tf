@@ -10,7 +10,7 @@ variable "icd_mongo_plan" {
 variable "icd_mongo_adminpassword" {
   type        = string
   description = "The admin user password for the instance"
-  default     = "Passw0rd01"
+  default     = "AdministratorPassw0rd01"
 }
 
 variable "icd_mongo_ram_allocation" {
