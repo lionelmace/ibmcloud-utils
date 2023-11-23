@@ -1,6 +1,9 @@
-data "ibm_enterprises" "enterprise" {
-    # name = "enterprise-account"
-    name = "86d12027dc2245559daf98ce3d130998"
+# data "ibm_enterprises" "enterprise" {
+#     name = "enterprise-account"
+# }
+
+data "ibm_enterprise_accounts" "accounts" {
+    name = "enterprise-account"
 }
 
 # resource "ibm_enterprise_account" "enterprise_account" {
