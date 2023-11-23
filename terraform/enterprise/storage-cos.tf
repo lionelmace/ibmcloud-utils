@@ -18,7 +18,7 @@ variable "cos_region" {
 
 resource "ibm_resource_instance" "cos" {
   provider          = ibm.enterprise
-  name              = format("%s-%s", local.basename, "cos-scc")
+  name              = format("%s-%s", local.basename, "cos")
   service           = "cloud-object-storage"
   plan              = var.cos_plan
   location          = var.cos_region
@@ -32,8 +32,8 @@ resource "ibm_resource_instance" "cos" {
 
 ## COS Bucket
 ##############################################################################
-resource "ibm_cos_bucket" "scc-bucket" {
-  bucket_name          = format("%s-%s", local.basename, "cos-bucket-scc")
+resource "ibm_cos_bucket" "cos-bucket" {
+  bucket_name          = format("%s-%s", local.basename, "cos-bucket")
   resource_instance_id = ibm_resource_instance.cos.id
   storage_class        = "smart"
 
