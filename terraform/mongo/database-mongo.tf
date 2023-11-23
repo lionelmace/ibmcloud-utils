@@ -71,9 +71,9 @@ resource "ibm_database" "icd_mongo" {
   # key_protect_instance = ibm_resource_instance.key-protect.id
   # key_protect_key      = ibm_kms_key.key.id
   # backup_encryption_key_crn = ibm_kms_key.key.id
-  depends_on = [ # require when using encryption key otherwise provisioning failed
-    ibm_iam_authorization_policy.mongo-kms,
-  ]
+  # depends_on = [ # require when using encryption key otherwise provisioning failed
+  #   ibm_iam_authorization_policy.mongo-kms,
+  # ]
 
   # DB Settings
   adminpassword = var.icd_mongo_adminpassword
@@ -232,9 +232,9 @@ resource "ibm_is_virtual_endpoint_gateway" "vpe_mongo" {
 # Authorization policy between Mongo and Key Protect
 # Require to encrypt Mongo DB with Key in Key Protect
 # https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_services/main.tf
-resource "ibm_iam_authorization_policy" "mongo-kms" {
-  source_service_name         = "databases-for-mongodb"
-  target_service_name         = "kms"
-  target_resource_instance_id = ibm_resource_instance.key-protect.guid
-  roles                       = ["Reader", "Authorization Delegator"]
-}
+# resource "ibm_iam_authorization_policy" "mongo-kms" {
+#   source_service_name         = "databases-for-mongodb"
+#   target_service_name         = "kms"
+#   target_resource_instance_id = ibm_resource_instance.key-protect.guid
+#   roles                       = ["Reader", "Authorization Delegator"]
+# }
