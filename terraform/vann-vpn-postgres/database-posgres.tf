@@ -59,7 +59,7 @@ variable "icd_postgresql_use_vpe" { default = false }
 ##############################################################################
 resource "ibm_database" "icd_postgresql" {
   name              = format("%s-%s", local.basename, "postgresql")
-  service           = "databases-for-postgresqldb"
+  service           = "databases-for-postgresql"
   plan              = var.icd_postgresql_plan
   version           = var.icd_postgresql_db_version
   service_endpoints = var.icd_postgresql_service_endpoints
