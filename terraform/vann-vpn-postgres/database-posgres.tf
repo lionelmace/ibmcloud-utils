@@ -46,7 +46,7 @@ variable "icd_postgresql_users" {
 # postgresqlDB cannot support both public and private endpoints simultaneously.
 # This cannot be changed after provisioning.
 variable "icd_postgresql_service_endpoints" {
-  default     = "public"
+  default     = "private"
   type        = string
   description = "Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'."
 }
