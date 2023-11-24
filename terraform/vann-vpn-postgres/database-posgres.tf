@@ -113,19 +113,6 @@ resource "ibm_resource_key" "icd_postgresql_key" {
 # }
 
 
-## IAM
-##############################################################################
-# Doc at https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-iam
-resource "ibm_iam_access_group_policy" "iam-postgresql" {
-  access_group_id = ibm_iam_access_group.accgrp.id
-  roles           = ["Editor"]
-
-  resources {
-    service           = "databases-for-postgresqldb"
-    resource_group_id = ibm_resource_group.group.id
-  }
-}
-
 locals {
   endpoints = [
     {
