@@ -34,7 +34,7 @@ variable "icd_postgresql_core_allocation" {
 variable "icd_postgresql_db_version" {
   type        = string
   description = "The database version to provision if specified"
-  default     = "5.0"
+  default     = "15"
 }
 
 variable "icd_postgresql_users" {
