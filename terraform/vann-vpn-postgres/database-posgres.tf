@@ -108,25 +108,20 @@ resource "ibm_resource_key" "icd_postgresql_key" {
 #     user_type = "database"
 # }
 
-# output "iks_cluster_alb" {
-#   value = data.ibm_database_connection.postgresql_db_connection.database
+# locals {
+#   endpoints = [
+#     {
+#       name     = "postgresql",
+#       crn      = ibm_database.icd_postgresql.id
+#       hostname = ibm_resource_key.icd_postgresql_key.credentials["connection.postgresqldb.hosts.0.hostname"]
+#     }
+#   ]
 # }
 
-
-locals {
-  endpoints = [
-    {
-      name     = "postgresql",
-      crn      = ibm_database.icd_postgresql.id
-      hostname = ibm_resource_key.icd_postgresql_key.credentials["connection.postgresqldb.hosts.0.hostname"]
-    }
-  ]
-}
-
-output "endpoints" {
-  sensitive = true
-  value     = local.endpoints
-}
+# output "endpoints" {
+#   sensitive = true
+#   value     = local.endpoints
+# }
 
 
 ## VPE (Optional)
