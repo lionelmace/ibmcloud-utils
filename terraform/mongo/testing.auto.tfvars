@@ -18,7 +18,7 @@ vpc_enable_public_gateway     = true
 # Available Plans: standard, enterprise
 icd_mongo_plan = "standard"
 # expected length in the range (10 - 32) - must not contain special characters
-icd_mongo_adminpassword     = "Passw0rd01"
+icd_mongo_adminpassword     = "AdministratorPassw0rd01"
 icd_mongo_db_version        = "5.0"
 icd_mongo_service_endpoints = "private"
 # VPE can only be used if Mongo Private endpoint is enabled
