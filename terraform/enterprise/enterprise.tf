@@ -1,6 +1,10 @@
-# data "ibm_enterprises" "enterprise" {
-#     name = "enterprise-account"
-# }
+data "ibm_enterprises" "enterprise" {
+    name = "enterprise-account"
+}
+
+output "enterprise-crn" {
+  value = data.ibm_enterprises.enterprise.enterprises.0.crn
+}
 
 data "ibm_enterprise_accounts" "accounts" {
     name = "enterprise-account"
