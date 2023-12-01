@@ -26,7 +26,7 @@
 1. Start the docker agent
 
     ```sh
-    docker run -d --env-file ./agent-env-files/connector.env -v ~/mygit/ibmcloud-utils/satellite/agent-env-files:/agent-env-files icr.io/ibm/satellite-connector/satellite-connector-agent:v1.1.1
+    docker run -d --env-file ./agent-env-files/connector.env -v ~/mygit/ibmcloud-utils/satellite/agent-env-files:/agent-env-files icr.io/ibm/satellite-connector/satellite-connector-agent:latest
     ```
 
 2. Verify the tunnel gets established
