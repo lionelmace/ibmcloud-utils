@@ -41,7 +41,7 @@ brew install terraformer
     2023/12/05 14:13:34 ibm Connecting....
     2023/12/05 14:13:34 ibm save ibm_is_vpc
     2023/12/05 14:13:34 ibm save tfstate for ibm_is_vpc
-    ```sh
+    ```
 
 1. Generate the Terraform files for your VPC Clusters
 
@@ -81,3 +81,7 @@ brew install terraformer
     2023/12/05 14:41:53 ibm save ibm_database_mongo
     2023/12/05 14:41:53 ibm save tfstate for ibm_database_mongo
     ```
+
+1. Generated files are visible in the generated folder
+
+    ![](./terraformer-generated.png)
