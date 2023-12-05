@@ -1,5 +1,5 @@
 provider "ibm" {
-  region = "us-south"
+  region = "eu-de"
 }
 
 terraform {
