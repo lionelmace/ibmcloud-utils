@@ -2,6 +2,7 @@
 resource "ibm_iam_service_id" "service_id_for_child_account" {
   name        = "svc-id-child-account"
   description = "ServiceID to create Child Account in Enterprise"
+  tags        = var.tags
 }
 
 # API Key for Service ID
@@ -12,7 +13,7 @@ resource "ibm_iam_service_api_key" "testacc_apiKey" {
 
 # Policy Template for "All Identity and Access enabled services"
 # Role: Administrator, Manager
-resource "ibm_iam_policy_template" "all_iam_services_ap_template" {
+resource "ibm_iam_policy_template" "all_iam_services_policy_template" {
 	name = "template-policy-all-iam-services"
 	description = "Grant Administrator to all IAM Services"
 	committed = "true"
@@ -31,7 +32,7 @@ resource "ibm_iam_policy_template" "all_iam_services_ap_template" {
 
 # Policy Template for "All Account Management Services"
 # Role: Administrator
-resource "ibm_iam_policy_template" "account_management_ap_template" {
+resource "ibm_iam_policy_template" "account_management_policy_template" {
 	name = "template-policy-account-management"
 	description = "Grant Administrator to Account Management Servcie"
 	committed = "true"
@@ -61,11 +62,11 @@ resource "ibm_iam_access_group_template" "iam_ag_admin_template" {
   }
   name = "IAM Admin Group template"
   policy_template_references {
-    id = ibm_iam_policy_template.all_iam_services_ap_template.id
+    id = ibm_iam_policy_template.all_iam_services_policy_template.id
     version = "1"
   }
   policy_template_references {
-	id = ibm_iam_policy_template.account_management_ap_template.id
+	id = ibm_iam_policy_template.account_management_policy_template.id
 	version = "1"
   }
 }
