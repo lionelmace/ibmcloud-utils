@@ -51,7 +51,9 @@ resource "ibm_iam_policy_template" "account_management_policy_template" {
 
 # Access Group Template with Policies Templates
 resource "ibm_iam_access_group_template" "iam_ag_admin_template" {
+  name = "IAM Admin Group template"
   description = "This access group template allows admin access to all IAM platform services in the account."
+  committed = true
   group {
 	name = "name"
 	description = "description"
@@ -60,7 +62,6 @@ resource "ibm_iam_access_group_template" "iam_ag_admin_template" {
 		services = [ ibm_iam_service_id.service_id_for_child_account.id ]
 	}
   }
-  name = "IAM Admin Group template"
   policy_template_references {
     id = split("/", ibm_iam_policy_template.all_iam_services_policy_template.id)[0]
     version = "1"
