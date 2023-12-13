@@ -28,6 +28,9 @@ resource "ibm_enterprise_account" "coreit" {
   name         = "CoreIT"
   parent       = data.ibm_enterprise_account_groups.enterprise_country_ch.account_groups.0.crn
   owner_iam_id = data.ibm_enterprise_account_groups.enterprise_country_ch.account_groups.0.primary_contact_iam_id
+  traits { 
+    enterprise_iam_managed = true
+  }
 }
 
 # resource "ibm_enterprise_account" "child_account" {
