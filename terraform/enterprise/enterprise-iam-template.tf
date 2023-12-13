@@ -72,9 +72,9 @@ resource "ibm_iam_access_group_template" "iam_ag_admin_template" {
 }
 
 # Assing Access Group Template to Child Account or Account Group
-# resource "ibm_iam_access_group_template_assignment" "iam_ag_template_assignment" {
-#   target = ibm_enterprise_account.child_account.id // <account id>
-#   target_type = "Account"   // or "AccountGroup"
-#   template_id = ibm_iam_access_group_template.iam_ag_admin_template.id
-#   template_version = "1"
-# }
+resource "ibm_iam_access_group_template_assignment" "iam_ag_template_assignment" {
+  target = ibm_enterprise_account.coreit.account_id
+  target_type = "Account"   // or "AccountGroup"
+  template_id = ibm_iam_access_group_template.iam_ag_admin_template.id
+  template_version = "1"
+}
