@@ -16,14 +16,19 @@ output "enterprise-account-crn" {
   value = data.ibm_enterprise_accounts.accounts.accounts.0.crn
 }
 
-resource "ibm_enterprise_account" "child_account" {
-  parent = data.ibm_enterprise_accounts.accounts.accounts.0.crn
-  # parent = "86d12027dc2245559daf98ce3d130998"
-  name = "new-child-tf-account"
-  owner_iam_id = "first.last@fr.ibm.com"
-  # Optional:
-  # traits {
-  #   mfa = "NONE"
-  #   enterprise_iam_managed = true
-  # }
+output "is_enterprise_account" {
+  value = data.ibm_enterprise_accounts.accounts.accounts.0.is_enterprise_account
 }
+
+
+# resource "ibm_enterprise_account" "child_account" {
+#   parent = data.ibm_enterprise_accounts.accounts.accounts.0.crn
+#   # parent = "86d12027dc2245559daf98ce3d130998"
+#   name = "new-child-tf-account"
+#   owner_iam_id = "first.last@fr.ibm.com"
+#   # Optional:
+#   # traits {
+#   #   mfa = "NONE"
+#   #   enterprise_iam_managed = true
+#   # }
+# }
