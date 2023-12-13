@@ -62,18 +62,18 @@ resource "ibm_iam_access_group_template" "iam_ag_admin_template" {
   }
   name = "IAM Admin Group template"
   policy_template_references {
-    id = ibm_iam_policy_template.all_iam_services_policy_template.id
+    id = split("/", ibm_iam_policy_template.all_iam_services_policy_template.id)[0]
     version = "1"
   }
   policy_template_references {
-	id = ibm_iam_policy_template.account_management_policy_template.id
+	id = split("/", ibm_iam_policy_template.account_management_policy_template.id)[0]
 	version = "1"
   }
 }
 
 # Assing Access Group Template to Child Account or Account Group
 # resource "ibm_iam_access_group_template_assignment" "iam_ag_template_assignment" {
-#   target = "0a45594d0f-123" // <account id>
+#   target = ibm_enterprise_account.child_account.id // <account id>
 #   target_type = "Account"   // or "AccountGroup"
 #   template_id = ibm_iam_access_group_template.iam_ag_admin_template.id
 #   template_version = "1"

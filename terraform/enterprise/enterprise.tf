@@ -17,7 +17,7 @@ output "enterprise-account-crn" {
 }
 # enterprise-account-crn = "crn:v1:bluemix:public:enterprise::a/82e850d55a814f729c69ab4667d0cdf8::account:82e850d55a814f729c69ab4667d0cdf8"
 
-# resource "ibm_enterprise_account" "enterprise_account_instance" {
+# resource "ibm_enterprise_account" "child_account" {
 #   parent = data.ibm_enterprise_accounts.accounts.accounts.0.crn
 #   # parent = "86d12027dc2245559daf98ce3d130998"
 #   name = "new-child-tf-account"
