@@ -8,13 +8,13 @@
 # }
 
 # Enterprise Account where resources can be provisioned.
-# data "ibm_enterprise_accounts" "enterprise-account" {
-#     name = "enterprise-account"
-# }
+data "ibm_enterprise_accounts" "enterprise-account" {
+    name = "enterprise-account"
+}
 
-# output "enterprise-account-crn" {
-#   value = data.ibm_enterprise_accounts.enterprise-account.accounts.0.crn
-# }
+output "enterprise-account-crn" {
+  value = data.ibm_enterprise_accounts.enterprise-account.accounts.0.crn
+}
 
 output "is_enterprise_account" {
   value = data.ibm_enterprise_accounts.enterprise-account.accounts.0.is_enterprise_account
