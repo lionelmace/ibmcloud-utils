@@ -53,12 +53,12 @@ resource "ibm_iam_policy_template" "account_management_policy_template" {
 resource "ibm_iam_access_group_template" "iam_ag_admin_template" {
   description = "This access group template allows admin access to all IAM platform services in the account."
   group {
-        name = "name"
-        description = "description"
-        members {
-            # users = [ "users" ]
-            services = [ ibm_iam_service_id.service_id_for_child_account.id ]
-        }
+	name = "name"
+	description = "description"
+	members {
+		# users = [ "users" ]
+		services = [ ibm_iam_service_id.service_id_for_child_account.id ]
+	}
   }
   name = "IAM Admin Group template"
   policy_template_references {
@@ -75,6 +75,6 @@ resource "ibm_iam_access_group_template" "iam_ag_admin_template" {
 resource "ibm_iam_access_group_template_assignment" "iam_ag_template_assignment" {
   target = ibm_enterprise_account.coreit.account_id
   target_type = "Account"   // or "AccountGroup"
-  template_id = ibm_iam_access_group_template.iam_ag_admin_template.id
+  template_id = split("/", ibm_iam_access_group_template.iam_ag_admin_template.id)[0]
   template_version = "1"
 }
