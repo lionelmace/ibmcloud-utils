@@ -1,23 +1,23 @@
 # Top level Enterprise Account with label "Enterprise" in the Console
-# data "ibm_enterprises" "enterprise" {
+# data "ibm_enterprises" "top-enterprise" {
 #     name = "enterprise-account"
 # }
 
 # output "enterprise-crn" {
-#   value = data.ibm_enterprises.enterprise.enterprises.0.crn
+#   value = data.ibm_enterprises.top-enterprise.enterprises.0.crn
 # }
 
 # Enterprise account where resources can be provisioned.
-data "ibm_enterprise_accounts" "accounts" {
+data "ibm_enterprise_accounts" "enterprise-account" {
     name = "enterprise-account"
 }
 
 output "enterprise-account-crn" {
-  value = data.ibm_enterprise_accounts.accounts.accounts.0.crn
+  value = data.ibm_enterprise_accounts.enterprise-account.accounts.0.crn
 }
 
 output "is_enterprise_account" {
-  value = data.ibm_enterprise_accounts.accounts.accounts.0.is_enterprise_account
+  value = data.ibm_enterprise_accounts.enterprise-account.accounts.0.is_enterprise_account
 }
 
 
