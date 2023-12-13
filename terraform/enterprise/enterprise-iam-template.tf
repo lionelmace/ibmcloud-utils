@@ -16,7 +16,7 @@ resource "ibm_iam_service_api_key" "testacc_apiKey" {
 resource "ibm_iam_policy_template" "all_iam_services_policy_template" {
   name        = "template-policy-all-iam-services"
   description = "Grant Administrator to all IAM Services"
-  committed   = "true"
+  committed   = true
   policy {
     type = "access"
     resource {
