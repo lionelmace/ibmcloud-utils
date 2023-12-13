@@ -10,7 +10,7 @@
 
 # Enterprise Account where resources can be provisioned.
 data "ibm_enterprise_accounts" "enterprise-account" {
-    name = "enterprise-account"
+  name = "enterprise-account"
 }
 
 output "enterprise-account-crn" {
@@ -29,7 +29,7 @@ resource "ibm_enterprise_account" "coreit" {
   name         = "CoreIT2"
   parent       = data.ibm_enterprise_account_groups.enterprise_country_ch.account_groups.0.crn
   owner_iam_id = data.ibm_enterprise_account_groups.enterprise_country_ch.account_groups.0.primary_contact_iam_id
-  traits { 
+  traits {
     enterprise_iam_managed = true
   }
 }
