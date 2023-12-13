@@ -1,4 +1,5 @@
 # Top level Enterprise Account with label "Enterprise" in the Console
+# Failing: Unable to find it...
 # data "ibm_enterprises" "top-enterprise" {
 #   name = "enterprise-account"
 # }
@@ -21,11 +22,11 @@ output "is_enterprise_account" {
 }
 
 data "ibm_enterprise_account_groups" "enterprise_country_ch" {
-  name = "Country Switzerland"
+  name = "Country Switzerland" // My existing account group
 }
 
 resource "ibm_enterprise_account" "coreit" {
-  name         = "CoreIT"
+  name         = "CoreIT2"
   parent       = data.ibm_enterprise_account_groups.enterprise_country_ch.account_groups.0.crn
   owner_iam_id = data.ibm_enterprise_account_groups.enterprise_country_ch.account_groups.0.primary_contact_iam_id
   traits { 
@@ -35,13 +36,6 @@ resource "ibm_enterprise_account" "coreit" {
 
 # resource "ibm_enterprise_account" "child_account" {
 #   # parent = data.ibm_enterprise_accounts.accounts.accounts.0.crn // Failed
-#   parent = data.ibm_enterprises.top-enterprise.enterprises.0.crn
-#   # parent = "86d12027dc2245559daf98ce3d130998"
 #   name = "new-child-tf-account"
 #   owner_iam_id = "first.last@fr.ibm.com"
-#   # Optional:
-#   # traits {
-#   #   mfa = "NONE"
-#   #   enterprise_iam_managed = true
-#   # }
 # }
