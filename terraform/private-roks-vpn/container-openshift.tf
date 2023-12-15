@@ -50,7 +50,7 @@ variable "openshift_wait_till" {
 variable "openshift_disable_public_service_endpoint" {
   description = "Boolean value true if Public service endpoint to be disabled."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "openshift_force_delete_storage" {

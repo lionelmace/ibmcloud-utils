@@ -57,7 +57,7 @@ variable "subnet_cidr_blocks" {
 
 variable "vpc_enable_public_gateway" {
   description = "Enable public gateways, true or false"
-  default     = true
+  default     = false
 }
 
 variable "floating_ip" {
