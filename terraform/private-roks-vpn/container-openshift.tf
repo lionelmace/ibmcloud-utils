@@ -95,11 +95,11 @@ variable "worker_pools" {
       pool_name        = "dev"
       machine_type     = "bx2.4x16"
       workers_per_zone = 1
-      # },
-      # {
-      #     pool_name        = "odf"
-      #     machine_type     = "bx2.16x64"
-      #     workers_per_zone = 1
+      },
+      {
+          pool_name        = "odf"
+          machine_type     = "bx2.16x64"
+          workers_per_zone = 1
     }
   ]
 
@@ -171,20 +171,6 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
 #       subnet_id = zones.value.id
 #     }
 #   }
-# }
-
-# Retrieve VPC LB attached to the cluster
-##############################################################################
-# data "ibm_container_vpc_cluster" "roks_cluster" {
-#   name = ibm_container_vpc_cluster.roks_cluster.id
-# }
-
-# data "ibm_container_vpc_alb" "roks_cluster_alb" {
-#   alb_id = data.ibm_container_vpc_cluster.roks_cluster.albs[0].id
-# }
-
-# output "roks_cluster_alb" {
-#   value = data.ibm_container_vpc_alb.roks_cluster_alb
 # }
 
 
