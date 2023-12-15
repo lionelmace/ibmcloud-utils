@@ -122,36 +122,36 @@ variable "worker_pools" {
 
 ## Resources
 ##############################################################################
-resource "ibm_container_vpc_cluster" "roks_cluster" {
-  name              = format("%s-%s", local.basename, var.openshift_cluster_name)
-  vpc_id            = ibm_is_vpc.vpc.id
-  resource_group_id = ibm_resource_group.group.id
-  # Optional: Specify OpenShift version. If not included, 4.13 is used
-  kube_version                    = var.openshift_version == "" ? "4.13_openshift" : var.openshift_version
-  cos_instance_crn                = var.is_openshift_cluster ? ibm_resource_instance.cos_openshift_registry[0].id : null
-  entitlement                     = var.entitlement
-  tags                            = var.tags
-  disable_public_service_endpoint = var.openshift_disable_public_service_endpoint
-  update_all_workers              = var.openshift_update_all_workers
+# resource "ibm_container_vpc_cluster" "roks_cluster" {
+#   name              = format("%s-%s", local.basename, var.openshift_cluster_name)
+#   vpc_id            = ibm_is_vpc.vpc.id
+#   resource_group_id = ibm_resource_group.group.id
+#   # Optional: Specify OpenShift version. If not included, 4.13 is used
+#   kube_version                    = var.openshift_version == "" ? "4.13_openshift" : var.openshift_version
+#   cos_instance_crn                = var.is_openshift_cluster ? ibm_resource_instance.cos_openshift_registry[0].id : null
+#   entitlement                     = var.entitlement
+#   tags                            = var.tags
+#   disable_public_service_endpoint = var.openshift_disable_public_service_endpoint
+#   update_all_workers              = var.openshift_update_all_workers
 
-  flavor       = var.openshift_machine_flavor
-  worker_count = var.openshift_worker_nodes_per_zone
-  wait_till    = var.openshift_wait_till
+#   flavor       = var.openshift_machine_flavor
+#   worker_count = var.openshift_worker_nodes_per_zone
+#   wait_till    = var.openshift_wait_till
 
-  dynamic "zones" {
-    for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
-    content {
-      name      = zones.value.zone
-      subnet_id = zones.value.id
-    }
-  }
+#   dynamic "zones" {
+#     for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
+#     content {
+#       name      = zones.value.zone
+#       subnet_id = zones.value.id
+#     }
+#   }
 
-  kms_config {
-    instance_id      = ibm_resource_instance.key-protect.guid # GUID of Key Protect instance
-    crk_id           = ibm_kms_key.key.key_id                 # ID of customer root key
-    private_endpoint = true
-  }
-}
+#   kms_config {
+#     instance_id      = ibm_resource_instance.key-protect.guid # GUID of Key Protect instance
+#     crk_id           = ibm_kms_key.key.key_id                 # ID of customer root key
+#     private_endpoint = true
+#   }
+# }
 
 # Additional Worker Pool
 ##############################################################################
@@ -204,15 +204,15 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
 
 # Object Storage to backup the OpenShift Internal Registry
 ##############################################################################
-resource "ibm_resource_instance" "cos_openshift_registry" {
-  count             = var.is_openshift_cluster ? 1 : 0
-  name              = join("-", [local.basename, "cos-registry"])
-  resource_group_id = ibm_resource_group.group.id
-  service           = "cloud-object-storage"
-  plan              = "standard"
-  location          = "global"
-  tags              = var.tags
-}
+# resource "ibm_resource_instance" "cos_openshift_registry" {
+#   count             = var.is_openshift_cluster ? 1 : 0
+#   name              = join("-", [local.basename, "cos-registry"])
+#   resource_group_id = ibm_resource_group.group.id
+#   service           = "cloud-object-storage"
+#   plan              = "standard"
+#   location          = "global"
+#   tags              = var.tags
+# }
 
 
 ##############################################################################
