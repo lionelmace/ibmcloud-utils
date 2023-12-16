@@ -90,6 +90,17 @@ resource "ibm_is_vpn_server_route" "route_private_to_vpc" {
   name        = "route-private-2-ibm-iaas-endpoints"
 }
 
+# Route to Subnets (NEW)
+resource "ibm_is_vpn_server_route" "route_to_subnet" {
+  # count           = 3
+  count       = length(var.subnet_cidr_blocks)
+  vpn_server  = ibm_is_vpn_server.vpn.id
+  action      = "deliver"
+  destination = element(var.subnet_cidr_blocks, count.index)
+  name        = "route-2f-subnet-${count.index + 1}"
+}
+
+
 data "ibm_is_vpn_server_client_configuration" "config" {
   vpn_server = ibm_is_vpn_server.vpn.id
 }
