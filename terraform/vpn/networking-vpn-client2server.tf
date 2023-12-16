@@ -1,4 +1,3 @@
-
 variable "vpn_client_ip_pool" {
   default = "192.168.0.0/16"
 }

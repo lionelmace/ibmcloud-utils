@@ -9,7 +9,7 @@ resource "ibm_is_vpn_server" "vpn" {
     client_ca_crn = ibm_sm_imported_certificate.client_cert.crn
   }
   client_ip_pool         = var.vpn_client_ip_pool
-  client_dns_server_ips  = ["161.26.0.10", "161.26.0.11"]
+  client_dns_server_ips  = ["161.26.0.10", "161.26.0.11"] # NEW
   client_idle_timeout    = 2800
   enable_split_tunneling = true
   name                   = "${local.basename}-vpn-server"
@@ -20,7 +20,7 @@ resource "ibm_is_vpn_server" "vpn" {
     # ibm_is_subnet.subnet.id
   ]
   security_groups = [
-    ibm_is_vpc.vpc.default_security_group,
+    ibm_is_vpc.vpc.default_security_group,  # NEW
     ibm_is_security_group.vpn.id
   ]
   resource_group = ibm_resource_group.group.id
@@ -100,10 +100,11 @@ resource "ibm_is_vpn_server_route" "route_private_to_vpc" {
 }
 
 # Route to Subnets (NEW)
+# NATing
 resource "ibm_is_vpn_server_route" "route_to_subnet" {
   count       = length(var.subnet_cidr_blocks)
   vpn_server  = ibm_is_vpn_server.vpn.id
-  action      = "deliver"
+  action      = "translate"
   destination = element(var.subnet_cidr_blocks, count.index)
   name        = "route-2-subnet-${count.index + 1}"
 }
