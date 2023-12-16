@@ -10,7 +10,7 @@ resource "ibm_is_vpn_server" "vpn" {
     client_ca_crn = ibm_sm_imported_certificate.client_cert.crn
   }
   client_ip_pool         = var.vpn_client_ip_pool
-  # client_dns_server_ips  = ["161.26.0.10", "161.26.0.11"]
+  client_dns_server_ips  = ["161.26.0.10", "161.26.0.11"]
   client_idle_timeout    = 2800
   enable_split_tunneling = true
   name                   = "${local.basename}-vpn-server"
