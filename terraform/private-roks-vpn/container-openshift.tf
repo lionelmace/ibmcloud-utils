@@ -81,45 +81,6 @@ variable "is_openshift_cluster" {
   default = true
 }
 
-variable "worker_pools" {
-  description = "List of maps describing worker pools"
-
-  type = list(object({
-    pool_name        = string
-    machine_type     = string
-    workers_per_zone = number
-  }))
-
-  default = [
-    # {
-    #   pool_name        = "dev"
-    #   machine_type     = "bx2.4x16"
-    #   workers_per_zone = 1
-    # },
-    {
-      pool_name        = "odf"
-      machine_type     = "bx2.16x64"
-      workers_per_zone = 1
-    }
-  ]
-
-  validation {
-    error_message = "Worker pool names must match the regex `^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$`."
-    condition = length([
-      for pool in var.worker_pools :
-      false if !can(regex("^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$", pool.pool_name))
-    ]) == 0
-  }
-
-  validation {
-    error_message = "Worker pools cannot have duplicate names."
-    condition = length(distinct([
-      for pool in var.worker_pools :
-      pool.pool_name
-    ])) == length(var.worker_pools)
-  }
-}
-
 ## Resources
 ##############################################################################
 resource "ibm_container_vpc_cluster" "roks_cluster" {
@@ -155,23 +116,63 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
 
 # Additional Worker Pool
 ##############################################################################
-resource "ibm_container_vpc_worker_pool" "roks_worker_pools" {
-  for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
-  cluster           = ibm_container_vpc_cluster.roks_cluster.id
-  resource_group_id = ibm_resource_group.group.id
-  worker_pool_name  = each.key
-  flavor            = lookup(each.value, "machine_type", null)
-  vpc_id            = ibm_is_vpc.vpc.id
-  worker_count      = each.value.workers_per_zone
 
-  dynamic "zones" {
-    for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
-    content {
-      name      = zones.value.zone
-      subnet_id = zones.value.id
-    }
-  }
-}
+# variable "worker_pools" {
+#   description = "List of maps describing worker pools"
+
+#   type = list(object({
+#     pool_name        = string
+#     machine_type     = string
+#     workers_per_zone = number
+#   }))
+
+#   default = [
+#     # {
+#     #   pool_name        = "dev"
+#     #   machine_type     = "bx2.4x16"
+#     #   workers_per_zone = 1
+#     # },
+#     {
+#       pool_name        = "odf"
+#       machine_type     = "bx2.16x64"
+#       workers_per_zone = 1
+#     }
+#   ]
+
+#   validation {
+#     error_message = "Worker pool names must match the regex `^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$`."
+#     condition = length([
+#       for pool in var.worker_pools :
+#       false if !can(regex("^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$", pool.pool_name))
+#     ]) == 0
+#   }
+
+#   validation {
+#     error_message = "Worker pools cannot have duplicate names."
+#     condition = length(distinct([
+#       for pool in var.worker_pools :
+#       pool.pool_name
+#     ])) == length(var.worker_pools)
+#   }
+# }
+
+# resource "ibm_container_vpc_worker_pool" "roks_worker_pools" {
+#   for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
+#   cluster           = ibm_container_vpc_cluster.roks_cluster.id
+#   resource_group_id = ibm_resource_group.group.id
+#   worker_pool_name  = each.key
+#   flavor            = lookup(each.value, "machine_type", null)
+#   vpc_id            = ibm_is_vpc.vpc.id
+#   worker_count      = each.value.workers_per_zone
+
+#   dynamic "zones" {
+#     for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
+#     content {
+#       name      = zones.value.zone
+#       subnet_id = zones.value.id
+#     }
+#   }
+# }
 
 
 ## IAM

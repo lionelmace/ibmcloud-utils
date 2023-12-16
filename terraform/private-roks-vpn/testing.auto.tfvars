@@ -22,8 +22,8 @@ activity_tracker_name         = "platform-activities"
 ##############################################################################
 ## Cluster ROKS
 ##############################################################################
-openshift_machine_flavor = "bx2.4x16"
-# openshift_machine_flavor = "bx2.16x64" # ODF Flavors
+# openshift_machine_flavor = "bx2.4x16"
+openshift_machine_flavor = "bx2.16x64" # ODF Flavors
 openshift_disable_public_service_endpoint = true
 
 # Available values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
