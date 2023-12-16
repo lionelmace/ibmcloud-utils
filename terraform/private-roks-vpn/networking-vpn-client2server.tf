@@ -1,4 +1,3 @@
-
 variable "vpn_client_ip_pool" {
   default = "192.168.0.0/16"
 }
@@ -21,6 +20,7 @@ resource "ibm_is_vpn_server" "vpn" {
     # ibm_is_subnet.subnet.id
   ]
   security_groups = [
+    ibm_is_vpc.vpc.default_security_group,
     ibm_is_security_group.vpn.id
   ]
   resource_group = ibm_resource_group.group.id
@@ -51,7 +51,7 @@ resource "ibm_is_security_group_rule" "vpn_ssh_outbound" {
   }
 }
 
-# allow clients to use SSH to ping
+# allow clients to ping
 resource "ibm_is_security_group_rule" "vpn_icmp_outbound" {
   group     = ibm_is_security_group.vpn.id
   direction = "outbound"
