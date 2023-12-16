@@ -83,6 +83,15 @@ resource "ibm_is_security_group_rule" "vpn_private_outbound" {
   remote    = "161.26.0.0/16"
 }
 
+# Add outbound rules for each subnet (NEW)
+resource "ibm_is_security_group_rule" "vpn_outbound_subnet" {
+  count     = length(var.subnet_cidr_blocks)
+  group     = ibm_is_security_group.vpn.id
+  direction = "outbound"
+  remote    = element(var.subnet_cidr_blocks, count.index)
+}
+
+
 resource "ibm_is_vpn_server_route" "route_private_to_vpc" {
   vpn_server  = ibm_is_vpn_server.vpn.id
   action      = "deliver"
@@ -92,14 +101,12 @@ resource "ibm_is_vpn_server_route" "route_private_to_vpc" {
 
 # Route to Subnets (NEW)
 resource "ibm_is_vpn_server_route" "route_to_subnet" {
-  # count           = 3
   count       = length(var.subnet_cidr_blocks)
   vpn_server  = ibm_is_vpn_server.vpn.id
   action      = "deliver"
   destination = element(var.subnet_cidr_blocks, count.index)
-  name        = "route-2f-subnet-${count.index + 1}"
+  name        = "route-2-subnet-${count.index + 1}"
 }
-
 
 data "ibm_is_vpn_server_client_configuration" "config" {
   vpn_server = ibm_is_vpn_server.vpn.id
