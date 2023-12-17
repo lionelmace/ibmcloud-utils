@@ -107,13 +107,13 @@ resource "ibm_is_vpn_server_route" "route_private_to_vpc" {
 
 # Route to Subnets (NEW)
 # NATing
-# resource "ibm_is_vpn_server_route" "route_to_subnet" {
-#   count       = length(var.subnet_cidr_blocks)
-#   vpn_server  = ibm_is_vpn_server.vpn.id
-#   action      = "deliver" #NEW
-#   destination = element(var.subnet_cidr_blocks, count.index)
-#   name        = "route-2-subnet-${count.index + 1}"
-# }
+resource "ibm_is_vpn_server_route" "route_to_subnet" {
+  count       = length(var.subnet_cidr_blocks)
+  vpn_server  = ibm_is_vpn_server.vpn.id
+  action      = "translate" #NEW
+  destination = element(var.subnet_cidr_blocks, count.index)
+  name        = "route-2-subnet-${count.index + 1}"
+}
 
 data "ibm_is_vpn_server_client_configuration" "config" {
   vpn_server = ibm_is_vpn_server.vpn.id
