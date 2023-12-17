@@ -92,9 +92,12 @@ resource "ibm_is_security_group_rule" "vpn_outbound_subnet" {
   remote    = element(var.subnet_cidr_blocks, count.index)
 }
 
+# When you specify the DNS server "client_dns_server_ips" in the VPN, 
+# you must also create a VPN route after the VPN server is provisioned, 
+# with destination 161.26.0.0/16 and the translate action.
 resource "ibm_is_vpn_server_route" "route_private_to_vpc" {
   vpn_server  = ibm_is_vpn_server.vpn.id
-  action      = "deliver"
+  action      = "translate"
   destination = "161.26.0.0/16"
   name        = "route-private-2-ibm-iaas-endpoints"
 }
@@ -104,7 +107,7 @@ resource "ibm_is_vpn_server_route" "route_private_to_vpc" {
 resource "ibm_is_vpn_server_route" "route_to_subnet" {
   count       = length(var.subnet_cidr_blocks)
   vpn_server  = ibm_is_vpn_server.vpn.id
-  action      = "translate"
+  action      = "deliver"
   destination = element(var.subnet_cidr_blocks, count.index)
   name        = "route-2-subnet-${count.index + 1}"
 }
