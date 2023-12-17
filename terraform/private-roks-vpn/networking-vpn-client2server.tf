@@ -105,8 +105,8 @@ resource "ibm_is_vpn_server_route" "route_private_to_vpc" {
   name        = "route-private-2-ibm-iaas-endpoints"
 }
 
-# Route to Subnets (NEW)
-# NATing
+# Route to Subnets (NEW) - NATing
+# Ok in both translate and deliver
 resource "ibm_is_vpn_server_route" "route_to_subnet" {
   count       = length(var.subnet_cidr_blocks)
   vpn_server  = ibm_is_vpn_server.vpn.id
