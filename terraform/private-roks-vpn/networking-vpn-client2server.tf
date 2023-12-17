@@ -88,12 +88,12 @@ resource "ibm_is_security_group_rule" "vpn_private_outbound" {
 }
 
 # Add outbound rules for each subnet (NEW)
-resource "ibm_is_security_group_rule" "vpn_outbound_subnet" {
-  count     = length(var.subnet_cidr_blocks)
-  group     = ibm_is_security_group.vpn.id
-  direction = "outbound"
-  remote    = element(var.subnet_cidr_blocks, count.index)
-}
+# resource "ibm_is_security_group_rule" "vpn_outbound_subnet" {
+#   count     = length(var.subnet_cidr_blocks)
+#   group     = ibm_is_security_group.vpn.id
+#   direction = "outbound"
+#   remote    = element(var.subnet_cidr_blocks, count.index)
+# }
 
 # When you specify the DNS server "client_dns_server_ips" in the VPN, 
 # you must also create a VPN route after the VPN server is provisioned, 
@@ -107,13 +107,13 @@ resource "ibm_is_vpn_server_route" "route_private_to_vpc" {
 
 # Route to Subnets (NEW)
 # NATing
-resource "ibm_is_vpn_server_route" "route_to_subnet" {
-  count       = length(var.subnet_cidr_blocks)
-  vpn_server  = ibm_is_vpn_server.vpn.id
-  action      = "deliver" #NEW
-  destination = element(var.subnet_cidr_blocks, count.index)
-  name        = "route-2-subnet-${count.index + 1}"
-}
+# resource "ibm_is_vpn_server_route" "route_to_subnet" {
+#   count       = length(var.subnet_cidr_blocks)
+#   vpn_server  = ibm_is_vpn_server.vpn.id
+#   action      = "deliver" #NEW
+#   destination = element(var.subnet_cidr_blocks, count.index)
+#   name        = "route-2-subnet-${count.index + 1}"
+# }
 
 data "ibm_is_vpn_server_client_configuration" "config" {
   vpn_server = ibm_is_vpn_server.vpn.id
