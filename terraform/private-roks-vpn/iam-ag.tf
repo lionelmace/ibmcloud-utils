@@ -74,22 +74,3 @@ resource "ibm_iam_access_group_policy" "policy-k8s-identity-administrator" {
 #   target_resource_instance_id = ibm_resource_instance.secrets-manager.guid
 #   roles                       = ["Manager"]
 # }
-
-# Authorization policy between SCC (Source) and COS Bucket (Target)
-# Required by SCC in order to store SCC evaluation results into COS bucket
-resource "ibm_iam_authorization_policy" "iam-auth-scc-cos" {
-  source_service_name         = "compliance"
-  target_service_name         = "cloud-object-storage"
-  target_resource_instance_id = ibm_resource_instance.cos.guid
-  roles                       = ["Writer"]
-}
-
-# Authorization policy between COS Bucket (Source) and Key Protect (Target)
-# Required to encrypt COS buckets
-resource "ibm_iam_authorization_policy" "iam-auth-kms-cos" {
-  source_service_name         = "cloud-object-storage"
-  source_resource_instance_id = ibm_resource_instance.cos.guid
-  target_service_name         = "kms"
-  target_resource_instance_id = ibm_resource_instance.key-protect.guid
-  roles                       = ["Reader"]
-}
