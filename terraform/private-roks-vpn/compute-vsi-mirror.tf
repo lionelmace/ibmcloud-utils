@@ -84,6 +84,10 @@ output "vsi_private_ip" {
   value = ibm_is_instance.vsi.primary_network_interface.0.primary_ip.0.address
 }
 
+output "private_key_pem" {
+  value = tls_private_key.rsa_4096_key.private_key_pem
+}
+
 output "vsi_public_ip" {
   description = "The public Floating IP attached to the VSI"
   value = ibm_is_floating_ip.public_ip.0.address
