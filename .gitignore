@@ -1,5 +1,6 @@
 # te
 local.env
+**/secrets/*
 
 # VPN Certificates
 *.ovpn
