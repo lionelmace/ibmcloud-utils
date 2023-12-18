@@ -16,7 +16,7 @@ resource "ibm_is_subnet" "subnet-mirror" {
   zone            = "${var.region}-1"
   ipv4_cidr_block = "10.243.65.0/24"
   network_acl     = ibm_is_network_acl.multizone_acl.id
-  public_gateway  = ibm_is_public_gateway.pgw-mirror.*.id
+  public_gateway  = ibm_is_public_gateway.pgw-mirror.id
   tags            = var.tags
   resource_group  = ibm_resource_group.group.id
 
