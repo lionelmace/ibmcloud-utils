@@ -11,5 +11,4 @@ variable "rg_name" {
 
 data "ibm_resource_group" "group" {
   name = var.rg_name
-  
 }

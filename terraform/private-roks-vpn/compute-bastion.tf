@@ -18,7 +18,7 @@ variable "create_public_ip" {
 
 variable "image_name" {
   type        = string
-  default     = "ibm-ubuntu-20-04-6-minimal-amd64-3"
+  default     = "ibm-redhat-9-2-minimal-amd64-3"
   description = "Name of the image to use for the private instance"
 }
 
