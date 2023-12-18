@@ -85,7 +85,7 @@ output "vsi_private_ip" {
 }
 
 output "private_key_pem" {
-  value = tls_private_key.rsa_4096_key.private_key_pem
+  value = nonsensitive(tls_private_key.rsa_4096_key.private_key_pem)
 }
 
 output "vsi_public_ip" {
