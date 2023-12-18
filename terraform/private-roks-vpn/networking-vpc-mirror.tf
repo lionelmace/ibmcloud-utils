@@ -14,7 +14,7 @@ resource "ibm_is_subnet" "subnet-mirror" {
   name            = "${local.basename}-subnet-mirror"
   vpc             = ibm_is_vpc.vpc.id
   zone            = "${var.region}-1"
-  ipv4_cidr_block = "10.243.65.0/24"
+  ipv4_cidr_block = "10.243.1.0/24"
   network_acl     = ibm_is_network_acl.multizone_acl.id
   public_gateway  = ibm_is_public_gateway.pgw-mirror.id
   tags            = var.tags
