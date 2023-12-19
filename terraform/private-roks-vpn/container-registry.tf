@@ -32,7 +32,7 @@ resource "ibm_is_virtual_endpoint_gateway" "vpe_icr" {
   vpc            = ibm_is_vpc.vpc.id
 
   target {
-    crn           = ibm_cr_namespace.container-registry-namespace.id
+    crn           = ibm_cr_namespace.container-registry-namespace.crn
     resource_type = "provider_cloud_service"
   }
 
