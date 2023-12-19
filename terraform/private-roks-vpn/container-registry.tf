@@ -5,7 +5,7 @@ resource "ibm_cr_namespace" "container-registry-namespace" {
 }
 
 output "icr-namespace" {
-  value = ibm_cr_namespace.container-registry-namespace.name
+  value = ibm_cr_namespace.container-registry-namespace.crn
 }
 
 variable "icr_use_vpe" { default = true }
