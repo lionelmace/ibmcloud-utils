@@ -4,12 +4,28 @@ resource "ibm_cr_namespace" "container-registry-namespace" {
   tags              = var.tags
 }
 
-# VPE (Virtual Private Endpoint) for Container Registry
-##############################################################################
 variable "icr_use_vpe" { default = true }
 
+# locals {
+#   endpoints = [
+#     {
+#       name     = "mongo",
+#       crn      = ibm_cr_namespace.container-registry-namespace.id
+#       hostname = ibm_resource_key.icd_mongo_key.credentials["connection.mongodb.hosts.0.hostname"]
+#     }
+#   ]
+# }
+
+# output "endpoints" {
+#   sensitive = true
+#   value     = local.endpoints
+# }
+
+# VPE (Virtual Private Endpoint) for Container Registry
+##############################################################################
+
 resource "ibm_is_virtual_endpoint_gateway" "vpe_icr" {
-  for_each = { for target in local.endpoints : target.name => target if tobool(var.icr_use_vpe) }
+  # for_each = { for target in local.endpoints : target.name => target if tobool(var.icr_use_vpe) }
 
   name           = "${local.basename}-icr-vpe"
   resource_group = ibm_resource_group.group.id
