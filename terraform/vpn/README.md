@@ -55,7 +55,7 @@ This lab requires the following command lines:
 1. Start provisioning.
 
     ```sh
-    terraform apply
+    terraform apply -var-file="testing.auto.tfvars"
     ```
 
 1. Clean up the resources to avoid cost
