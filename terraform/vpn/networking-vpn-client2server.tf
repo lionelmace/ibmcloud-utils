@@ -84,6 +84,9 @@ resource "ibm_is_vpn_server_route" "route_nating" {
   action      = "translate"
   destination = "10.243.0.0/16"
   name        = "nating-frankfurt"
+  timeouts {
+    delete = "5m"
+  }
 }
 
 resource "ibm_is_vpn_server_route" "route_cse_to_vpc" {
@@ -92,6 +95,9 @@ resource "ibm_is_vpn_server_route" "route_cse_to_vpc" {
   # destination = "166.9.0.0/16"
   destination = "166.8.0.0/14"
   name        = "route-2-ibm-cloud-service-endpoints"
+  timeouts {
+    delete = "5m"
+  }
 }
 
 # allow clients to reach private backend
@@ -106,6 +112,9 @@ resource "ibm_is_vpn_server_route" "route_private_to_vpc" {
   action      = "deliver"
   destination = "161.26.0.0/16"
   name        = "route-private-2-ibm-iaas-endpoints"
+  timeouts {
+    delete = "5m"
+  }
 }
 
 data "ibm_is_vpn_server_client_configuration" "config" {
