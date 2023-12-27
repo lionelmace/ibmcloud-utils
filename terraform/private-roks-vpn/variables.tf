@@ -31,6 +31,11 @@ variable "region" {
   default     = "eu-de"
 }
 
+variable "icr_region" {
+  description = "IBM Container Registry Region (e.g. de.icr.io)"
+  default     = "de.icr.io"
+}
+
 variable "tags" {
   description = "List of Tags"
   type        = list(string)

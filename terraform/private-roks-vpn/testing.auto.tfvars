@@ -2,7 +2,8 @@
 ## Global Variables
 ##############################################################################
 
-#region                = "eu-de" # eu-de for Frankfurt MZR
+#region     = "eu-de"     # eu-de for Frankfurt MZR
+#icr_region = "de.icr.io"
 
 ##############################################################################
 ## VPC
