@@ -20,7 +20,7 @@ resource "ibm_is_virtual_endpoint_gateway" "vpe_icr" {
   vpc            = ibm_is_vpc.vpc.id
 
   target {
-    crn           = "crn:v1:bluemix:public:container-registry:${region}:::endpoint:${icr_region}"
+    crn           = "crn:v1:bluemix:public:container-registry:${var.region}:::endpoint:${var.icr_region}"
     resource_type = "provider_cloud_service"
   }
 
