@@ -58,6 +58,8 @@ This lab requires the following command lines:
     terraform apply -var-file="testing.auto.tfvars"
     ```
 
+    > Duration: 7+ minutes
+
 1. Clean up the resources to avoid cost
 
     ```sh

@@ -85,7 +85,7 @@ resource "ibm_is_vpn_server_route" "route_nating" {
   destination = "10.243.0.0/16"
   name        = "nating-frankfurt"
   timeouts {
-    delete = "10m"
+    delete = "20m"
   }
 }
 
@@ -96,7 +96,7 @@ resource "ibm_is_vpn_server_route" "route_cse_to_vpc" {
   destination = "166.8.0.0/14"
   name        = "route-2-ibm-cloud-service-endpoints"
   timeouts {
-    delete = "10m"
+    delete = "20m"
   }
 }
 
@@ -113,7 +113,7 @@ resource "ibm_is_vpn_server_route" "route_private_to_vpc" {
   destination = "161.26.0.0/16"
   name        = "route-private-2-ibm-iaas-endpoints"
   timeouts {
-    delete = "10m"
+    delete = "20m"
   }
 }
 
