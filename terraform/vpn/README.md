@@ -2,6 +2,11 @@
 
 This lab will provision a VPC, a Subnet, a Client to Server VPN in a new Resource Group within IBM Cloud.
 
+| Terraform | Duration |
+| --------- | --------- |
+| Apply     | ~7 mins |
+| Destroy   | ~5 mins |
+
 ## Before you begin
 
 This lab requires the following command lines:
@@ -57,8 +62,6 @@ This lab requires the following command lines:
     ```sh
     terraform apply -var-file="testing.auto.tfvars"
     ```
-
-    > Duration: 7+ minutes
 
 1. Clean up the resources to avoid cost
 
