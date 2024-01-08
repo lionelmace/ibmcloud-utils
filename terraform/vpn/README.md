@@ -70,14 +70,3 @@ This lab requires the following command lines:
     ```sh
     terraform destroy
     ```
-
-1. Terraform fails to delete VPN Server Route
-
-    ```sh
-    ibm_is_vpn_server_route.route_nating: Still destroying... [id=r010-f039cf1b-49c4-43a9-b0c1-3ad877f463...0-7d6cd7ae-7d19-4c09-86a8-49b70c7f2a7b, 10m0s elapsed]
-    ibm_is_vpn_server_route.route_cse_to_vpc: Still destroying... [id=r010-f039cf1b-49c4-43a9-b0c1-3ad877f463...0-288ee7be-395d-4f03-8615-51a454e172b9, 10m0s elapsed]
-    ibm_is_vpn_server_route.route_private_to_vpc: Still destroying... [id=r010-f039cf1b-49c4-43a9-b0c1-3ad877f463...0-1ff99a76-4124-4b34-8694-9495e39e6d88, 10m0s elapsed]
-    Error: [ERROR] VPNServer Route failed timeout while waiting for state to become 'deleted, failed' (last state: 'deleting', timeout: 10m0s)
-    Error: [ERROR] VPNServer Route failed timeout while waiting for state to become 'deleted, failed' (last state: 'deleting', timeout: 10m0s)
-    Error: [ERROR] VPNServer Route failed timeout while waiting for state to become 'deleted, failed' (last state: 'deleting', timeout: 10m0s)
-    ```
