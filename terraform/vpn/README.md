@@ -2,6 +2,8 @@
 
 This lab will provision a VPC, a Subnet, a Client to Server VPN in a new Resource Group within IBM Cloud.
 
+![](./images/graph.svg)
+
 | Terraform | Duration |
 | --------- | --------- |
 | Apply     | ~7 mins |
