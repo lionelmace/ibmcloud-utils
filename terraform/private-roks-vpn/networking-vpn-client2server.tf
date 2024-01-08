@@ -78,9 +78,7 @@ resource "ibm_is_vpn_server_route" "route_cse_to_vpc" {
   # destination = "166.9.0.0/16"
   destination = "166.8.0.0/14"
   name        = "route-2-ibm-cloud-service-endpoints"
-  timeouts {
-    delete = "30m"
-  }
+  depends_on  = [ibm_iam_authorization_policy.secret_group_to_vpn]
 }
 
 # allow clients to reach private backend
@@ -106,9 +104,7 @@ resource "ibm_is_vpn_server_route" "route_private_to_vpc" {
   action      = "translate"
   destination = "161.26.0.0/16"
   name        = "route-private-2-ibm-iaas-endpoints"
-  timeouts {
-    delete = "30m"
-  }
+  depends_on  = [ibm_iam_authorization_policy.secret_group_to_vpn]
 }
 
 # Route to Subnets - NATing
@@ -119,9 +115,7 @@ resource "ibm_is_vpn_server_route" "route_to_subnet" {
   action      = "translate"
   destination = element(var.subnet_cidr_blocks, count.index)
   name        = "route-2-subnet-${count.index + 1}"
-  timeouts {
-    delete = "30m"
-  }
+  depends_on  = [ibm_iam_authorization_policy.secret_group_to_vpn]
 }
 
 data "ibm_is_vpn_server_client_configuration" "config" {
