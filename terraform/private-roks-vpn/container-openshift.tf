@@ -112,6 +112,9 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
     crk_id           = ibm_kms_key.key.key_id                 # ID of customer root key
     private_endpoint = true
   }
+  depends_on = [
+    ibm_iam_authorization_policy.roks-kms
+  ]
 }
 
 # Additional Worker Pool
@@ -227,3 +230,15 @@ resource "ibm_resource_instance" "cos_openshift_registry" {
 #   instance_id      = module.cloud_monitoring.guid
 #   private_endpoint = var.sysdig_private_endpoint
 # }
+
+# IAM AUTHORIZATIONS
+##############################################################################
+
+# Authorization policy between OpenShift and Key Protect
+# Require to encrypt OpenShift with Key in Key Protect
+resource "ibm_iam_authorization_policy" "roks-kms" {
+  source_service_name         = "containers-kubernetes"
+  target_service_name         = "kms"
+  target_resource_instance_id = ibm_resource_instance.key-protect.guid
+  roles                       = ["Reader"]
+}
