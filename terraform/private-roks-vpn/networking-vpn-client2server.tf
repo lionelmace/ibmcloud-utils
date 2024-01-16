@@ -36,15 +36,14 @@ resource "ibm_is_security_group" "vpn" {
   vpc            = ibm_is_vpc.vpc.id
 }
 
-# TEST
-# resource "ibm_is_security_group_rule" "vpn_inbound" {
-#   group     = ibm_is_security_group.vpn.id
-#   direction = "inbound"
-#   udp {
-#     port_min = 443
-#     port_max = 443
-#   }
-# }
+resource "ibm_is_security_group_rule" "vpn_inbound" {
+  group     = ibm_is_security_group.vpn.id
+  direction = "inbound"
+  udp {
+    port_min = 443
+    port_max = 443
+  }
+}
 
 # allow clients to use SSH to connect to hosts in the cloud
 resource "ibm_is_security_group_rule" "vpn_ssh_outbound" {
