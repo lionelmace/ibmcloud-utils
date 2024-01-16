@@ -12,6 +12,7 @@ resource "ibm_is_vpn_server" "vpn" {
   # Use those IPs to access service endpoints and IaaS endpoints from your client
   # client_dns_server_ips  = ["161.26.0.10", "161.26.0.11"]
   # Use those IPs if you need to resolve private DNS names from your client.
+  # Requires to be able to open OpenShift Console.
   client_dns_server_ips  = ["161.26.0.7", "161.26.0.8"]
   client_idle_timeout    = 2800
   enable_split_tunneling = true
@@ -35,14 +36,15 @@ resource "ibm_is_security_group" "vpn" {
   vpc            = ibm_is_vpc.vpc.id
 }
 
-resource "ibm_is_security_group_rule" "vpn_inbound" {
-  group     = ibm_is_security_group.vpn.id
-  direction = "inbound"
-  udp {
-    port_min = 443
-    port_max = 443
-  }
-}
+# TEST
+# resource "ibm_is_security_group_rule" "vpn_inbound" {
+#   group     = ibm_is_security_group.vpn.id
+#   direction = "inbound"
+#   udp {
+#     port_min = 443
+#     port_max = 443
+#   }
+# }
 
 # allow clients to use SSH to connect to hosts in the cloud
 resource "ibm_is_security_group_rule" "vpn_ssh_outbound" {
