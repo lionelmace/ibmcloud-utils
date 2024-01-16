@@ -10,9 +10,9 @@ resource "ibm_is_vpn_server" "vpn" {
   }
   client_ip_pool         = var.vpn_client_ip_pool
   # Use those IPs to access service endpoints and IaaS endpoints from your client
-  client_dns_server_ips  = ["161.26.0.10", "161.26.0.11"]
+  # client_dns_server_ips  = ["161.26.0.10", "161.26.0.11"]
   # Use those IPs if you need to resolve private DNS names from your client.
-  # client_dns_server_ips  = ["161.26.0.7", "161.26.0.8"]
+  client_dns_server_ips  = ["161.26.0.7", "161.26.0.8"]
   client_idle_timeout    = 2800
   enable_split_tunneling = true
   name                   = "${local.basename}-vpn-server"
