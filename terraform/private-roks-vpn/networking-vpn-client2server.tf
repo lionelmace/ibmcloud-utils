@@ -1,5 +1,17 @@
 variable "vpn_client_ip_pool" {
-  default = "192.168.0.0/16"
+  type        = string
+  description = "The VPN client IPv4 address pool, expressed in CIDR format. The request must not overlap with any existing address prefixes in the VPC or any of the following reserved address ranges: - 127.0.0.0/8 (IPv4 loopback addresses) - 161.26.0.0/16 (IBM services) - 166.8.0.0/14 (Cloud Service Endpoints) - 169.254.0.0/16 (IPv4 link-local addresses) - 224.0.0.0/4 (IPv4 multicast addresses). The prefix length of the client IP address pool's CIDR must be between /9 (8,388,608 addresses) and /22 (1024 addresses). A CIDR block that contains twice the number of IP addresses that are required to enable the maximum number of concurrent connections is recommended."
+  default     = "10.0.0.0/20"
+}
+
+  # Use those IPs to access service endpoints and IaaS endpoints from your client
+  # client_dns_server_ips  = ["161.26.0.10", "161.26.0.11"]
+  # Use those IPs if you need to resolve private DNS names from your client.
+  # Requires to be able to open OpenShift Console.
+variable "client_dns_server_ips" {
+  type        = list(string)
+  description = "DNS server addresses that will be provided to VPN clients connected to this VPN server"
+  default     = ["161.26.0.7", "161.26.0.8"]
 }
 
 resource "ibm_is_vpn_server" "vpn" {
@@ -9,11 +21,7 @@ resource "ibm_is_vpn_server" "vpn" {
     client_ca_crn = ibm_sm_imported_certificate.client_cert.crn
   }
   client_ip_pool         = var.vpn_client_ip_pool
-  # Use those IPs to access service endpoints and IaaS endpoints from your client
-  # client_dns_server_ips  = ["161.26.0.10", "161.26.0.11"]
-  # Use those IPs if you need to resolve private DNS names from your client.
-  # Requires to be able to open OpenShift Console.
-  client_dns_server_ips  = ["161.26.0.7", "161.26.0.8"]
+  client_dns_server_ips  = var.client_dns_server_ips
   client_idle_timeout    = 2800
   enable_split_tunneling = true
   name                   = "${local.basename}-vpn-server"
