@@ -46,39 +46,19 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: test
+  name: myloadbalancer
   namespace: ns-route
   labels:
     app: test
+  annotations:
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-lb-name: "my-load-balancer"
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: "public"
 spec:
-  # type: LoadBalancer
-  type: ClusterIP
+  type: LoadBalancer
+  selector:
+    app: test
   ports:
     - port: 80
       targetPort: 8080
       protocol: TCP
       name: http
-  selector:
-    app: test
-
----
-apiVersion: route.openshift.io/v1
-kind: Route
-metadata:
-  annotations:
-    haproxy.router.openshift.io/hsts_header: max-age=31536000;includeSubDomains;preload
-  labels:
-    app: test
-  name: test
-  namespace: ns-route
-spec:
-  host: hello-ns-route.private-x8hmsq-roks-483cccd2f0d38128dd40d2b711142ba9-i000.eu-de.containers.appdomain.cloud
-  port:
-    targetPort: 8080
-  tls:
-    termination: edge
-  to:
-    kind: Service
-    name: test
-    weight: 100
-  wildcardPolicy: None
