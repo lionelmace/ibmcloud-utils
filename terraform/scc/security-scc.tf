@@ -7,7 +7,7 @@ resource "ibm_resource_instance" "scc_instance" {
   plan              = "security-compliance-center-standard-plan"
   location          = var.region
   resource_group_id = ibm_resource_group.group.id
-  depends_on [ibm_scc_instance_settings.scc_instance_settings]
+  depends_on = [ibm_scc_instance_settings.scc_instance_settings]
 }
 
 resource "ibm_scc_instance_settings" "scc_instance_settings" {
