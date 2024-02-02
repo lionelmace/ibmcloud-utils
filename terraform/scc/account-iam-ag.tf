@@ -24,9 +24,9 @@ resource "ibm_iam_authorization_policy" "iam-auth-scc-cos" {
 }
 
 resource "ibm_iam_authorization_policy" "iam-auth-kms-cos" {
-    source_service_name = "cloud-object-storage"
-    source_resource_instance_id = ibm_resource_instance.cos.guid
-    target_service_name = "kms"
-    target_resource_instance_id = ibm_resource_instance.key-protect.guid
-    roles               = ["Reader"]
+  source_service_name         = "cloud-object-storage"
+  source_resource_instance_id = ibm_resource_instance.cos.guid
+  target_service_name         = "kms"
+  target_resource_instance_id = ibm_resource_instance.key-protect.guid
+  roles                       = ["Reader"]
 }
