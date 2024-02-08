@@ -1,6 +1,9 @@
+# Retrieve images
+# ibmcloud is images | grep redhat-9 | grep -v "deprecated"
+# ibmcloud is images | grep ubuntu-20 | grep -v "deprecated"
 variable "image_name" {
   type        = string
-  default     = "ibm-ubuntu-18-04-1-minimal-amd64-2"
+  default     = "ibm-ubuntu-20-04-6-minimal-amd64-3"
   description = "Name of the image to use for the private instance"
 }
 
