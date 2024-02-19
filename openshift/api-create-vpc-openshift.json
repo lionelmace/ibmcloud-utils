@@ -1,0 +1,44 @@
+{
+    "cosInstanceCRN": "crn:v1:bluemix:public:cloud-object-storage:global:a/0b5a00334eaf9eb9339d2ab48f7326b4:69284256-ead9-43f7-a069-4cf707c9f6cc::",
+    "cseACLEnabled": true,
+    "defaultWorkerPoolEntitlement": "string",
+    "disablePublicServiceEndpoint": false,
+    "infrastructureTopology": "string",
+    "kubeVersion": "4.14.8_1545_openshift",
+    "name": "new-roks",
+    "podSubnet": "172.17.0.0/18",
+    "previews": [
+      "string"
+    ],
+    "provider": "vpc-gen2",
+    "requestSecure": false,
+    "securityGroupIDs": [
+      "string"
+    ],
+    "serviceSubnet": "string",
+    "workerPool": {
+      "diskEncryption": true,
+      "flavor": "bx2.4x16",
+      "hostPoolID": "string",
+      "isolation": "string",
+      "kmsAccountID": "string",
+      "kmsInstanceID": "string",
+      "labels": {
+        "additionalProp1": "string",
+        "additionalProp2": "string",
+        "additionalProp3": "string"
+      },
+      "name": "string",
+      "operatingSystem": "string",
+      "secondaryStorageOption": "string",
+      "vpcID": "r010-68dfdcd1-a8ca-4302-83a1-a14d7408ab7c",
+      "workerCount": 1,
+      "workerVolumeCRKID": "string",
+      "zones": [
+        {
+          "id": "eu-de-1",
+          "subnetID": "02b7-b2c7c714-2376-4f55-ba65-fd905eda89ec"
+        }
+      ]
+    }
+  }
