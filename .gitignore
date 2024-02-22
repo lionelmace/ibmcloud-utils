@@ -13,6 +13,9 @@ settings.json
 
 satellite/satellite.env
 
+# Infracost
+**/.infracost/*
+
 # Local .terraform directories
 **/.terraform/*
 # Generated terraform scripts from Terraformer
