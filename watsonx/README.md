@@ -80,9 +80,9 @@ Source: https://eu-de.dataplatform.cloud.ibm.com/docs/content/wsj/admin/monitor-
 
 WML (Watson Machine Learning) resources (measured in RU Resource Units) is used when you run inferencing services with foundation models.  The service instance of WML is dedicated to the client. WML provides access to shared compute resources.Watson Machine Learning plans govern how you are billed for models you train and deploy with Watson Machine Learning and for prompts you use with foundation models. Choose a plan based on your needs:
 
-Essentials is a pay-as-you-go plan that gives you the flexibility to build, deploy, and manage models to match your needs.
+* `Essentials` is a pay-as-you-go plan that gives you the flexibility to build, deploy, and manage models to match your needs.
 
-Standard is a high-capacity enterprise plan that is designed to support all of an organization's machine learning needs. Capacity unit hours are provided at a flat rate, while resource unit consumption is pay-as-you-go.
+* `Standard` is a high-capacity enterprise plan that is designed to support all of an organization's machine learning needs. Capacity unit hours are provided at a flat rate, while resource unit consumption is pay-as-you-go.
 
 Source: https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/wml-plans.html?context=cpdaas&audience=wdp
 
