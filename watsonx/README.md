@@ -35,22 +35,15 @@ Source: https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/secu
 
 You can use private network endpoints to connect to your IBM Watson Machine Learning service instance over the IBM Cloud Private network. After you configure your Watson Machine Learning service to use private endpoints, the service is not accessible from the public internet.
 
-Private URLs for Watson Machine Learning for each region are as follows:
-
-* Dallas - https://private.us-south.ml.cloud.ibm.com
-* London - https://private.eu-gb.ml.cloud.ibm.com
-* Frankfurt - https://private.eu-de.ml.cloud.ibm.com
-* Tokyo - https://private.jp-tok.ml.cloud.ibm.com
-
 ![Private Endpoint](./watsonx-private-enndpoint.png)
 
 Source: https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/ml-service-endpoint.html?context=cpdaas&audience=wdp
 
 ## Who has access to the data from IBM?
 
-Clients control whether prompts, model choices, and prompt engineering parameter settings are saved. When saved, your data is stored in a dedicated IBM Cloud Object Storage bucket that is associated with your project.
+IBM Cloud allows organizations to choose the geographic location where their data is stored and processed, helping them comply with data residency and sovereignty requirements.
 
-IBM does not have access to the Data.
+Clients control whether prompts, model choices, and prompt engineering parameter settings are saved. When saved, your data is stored in a dedicated IBM Cloud Object Storage bucket that is associated with your watsonx project.
 
 Source: https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/fm-security.html?context=wx
 
@@ -60,14 +53,18 @@ Data is stored in a dedicated IBM Cloud Object Storage bucket that is associated
 
 Source: https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/fm-security.html?context=wx
 
-![Private Endpoint](./watsonx-cos.png)
-
 IBM generally does not have access to Content.
-More details in the Data Processing and Protection Datasheet. Source: https://www.ibm.com/software/reports/compatibility/clarity-reports/report/html/softwareReqsForProduct?deliverableId=52EF8B204FEC11ED97548910D8A210BE
+More details in the Data Processing and Protection Datasheet.
+
+Source: https://www.ibm.com/software/reports/compatibility/clarity-reports/report/html/softwareReqsForProduct?deliverableId=52EF8B204FEC11ED97548910D8A210BE
 
 ## How does IBM Cloud secure the data that is shared with the watsonx platform?
 
+IBM Cloud employs encryption techniques to protect data both in transit and at rest. This ensures that data remains secure even if intercepted during transmission or stored on servers.
+
 In IBM watsonx, data security mechanisms, such as encryption, protect sensitive customer and corporate data, both in transit and at rest. A secure , and other mechanisms protect your valuable corporate data. A secure IBM Cloud Object Storage instance stores data assets from projects, catalogs, and deployment spaces.
+
+![COS](./watsonx-cos.png)
 
 Source: https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/security-data.html?context=wx&audience=wdp
 
