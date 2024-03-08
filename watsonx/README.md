@@ -1,7 +1,5 @@
 # How secure is IBM watsonx running on IBM Cloud?
 
-> 15 mins read
-
 The short answer could be: The IBM watsonx platform is very secure and resilient...
 I have been building mission-critial cloud architecture for the past 8 years and I can tell you clients and partners expect much more...
 * How does IBM secure my data?
