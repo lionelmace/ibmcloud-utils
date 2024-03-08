@@ -79,13 +79,19 @@ resource "ibm_container_vpc_cluster" "iks_cluster" {
   worker_count = var.iks_worker_nodes_per_zone
   wait_till    = var.iks_wait_till
 
-  dynamic "zones" {
-    for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
-    content {
-      name      = zones.value.zone
-      subnet_id = zones.value.id
-    }
+  zones {
+    subnet_id = ibm_is_subnet.subnet[0].id
+    # subnet_id = "0717-0c0899ce-48ac-4eb6-892d-4e2e1ff8c9478"
+    name      = "eu-de-1"
   }
+
+  # dynamic "zones" {
+  #   for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
+  #   content {
+  #     name      = zones.value.zone
+  #     subnet_id = zones.value.id
+  #   }
+  # }
 
   # kms_config {
   #   instance_id      = ibm_resource_instance.key-protect.guid # GUID of Key Protect instance
