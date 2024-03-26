@@ -14,7 +14,7 @@ variable "iks_cluster_name" {
 variable "iks_version" {
   description = "Specify the Kubernetes version, including the major.minor version. To see available versions, run `ibmcloud ks versions`."
   type        = string
-  default     = ""
+  default     = "1.29.2"
 }
 
 variable "iks_machine_flavor" {
