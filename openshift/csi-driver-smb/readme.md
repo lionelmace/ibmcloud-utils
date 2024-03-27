@@ -161,3 +161,7 @@ Filesystem      Size  Used Avail Use% Mounted on
 Filesystem      Size  Used Avail Use% Mounted on
 //161.156.173.196/readwrite       100G  2.1G   98G   3% /mnt/smb
 ```
+
+## Resources
+
+* https://github.com/kubernetes-csi/csi-driver-smb/tree/master/charts
