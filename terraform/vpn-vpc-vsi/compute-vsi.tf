@@ -1,6 +1,6 @@
 # Retrieve images
-# ibmcloud is images | grep redhat-9 | grep -v "deprecated"
-# ibmcloud is images | grep ubuntu-20 | grep -v "deprecated"
+# ibmcloud is images | grep redhat | grep "available"
+# ibmcloud is images | grep ubuntu | grep "available"
 variable "image_name" {
   type        = string
   default     = "ibm-ubuntu-20-04-6-minimal-amd64-3"
