@@ -25,7 +25,7 @@
 SERVER="10.243.0.5"
 SHARE="samba"
 USERNAME="Administrator"
-PASSWORD="hoVnpkl1qlJEOWqQ7DcN"
+PASSWORD="yourpasswordhere"
 PROJECT="default"
 ```
 
