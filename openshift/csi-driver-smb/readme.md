@@ -4,14 +4,18 @@
 
 1. Connect to the OpenShift cluster
 
-1. Install CSI Driver via Helm
+2. Install CSI Driver via Helm
 
     ```sh
     helm repo add csi-driver-smb https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
-    helm install csi-driver-smb csi-driver-smb/csi-driver-smb --namespace kube-system --version v1.14.0
+    helm install csi-driver-smb csi-driver-smb/csi-driver-smb --set linux.kubelet="/var/data/kubelet" --namespace kube-system --version v1.14.0    
     ```
 
-1. Check pods status
+    > Make sure to use the kubelet settings
+    > If you need to uninstall use, this command
+    > helm uninstall csi-driver-smb -n kube-system
+
+3. Check pods status
 
     ```sh
     kubectl --namespace=kube-system get pods --selector="app.kubernetes.io/name=csi-driver-smb" --watch
@@ -80,8 +84,6 @@ metadata:
     app: nginx
 spec:
   serviceName: statefulset-smb
-  securityContext:
-    privileged: true
   replicas: 1
   template:
     metadata:
