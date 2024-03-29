@@ -12,7 +12,8 @@ INGRESS_URL=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq -r .in
 CLUSTER_ID=$(ibmcloud ks cluster get --cluster $CLUSTER_NAME --json | jq -r .id)
 sleep 4
 printf "\n## Logging into OpenShift Cluster \"$CLUSTER_NAME\" ...\n"
-oc login -u apikey -p $APIKEY --server=$MASTER_URL --insecure-skip-tls-verify=true
+# oc login -u apikey -p $APIKEY --server=$MASTER_URL --insecure-skip-tls-verify=true
+oc login -u apikey -p $APIKEY --server=$MASTER_URL
 
 # Give the user a ClusterRoleBinding to the existing aggregate-olm-view ClusterRole
 # --------- BEGIN
