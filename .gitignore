@@ -5,6 +5,8 @@ local.env
 # VPN Certificates
 *.ovpn
 
+**/*.txt
+
 apikey
 settings.json
 **/*.DS_Store

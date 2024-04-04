@@ -1,0 +1,33 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: odf-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Mi
+  storageClassName: ibmc-vpc-block-5iops-tier
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: odf-test
+spec:
+  containers:
+  - name: test-odf
+    image: nginx
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do echo $(date -u) >> /test/test.txt; sleep 600; done"] 
+    volumeMounts:
+      - name: persistent-storage
+        mountPath: "/test"
+  restartPolicy: "Never"
+  volumes:
+    - name: persistent-storage
+      persistentVolumeClaim:
+        claimName: odf-pvc
