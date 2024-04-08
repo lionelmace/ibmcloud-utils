@@ -21,7 +21,7 @@ variable "cos_region" {
 ##############################################################################
 
 resource "ibm_resource_instance" "cos" {
-  name              = format("%s-%s", local.basename, "cos-scc")
+  name              = format("%s-%s", local.basename, "private-cos")
   service           = "cloud-object-storage"
   plan              = var.cos_plan
   location          = var.cos_region
@@ -31,7 +31,8 @@ resource "ibm_resource_instance" "cos" {
   parameters = {
     # SCC Control 2.1.3
     # Ensure network access for Cloud Object Storage is set to be exposed only on private endpoints
-    service-endpoints = "public"
+    # service-endpoints = "public"
+    service-endpoints = "private"
   }
 }
 
@@ -61,7 +62,8 @@ resource "ibm_cos_bucket" "scc-bucket" {
   #   request_metrics_enabled = true
   #   metrics_monitoring_crn  = module.cloud_monitoring.id
   # }
-  endpoint_type = "public"
+  # endpoint_type = "public"
+  endpoint_type = "private"
 }
 
 
