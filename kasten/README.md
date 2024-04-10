@@ -73,6 +73,10 @@
       namespace: kasten-io
     spec:
       ingressClassName: public-iks-k8s-nginx
+      tls:
+        - hosts:
+          - k10.$IKS_INGRESS_URL
+          secretName: $IKS_INGRESS_SECRET
       rules:
       - host: k10.$IKS_INGRESS_URL
         http:
