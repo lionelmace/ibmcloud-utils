@@ -2,7 +2,7 @@
 ##############################################################################
 resource "ibm_container_addons" "addons" {
   cluster           = ibm_container_vpc_cluster.roks_cluster.id
-  resource_group_id = ibm_resource_group.group.id
+  resource_group_id = local.resource_group_id
   addons {
     name            = "openshift-data-foundation"
     version         = "4.13.0"

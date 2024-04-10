@@ -38,7 +38,7 @@ module "cloud_monitoring" {
   source = "terraform-ibm-modules/observability-instances/ibm//modules/cloud_monitoring"
   # version = "latest" # Replace "latest" with a release version to lock into a specific release
 
-  resource_group_id       = ibm_resource_group.group.id
+  resource_group_id       = local.resource_group_id
   instance_name           = format("%s-%s", local.basename, "monitoring")
   plan                    = var.sysdig_plan
   service_endpoints       = var.sysdig_service_endpoints
@@ -62,6 +62,6 @@ resource "ibm_iam_access_group_policy" "iam-sysdig" {
 
   resources {
     service           = "sysdig-monitor"
-    resource_group_id = ibm_resource_group.group.id
+    resource_group_id = local.resource_group_id
   }
 }

@@ -18,7 +18,7 @@ resource "ibm_is_subnet" "subnet-mirror" {
   network_acl     = ibm_is_network_acl.multizone_acl.id
   public_gateway  = ibm_is_public_gateway.pgw-mirror.id
   tags            = var.tags
-  resource_group  = ibm_resource_group.group.id
+  resource_group  = local.resource_group_id
 
   depends_on = [ibm_is_vpc_address_prefix.address_prefix]
 }
@@ -32,6 +32,6 @@ resource "ibm_is_public_gateway" "pgw-mirror" {
   name           = "${local.basename}-pgw-mirror"
   vpc            = ibm_is_vpc.vpc.id
   zone           = "${var.region}-1"
-  resource_group = ibm_resource_group.group.id
+  resource_group = local.resource_group_id
   tags           = var.tags
 }

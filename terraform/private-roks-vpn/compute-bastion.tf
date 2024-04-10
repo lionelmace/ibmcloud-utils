@@ -46,7 +46,7 @@ resource "local_file" "private_key" {
 # Generate an SSH Key
 resource "ibm_is_ssh_key" "generated_ssh_key" {
   name           = "${local.basename}-ssh-key"
-  resource_group = ibm_resource_group.group.id
+  resource_group = local.resource_group_id
   public_key     = tls_private_key.rsa_4096_key.public_key_openssh
 }
 
@@ -58,7 +58,7 @@ resource "ibm_is_instance" "vsi" {
   profile        = var.profile_name
   image          = data.ibm_is_image.image.id
   keys           = [ibm_is_ssh_key.generated_ssh_key.id]
-  resource_group = ibm_resource_group.group.id
+  resource_group = local.resource_group_id
   tags           = var.tags
 
   primary_network_interface {

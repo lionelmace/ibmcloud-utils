@@ -86,7 +86,7 @@ variable "is_openshift_cluster" {
 resource "ibm_container_vpc_cluster" "roks_cluster" {
   name              = format("%s-%s", local.basename, var.openshift_cluster_name)
   vpc_id            = ibm_is_vpc.vpc.id
-  resource_group_id = ibm_resource_group.group.id
+  resource_group_id = local.resource_group_id
   # Optional: Specify OpenShift version. If not included, 4.13 is used
   kube_version                    = var.openshift_version == "" ? "4.13_openshift" : var.openshift_version
   cos_instance_crn                = var.is_openshift_cluster ? ibm_resource_instance.cos_openshift_registry[0].id : null
@@ -162,7 +162,7 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
 # resource "ibm_container_vpc_worker_pool" "roks_worker_pools" {
 #   for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
 #   cluster           = ibm_container_vpc_cluster.roks_cluster.id
-#   resource_group_id = ibm_resource_group.group.id
+#   resource_group_id = local.resource_group_id
 #   worker_pool_name  = each.key
 #   flavor            = lookup(each.value, "machine_type", null)
 #   vpc_id            = ibm_is_vpc.vpc.id
@@ -187,7 +187,7 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
 
 #   resources {
 #     service           = "containers-kubernetes"
-#     resource_group_id = ibm_resource_group.group.id
+#     resource_group_id = local.resource_group_id
 #   }
 # }
 
@@ -197,7 +197,7 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
 resource "ibm_resource_instance" "cos_openshift_registry" {
   count             = var.is_openshift_cluster ? 1 : 0
   name              = join("-", [local.basename, "cos-registry"])
-  resource_group_id = ibm_resource_group.group.id
+  resource_group_id = local.resource_group_id
   service           = "cloud-object-storage"
   plan              = "standard"
   location          = "global"

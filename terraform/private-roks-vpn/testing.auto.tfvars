@@ -4,6 +4,7 @@
 
 #region     = "eu-de"     # eu-de for Frankfurt MZR
 #icr_region = "de.icr.io"
+existing_resource_group_name = "ronan"
 
 ##############################################################################
 ## VPC
