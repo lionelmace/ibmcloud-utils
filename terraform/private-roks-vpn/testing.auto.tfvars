@@ -17,7 +17,7 @@ vpc_enable_public_gateway     = true
 ##############################################################################
 ## Existing Secrets Manager and Activity Tracker
 ##############################################################################
-existing_secrets_manager_guid = "d50e00f4-64c4-461a-9ce8-42117e433f73"
+existing_secrets_manager_name = "secrets-manager"
 activity_tracker_name         = "platform-activities"
 
 

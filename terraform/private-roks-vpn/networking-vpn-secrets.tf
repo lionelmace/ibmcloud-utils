@@ -1,17 +1,13 @@
 
-variable "existing_secrets_manager_guid" {
-  description = "GUID of an existing Secrets Manager instance located in the same region"
-}
-
 resource "ibm_sm_secret_group" "secret_group" {
-  instance_id = var.existing_secrets_manager_guid
+  instance_id = local.secrets_manager_guid
   name        = "${local.basename}-vpn-group"
   region      = var.region
   description = "Created by terraform as part of the client VPN example."
 }
 
 resource "ibm_sm_imported_certificate" "server_cert" {
-  instance_id     = var.existing_secrets_manager_guid
+  instance_id     = local.secrets_manager_guid
   name            = "${local.basename}-server-cert"
   description     = "Server certificate created by terraform as part of the client VPN example."
   secret_group_id = ibm_sm_secret_group.secret_group.secret_group_id
@@ -21,7 +17,7 @@ resource "ibm_sm_imported_certificate" "server_cert" {
 }
 
 resource "ibm_sm_imported_certificate" "client_cert" {
-  instance_id     = var.existing_secrets_manager_guid
+  instance_id     = local.secrets_manager_guid
   name            = "${local.basename}-client-cert"
   description     = "Client certificate created by terraform as part of the client VPN example."
   secret_group_id = ibm_sm_secret_group.secret_group.secret_group_id
