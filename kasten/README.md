@@ -75,10 +75,10 @@
       ingressClassName: public-iks-k8s-nginx
       tls:
         - hosts:
-          - k10.$IKS_INGRESS_URL
+          - $IKS_INGRESS_URL
           secretName: $IKS_INGRESS_SECRET
       rules:
-      - host: k10.$IKS_INGRESS_URL
+      - host: $IKS_INGRESS_URL
         http:
           paths:
           - path: /k10/
@@ -89,4 +89,10 @@
                 port:
                   number: 8080
     EOF
+    ```
+
+1. Open the K10 dashboard in a browser
+
+    ```sh
+    open https://$IKS_INGRESS_URL/k10
     ```
