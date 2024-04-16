@@ -1,0 +1,18 @@
+
+resource "ibm_enterprise_account" "coreit" {
+  name         = "new-child-account"
+  parent       = data.ibm_enterprise_account_groups.enterprise_country_ch.account_groups.0.crn
+  owner_iam_id = data.ibm_enterprise_account_groups.enterprise_country_ch.account_groups.0.primary_contact_iam_id
+  traits {
+    enterprise_iam_managed = true
+  }
+  options {
+    create_iam_service_id_with_apikey_and_owner_policies = true
+  }
+}
+
+# resource "ibm_enterprise_account" "child_account" {
+#   # parent = data.ibm_enterprise_accounts.accounts.accounts.0.crn // Failed
+#   name = "new-child-tf-account"
+#   owner_iam_id = "first.last@fr.ibm.com"
+# }

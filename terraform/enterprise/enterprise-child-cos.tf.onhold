@@ -1,0 +1,13 @@
+
+# Object Storage to backup the OpenShift Internal Registry
+##############################################################################
+resource "ibm_resource_instance" "cos_in_child_account" {
+  provider          = alias.child
+  name              = "cos_in_child_account"
+  resource_group_id = ibm_resource_group.group.id
+  service           = "cloud-object-storage"
+  plan              = "standard"
+  location          = "global"
+  tags              = var.tags
+}
+
