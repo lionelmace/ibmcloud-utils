@@ -257,7 +257,7 @@ ipsec:
   #
   # If 'ipsec.keyexchange=ikev1', this field must be specified.
   # If 'ipsec.keyexchange=ikev2' and this field is blank, "aes128-sha1,3des-sha1" is used for the connection.
-  esp:
+  esp: aes256-sha256-modp2048
 
   # (Optional) ipsec.ike: The list of IKE/ISAKMP SA encryption/authentication algorithms your on-premises VPN tunnel
   # endpoint uses for the connection.
@@ -266,7 +266,7 @@ ipsec:
   #
   # If 'ipsec.keyexchange=ikev1', this field must be specified.
   # If 'ipsec.keyexchange=ikev2' and this field is blank, "aes128-sha1-modp2048,3des-sha1-modp1536" is used for the connection.
-  ike:
+  ike: aes256-sha256-modp2048
 
   # ipsec.auto: Which side of the VPN connection initiates the VPN connection.
   #   start - Cluster initiates the VPN connection
@@ -372,20 +372,22 @@ remote:
   # remote.subnet: The list of on-premises private subnet CIDRs that the Kubernetes clusters are allowed to access.
   #
   # NOTE: If 'ipsec.keyexchange=ikev1', only a single subnet can be specified.
-  subnet: 192.168.0.0/24
+  # subnet: 192.168.0.0/24
+  subnet: 192.168.0.0/20
 
   # remote.id: The string identifier for the remote on-premises side your VPN tunnel endpoint uses for the connection.
   id: on-prem
 
   # (Optional) remote.privateIPtoPing: the private IP address in the remote subnet that will be used by the
   # Helm test validation programs for VPN ping connectivity tests.
-  privateIPtoPing: 45.80.171.179
+  privateIPtoPing: 192.168.15.1
 
 preshared:
 
   # preshared.secret: The pre-shared secret that your on-premises VPN tunnel endpoint gateway uses for the connection.
   # Stored in ipsec.secrets.
-  secret: "strongswan-preshared-secret"
+  # secret: "strongswan-preshared-secret"
+  secret: "eEqcNj2da4Q3xWvR"
 
 monitoring:
   # monitoring.enable: Enable monitoring for the VPN connection
