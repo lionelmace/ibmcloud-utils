@@ -1,0 +1,33 @@
+set vpn ipsec authentication psk sstest id 'ibm-cloud'
+set vpn ipsec authentication psk sstest secret '*******'
+
+set vpn ipsec esp-group sstest_esp lifetime '27000'
+set vpn ipsec esp-group sstest_esp pfs 'enable' # Use same settings as IKE
+set vpn ipsec esp-group sstest_esp proposal 1 encryption 'aes256'
+set vpn ipsec esp-group sstest_esp proposal 1 hash 'sha256'
+
+set vpn ipsec ike-group sstest_ike close-action 'restart'
+set vpn ipsec ike-group sstest_ike key-exchange 'ikev2'
+set vpn ipsec ike-group sstest_ike lifetime '300'
+set vpn ipsec ike-group sstest_ike proposal 1 dh-group '14'
+set vpn ipsec ike-group sstest_ike proposal 1 encryption 'aes256'
+set vpn ipsec ike-group sstest_ike proposal 1 hash 'sha256'
+
+set vpn ipsec profile sstest authentication mode 'pre-shared-secret'
+set vpn ipsec profile sstest authentication pre-shared-secret 'eEqcNj2da4Q3xWvR'
+set vpn ipsec profile sstest esp-group 'sstest_esp'
+set vpn ipsec profile sstest ike-group 'sstest_ike'
+
+set vpn ipsec site-to-site peer sstest authentication local-id 'on-prem'
+set vpn ipsec site-to-site peer sstest authentication mode 'pre-shared-secret'
+set vpn ipsec site-to-site peer sstest authentication remote-id 'ibm-cloud'
+set vpn ipsec site-to-site peer sstest connection-type 'initiate'
+set vpn ipsec site-to-site peer sstest ike-group 'sstest_ike'
+set vpn ipsec site-to-site peer sstest local-address '<LOCAL PUBLIC_IP>'
+set vpn ipsec site-to-site peer sstest remote-address '<REMOTE PUBLIC_IP>'
+set vpn ipsec site-to-site peer sstest tunnel 1 esp-group 'sstest_esp'
+set vpn ipsec site-to-site peer sstest tunnel 1 local prefix '192.168.0.0/20'
+set vpn ipsec site-to-site peer sstest tunnel 1 remote prefix '172.21.0.0/16'
+set vpn ipsec site-to-site peer sstest tunnel 2 esp-group 'sstest_esp'
+set vpn ipsec site-to-site peer sstest tunnel 2 local prefix '192.168.0.0/20'
+set vpn ipsec site-to-site peer sstest tunnel 2 remote prefix '172.31.0.0/16'
