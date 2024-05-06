@@ -9,8 +9,6 @@
 
 ## Steps
 
-https://cloud.ibm.com/docs/containers?topic=containers-vpn#vpn_configure
-
 ```sh
 helm repo add iks-charts https://private.icr.io/helm/iks-charts
 ```
@@ -27,6 +25,7 @@ helm search repo iks-charts
 helm install vpn iks-charts/strongswan -f config.yaml
 ```
 
+```
 NAME: vpn
 LAST DEPLOYED: Mon May  6 16:50:51 2024
 NAMESPACE: default
@@ -45,10 +44,11 @@ Thank you for installing: strongswan.   Your release is named: vpn
 
     kubectl exec -n default  $STRONGSWAN_POD -- sudo ipsec status
     kubectl logs -n default  $STRONGSWAN_POD
-
-Tunnel UP
-
 ```
+
+Output for a Tunnel UP
+
+```sh
 kubectl exec -n default  $STRONGSWAN_POD -- sudo ipsec status
 Shunted Connections:
 Bypass LAN 169.254.1.1/32:  169.254.1.1/32 === 169.254.1.1/32 PASS
@@ -62,3 +62,7 @@ Security Associations (1 up, 0 connecting):
 ```sh
 kubectl delete pods -l app=strongswan
 ```
+
+## Resources
+
+https://cloud.ibm.com/docs/containers?topic=containers-vpn#vpn_configure
