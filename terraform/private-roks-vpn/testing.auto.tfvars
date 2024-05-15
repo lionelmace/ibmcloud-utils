@@ -24,6 +24,7 @@ activity_tracker_name         = "activity-tracker"
 ##############################################################################
 ## Cluster ROKS
 ##############################################################################
+openshift_version = "4.15_openshift"
 # openshift_machine_flavor = "bx2.4x16"
 openshift_machine_flavor                  = "bx2.16x64" # ODF Flavors
 openshift_disable_public_service_endpoint = true
