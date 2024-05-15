@@ -4,7 +4,7 @@
 
 #region     = "eu-de"     # eu-de for Frankfurt MZR
 #icr_region = "de.icr.io"
-existing_resource_group_name = "ronan"
+# existing_resource_group_name = ""
 
 ##############################################################################
 ## VPC
@@ -18,7 +18,7 @@ vpc_enable_public_gateway     = true
 ## Existing Secrets Manager and Activity Tracker
 ##############################################################################
 existing_secrets_manager_name = "secrets-manager"
-activity_tracker_name         = "platform-activities"
+activity_tracker_name         = "activity-tracker"
 
 
 ##############################################################################
