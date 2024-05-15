@@ -17,7 +17,9 @@ vpc_enable_public_gateway     = true
 ##############################################################################
 ## Existing Secrets Manager and Activity Tracker
 ##############################################################################
-existing_secrets_manager_name = "secrets-manager"
+ # Create a trial version of no name is mentioned
+existing_secrets_manager_name = ""
+# existing_secrets_manager_name = "secrets-manager"
 activity_tracker_name         = "activity-tracker"
 
 
