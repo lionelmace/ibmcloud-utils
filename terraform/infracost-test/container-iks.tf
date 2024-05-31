@@ -79,21 +79,22 @@ resource "ibm_container_vpc_cluster" "iks_cluster" {
   worker_count = var.iks_worker_nodes_per_zone
   wait_till    = var.iks_wait_till
 
-  zones {
-      # Non existent subnet id. Just used for the test.
-      subnet_id = "0717-0c0899ce-48ac-4eb6-892d-4e2e1ff8c9478"
-      name      = "eu-de-1"
-  }
+  # Single Zone test
+  # zones {
+  #     # Non existent subnet id. Just used for the test.
+  #     subnet_id = "0717-0c0899ce-48ac-4eb6-892d-4e2e1ff8c9478"
+  #     name      = "eu-de-1"
+  # }
   
   # Fix cost estimate for ROKS cluster showing zero - Not fixed for dynamic zones
   # https://github.ibm.com/cloud-finops/issues/issues/173
-  # dynamic "zones" {
-  #   for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
-  #   content {
-  #     name      = zones.value.zone
-  #     subnet_id = zones.value.id
-  #   }
-  # }
+  dynamic "zones" {
+    for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
+    content {
+      name      = zones.value.zone
+      subnet_id = zones.value.id
+    }
+  }
 
   # kms_config {
   #   instance_id      = ibm_resource_instance.key-protect.guid # GUID of Key Protect instance
