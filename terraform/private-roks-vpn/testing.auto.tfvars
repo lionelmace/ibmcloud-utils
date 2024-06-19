@@ -26,10 +26,13 @@ activity_tracker_name         = "activity-tracker"
 ##############################################################################
 ## Cluster ROKS
 ##############################################################################
-openshift_version = "4.15_openshift"
+openshift_version         = "4.15_openshift"
+openshift_os              = "RHCOS"
+openshift_machine_flavor  = "bx2.16x64" # ODF Flavors
 # openshift_machine_flavor = "bx2.4x16"
-openshift_machine_flavor                  = "bx2.16x64" # ODF Flavors
 openshift_disable_public_service_endpoint = true
+# By default, public outbound access is blocked in OpenShift 4.15
+openshift_disable_outbound_traffic_protection = false
 
 # Available values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
 openshift_wait_till          = "OneWorkerNodeReady"

@@ -14,6 +14,12 @@ variable "openshift_version" {
   default     = ""
 }
 
+variable "openshift_os" {
+  description = "The Operating System (REDHAT_8_64 or RHCOS) for the Worker Nodes."
+  type        = string
+  default     = "RHCOS"
+}
+
 variable "openshift_machine_flavor" {
   description = " The default flavor of the OpenShift worker node."
   type        = string
@@ -89,6 +95,7 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
   resource_group_id = local.resource_group_id
   # Optional: Specify OpenShift version. If not included, 4.15 is used
   kube_version                    = var.openshift_version == "" ? "4.15_openshift" : var.openshift_version
+  operating_system                = var.openshift_os
   cos_instance_crn                = var.is_openshift_cluster ? ibm_resource_instance.cos_openshift_registry[0].id : null
   entitlement                     = var.entitlement
   tags                            = var.tags
