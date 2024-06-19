@@ -53,7 +53,7 @@ variable "openshift_wait_till" {
   }
 }
 
-variable "openshift_disable_outbound_traffic_protection " {
+variable "openshift_disable_outbound_traffic_protection" {
   description = "Include this option to allow public outbound access from the cluster workers."
   type        = bool
   default     = false
