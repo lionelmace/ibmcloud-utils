@@ -53,6 +53,12 @@ variable "openshift_wait_till" {
   }
 }
 
+variable "openshift_disable_outbound_traffic_protection " {
+  description = "Include this option to allow public outbound access from the cluster workers."
+  type        = bool
+  default     = false
+}
+
 variable "openshift_disable_public_service_endpoint" {
   description = "Boolean value true if Public service endpoint to be disabled."
   type        = bool
@@ -100,6 +106,7 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
   entitlement                     = var.entitlement
   tags                            = var.tags
   disable_public_service_endpoint = var.openshift_disable_public_service_endpoint
+  disable_outbound_traffic_protection = var.openshift_disable_outbound_traffic_protection 
   update_all_workers              = var.openshift_update_all_workers
 
   flavor       = var.openshift_machine_flavor
