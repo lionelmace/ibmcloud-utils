@@ -1,0 +1,25 @@
+# IAM S2S Service to Service Authorization
+##############################################################################
+
+# S2S Authorization from Cloud Logs to COS
+resource "ibm_iam_authorization_policy" "cloud-logs-cos" {
+  source_service_name = "logs"
+  target_service_name = "cloud-object-storage"
+  roles               = ["Writer"]
+}
+
+# S2S Authorization from Logs Router to Cloud Logs
+resource "ibm_iam_authorization_policy" "cloud-logs-router" {
+  source_service_name = "logs-router"
+  target_service_name = "logs"
+  roles               = ["Sender"]
+}
+
+##############################################################################
+resource "ibm_iam_authorization_policy" "iam-auth-kms-cos" {
+  source_service_name         = "cloud-object-storage"
+  source_resource_instance_id = ibm_resource_instance.cos.guid
+  target_service_name         = "kms"
+  target_resource_instance_id = ibm_resource_instance.key-protect.guid
+  roles                       = ["Reader"]
+}
