@@ -4,22 +4,6 @@
 ##############################################################################
 
 
-# Cloud Logs Variables
-##############################################################################
-# variable "sysdig_plan" {
-#   description = "plan type"
-#   type        = string
-#   default     = "graduated-tier"
-#   # default     = "graduated-tier-sysdig-secure-plus-monitor"
-# }
-
-# variable "sysdig_private_endpoint" {
-#   description = "Add this option to connect to your Sysdig service instance through the private service endpoint"
-#   type        = bool
-#   default     = true
-# }
-
-
 # Cloud Logs Resource
 ##############################################################################
 
@@ -31,4 +15,11 @@ resource "ibm_resource_instance" "logs_instance" {
   location          = var.region
   tags              = var.tags
   service_endpoints = "private"
+  parameters = {
+    logs_bucket_crn = ibm_cos_bucket.bucket-data.crn
+    logs_bucket_endpoint = ibm_cos_bucket.bucket-data.s3_endpoint_direct
+    metrics_bucket_crn = ibm_cos_bucket.bucket-metrics.crn
+    metrics_bucket_endpoint = ibm_cos_bucket.bucket-metrics.s3_endpoint_direct
+    retention_period = 7
+  }
 }
