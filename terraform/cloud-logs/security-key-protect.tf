@@ -48,17 +48,3 @@ resource "ibm_kms_key_policies" "key_policy" {
     enabled = false
   }
 }
-
-
-## IAM
-##############################################################################
-
-resource "ibm_iam_access_group_policy" "iam-kms" {
-  access_group_id = ibm_iam_access_group.accgrp.id
-  roles           = ["Reader", "Viewer"]
-
-  resources {
-    service           = "kms"
-    resource_group_id = local.resource_group_id
-  }
-}

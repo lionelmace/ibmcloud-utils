@@ -1,0 +1,419 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ibm-observe
+  labels:
+    app: logger-agent
+    version: REPLACE_VERSION
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: logger-agent-sa
+  namespace: ibm-observe
+  labels:
+    app: logger-agent
+    version: REPLACE_VERSION
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: logger-agent-read-cr
+  labels:
+    app: logger-agent
+    version: REPLACE_VERSION
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - namespaces
+      - pods
+      - nodes/proxy
+    verbs:
+      - get
+      - list
+      - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: logger-agent-read-crb
+  labels:
+    app: logger-agent
+    version: REPLACE_VERSION
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: logger-agent-read-cr
+subjects:
+  - kind: ServiceAccount
+    name: logger-agent-sa
+    namespace: ibm-observe
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: iam-api-key-secret
+  namespace: ibm-observe
+type: Opaque
+data:
+  api-key: REPLACE_IAM_API_KEY  # pragma: whitelist secret
+---
+kind: SecurityContextConstraints
+apiVersion: security.openshift.io/v1
+metadata:
+  name: hostmount-logger
+  annotations:
+    kubernetes.io/description: |-
+      hostmount-logger is similar to hostmount-anyuid, but it drops more of
+      the Linux SYSCAP capabilities to reduce blast radius.
+  labels:
+    app: logger-agent
+    version: REPLACE_VERSION
+priority: 20
+allowHostDirVolumePlugin: true
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegeEscalation: true
+allowPrivilegedContainer: true
+allowedCapabilities:
+  - DAC_READ_SEARCH
+fsGroup:
+  type: RunAsAny
+groups: []
+readOnlyRootFilesystem: false
+requiredDropCapabilities:
+  - MKNOD
+  - FSETID
+  - KILL
+  - NET_BIND_SERVICE
+  - NET_RAW
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: MustRunAs
+  seLinuxOptions:
+    type: container_logreader_t
+supplementalGroups:
+  type: RunAsAny
+users:
+  - system:serviceaccount:ibm-observe:logger-agent-sa
+volumes:
+  - configMap
+  - downwardAPI
+  - emptyDir
+  - hostPath
+  - nfs
+  - persistentVolumeClaim
+  - projected
+  - secret
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: logger-agent
+    version: REPLACE_VERSION
+  name: logger-agent-config
+  namespace: ibm-observe
+data:
+  fluent-bit.conf: |
+    [SERVICE]
+      Flush                   1
+      Log_Level               info
+      Daemon                  off
+      Parsers_File            parsers.conf
+      Plugins_File            plugins.conf
+      HTTP_Server             On
+      HTTP_Listen             0.0.0.0
+      HTTP_Port               8081
+      Health_Check            On
+      HC_Errors_Count         1
+      HC_Retry_Failure_Count  1
+      HC_Period               30
+      storage.path            /fluent-bit/cache
+      storage.max_chunks_up   192
+      storage.metrics         On
+
+    @INCLUDE input-kubernetes.conf
+    @INCLUDE filter-kubernetes.conf
+    @INCLUDE filter-add-meta-data.conf
+    @INCLUDE output-logs-router-agent-plugin.conf
+    REPLACE_ICL_META_DATA_FILTER_INCLUDE
+
+  input-kubernetes.conf: |
+    [INPUT]
+        Name              tail
+        Tag               kube.*
+        Path              /var/log/containers/logger-agent-ds-*.log
+        Path_Key          file
+        DB                /var/log/fluent-bit/fluent-bit.DB
+        Buffer_Chunk_Size 32KB
+        Buffer_Max_Size   256KB
+        Parser            cri
+        Skip_Long_Lines   On
+        Refresh_Interval  10
+        storage.type      filesystem
+        storage.pause_on_chunks_overlimit on
+
+  filter-kubernetes.conf: |
+    [FILTER]
+        Name                kubernetes
+        Match               kube.*
+        Buffer_Size         10MB
+        Kube_URL            https://kubernetes.default.svc:443
+        Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
+        Kube_Tag_Prefix     kube.var.log.containers.
+        Merge_Log           On
+        Merge_Log_Key       log_processed
+        K8S-Logging.Parser  On
+        K8S-Logging.Exclude Off
+        Use_Kubelet         On
+        Kubelet_Port        10250
+        Kubelet_Host        ${HOST_IP}
+
+  filter-add-meta-data.conf: |
+    [FILTER]
+        Name record_modifier
+        Match *
+        Record meta.cluster_name REPLACE_CLUSTER_NAME
+        Record node_name ${NODE_NAME}
+
+    [FILTER]
+        Name nest
+        Match *
+        Operation nest
+        Wildcard meta.*
+        Nest_under meta
+        Remove_prefix meta.
+
+  filter-add-ICL-meta-data.conf: |
+      [FILTER]
+          Name modify
+          Match *
+          REPLACE_SUBSYSTEM_NAME
+          REPLACE_APPLICATION_NAME
+
+  output-logs-router-agent-plugin.conf: |
+    [OUTPUT]
+        Name logger-agent-plugin
+        Id logs-router-agent-plugin
+        Match *
+        Retry_Limit 8
+
+        # Connection
+        Target_Host REPLACE_INGESTER_HOST
+        Target_Port REPLACE_INGESTER_PORT
+        Target_Path /v1/logs/ws
+
+        # Authentication
+        Authentication_Mode REPLACE_IAM_AUTH_MODE
+        IAM_Environment REPLACE_IAM_ENVIRONMENT
+        REPLACE_TRUSTED_PROFILE_ID
+        CR_Token_Mount_Path /var/run/secrets/tokens/vault-token
+
+        # Logging
+        Logging_Level info
+
+        # Buffer storage
+        storage.total_limit_size 5G
+
+  parsers.conf: |
+    [PARSER]
+        Name   apache
+        Format regex
+        Regex  ^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$
+        Time_Key time
+        Time_Format %d/%b/%Y:%H:%M:%S %z
+
+    [PARSER]
+        Name   apache2
+        Format regex
+        Regex  ^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^ ]*) +\S*)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$
+        Time_Key time
+        Time_Format %d/%b/%Y:%H:%M:%S %z
+
+    [PARSER]
+        Name   apache_error
+        Format regex
+        Regex  ^\[[^ ]* (?<time>[^\]]*)\] \[(?<level>[^\]]*)\](?: \[pid (?<pid>[^\]]*)\])?( \[client (?<client>[^\]]*)\])? (?<message>.*)$
+
+    [PARSER]
+        Name   nginx
+        Format regex
+        Regex ^(?<remote>[^ ]*) (?<host>[^ ]*) (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$
+        Time_Key time
+        Time_Format %d/%b/%Y:%H:%M:%S %z
+
+    [PARSER]
+        Name   json
+        Format json
+        Time_Key time
+        Time_Format %d/%b/%Y:%H:%M:%S %z
+
+    [PARSER]
+        Name        docker
+        Format      json
+        Time_Key    time
+        Time_Format %Y-%m-%dT%H:%M:%S.%L
+        Time_Keep   On
+
+    [PARSER]
+        Name cri
+        Format regex
+        Regex ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<message>.*)$
+        Time_Key    time
+        Time_Format %Y-%m-%dT%H:%M:%S.%L%z
+
+    [PARSER]
+        Name        syslog
+        Format      regex
+        Regex       ^\<(?<pri>[0-9]+)\>(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<host>[^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$
+        Time_Key    time
+        Time_Format %b %d %H:%M:%S
+  plugins.conf: |
+    [PLUGINS]
+        Path    /fluent-bit/bin/logs-router-agent-plugin.so
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: logger-agent-ds
+  namespace: ibm-observe
+  annotations:
+    version: REPLACE_VERSION
+  labels:
+    app: logger-agent-ds
+    version: REPLACE_VERSION
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: logger-agent-ds
+  template:
+    metadata:
+      labels:
+        name: logger-agent-ds
+        app: logger-agent-ds
+        version: REPLACE_VERSION
+    spec:
+      initContainers:
+        - command:
+            - scripts/make_db_dir.sh
+          image: icr.io/ibm/observe/logs-router-agent-init:REPLACE_VERSION
+          imagePullPolicy: Always
+          name: create-db-dir
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /var/log
+              name: varlog
+      containers:
+        - args:
+            - --config=/fluent-bit/etc/fluent-bit.conf
+          command:
+            - /fluent-bit/bin/fluent-bit
+          image: icr.io/ibm/observe/logs-router-agent:REPLACE_VERSION
+          imagePullPolicy: Always
+          name: fluent-bit
+          env:
+            - name: IAM_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: iam-api-key-secret
+                  key: api-key
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: HOST_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          resources:
+            limits:
+              # Half a CPU
+              cpu: 500m
+              ephemeral-storage: 10Gi
+              memory: 3Gi
+            requests:
+              cpu: 100m
+              ephemeral-storage: 2Gi
+              memory: 1Gi
+          securityContext:
+            capabilities:
+              add:
+                - DAC_READ_SEARCH
+            privileged: false
+            runAsGroup: 10000
+            runAsUser: 10000
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /var/run/secrets/tokens
+              name: vault-token
+            - mountPath: /var/log
+              name: varlog
+              readOnly: true
+            - mountPath: /var/log/fluent-bit
+              name: varlogfluentbit
+            - mountPath: /fluent-bit/etc/
+              name: logger-agent-config
+            - mountPath: /fluent-bit/cache
+              name: fluent-bit-cache
+          livenessProbe:
+            httpGet:
+              path: /api/v1/health/
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health/
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 20
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      serviceAccount: logger-agent-sa
+      serviceAccountName: logger-agent-sa
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: vault-token
+          projected:
+            sources:
+              - serviceAccountToken:
+                  path: vault-token
+                  expirationSeconds: 7200
+                  audience: iam
+        - hostPath:
+            path: /var/log
+            type: ""
+          name: varlog
+        - hostPath:
+            path: /var/log/fluent-bit
+            type: ""
+          name: varlogfluentbit
+        - configMap:
+            name: logger-agent-config
+          name: logger-agent-config
+        - name: fluent-bit-cache
+          emptyDir:
+            sizeLimit: 6Gi
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
