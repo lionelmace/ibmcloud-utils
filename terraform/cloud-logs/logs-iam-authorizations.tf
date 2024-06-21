@@ -19,7 +19,7 @@ resource "ibm_iam_authorization_policy" "cloud-logs-cos" {
 # }
 
 ##############################################################################
-resource "ibm_iam_authorization_policy" "iam-auth-kms-cos" {
+resource "ibm_iam_authorization_policy" "iam-auth-kms-cos-for-logs" {
   source_service_name         = "cloud-object-storage"
   source_resource_instance_id = ibm_resource_instance.cos-for-logs.guid
   target_service_name         = "kms"

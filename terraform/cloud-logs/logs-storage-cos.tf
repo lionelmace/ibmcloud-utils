@@ -8,13 +8,13 @@
 
 # COS Variables
 ##############################################################################
-variable "cos_plan" {
+variable "cos_plan_for_logs" {
   description = "COS plan type"
   type        = string
   default     = "standard"
 }
 
-variable "cos_region" {
+variable "cos_region_for_logs" {
   description = "Enter Region for provisioning"
   type        = string
   default     = "global"
@@ -26,8 +26,8 @@ variable "cos_region" {
 resource "ibm_resource_instance" "cos-for-logs" {
   name              = format("%s-%s", local.basename, "cos-scc")
   service           = "cloud-object-storage"
-  plan              = var.cos_plan
-  location          = var.cos_region
+  plan              = var.cos_plan_for_logs
+  location          = var.cos_region_for_logs
   resource_group_id = local.resource_group_id
   tags              = var.tags
 
