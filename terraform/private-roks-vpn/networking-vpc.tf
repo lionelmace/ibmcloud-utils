@@ -57,7 +57,7 @@ variable "subnet_cidr_blocks" {
 
 variable "vpc_enable_public_gateway" {
   description = "Enable public gateways, true or false"
-  default     = false
+  default     = true
 }
 
 variable "floating_ip" {
@@ -90,7 +90,7 @@ resource "ibm_is_vpc" "vpc" {
 
 resource "ibm_is_vpc_address_prefix" "address_prefix" {
 
-  count = 3
+  count = length(var.vpc_cidr_blocks)
   name  = "${local.basename}-prefix-zone-${count.index + 1}"
   zone  = "${var.region}-${(count.index % 3) + 1}"
   vpc   = ibm_is_vpc.vpc.id
@@ -104,7 +104,7 @@ resource "ibm_is_vpc_address_prefix" "address_prefix" {
 
 resource "ibm_is_public_gateway" "pgw" {
 
-  count          = var.vpc_enable_public_gateway ? 3 : 0
+  count          = var.vpc_enable_public_gateway ? length(var.subnet_cidr_blocks) : 0
   name           = "${local.basename}-pgw-${count.index + 1}"
   vpc            = ibm_is_vpc.vpc.id
   zone           = "${var.region}-${count.index + 1}"
@@ -142,7 +142,7 @@ resource "ibm_is_network_acl" "multizone_acl" {
 
 resource "ibm_is_subnet" "subnet" {
 
-  count           = 3
+  count           = length(var.subnet_cidr_blocks)
   name            = "${local.basename}-subnet-${count.index + 1}"
   vpc             = ibm_is_vpc.vpc.id
   zone            = "${var.region}-${count.index + 1}"
