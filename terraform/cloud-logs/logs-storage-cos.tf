@@ -23,7 +23,7 @@ variable "cos_region" {
 # COS Service
 ##############################################################################
 
-resource "ibm_resource_instance" "cos" {
+resource "ibm_resource_instance" "cos-for-logs" {
   name              = format("%s-%s", local.basename, "cos-scc")
   service           = "cloud-object-storage"
   plan              = var.cos_plan
@@ -40,9 +40,9 @@ resource "ibm_resource_instance" "cos" {
 
 ## COS Data Bucket
 ##############################################################################
-resource "ibm_cos_bucket" "bucket-data" {
+resource "ibm_cos_bucket" "logs-bucket-data" {
   bucket_name          = format("%s-%s", local.basename, "bucket-data")
-  resource_instance_id = ibm_resource_instance.cos.id
+  resource_instance_id = ibm_resource_instance.cos-for-logs.id
   storage_class        = "smart"
 
   # SCC Control 2.1.1.2
@@ -59,9 +59,9 @@ resource "ibm_cos_bucket" "bucket-data" {
 
 ## COS Metrics Bucket
 ##############################################################################
-resource "ibm_cos_bucket" "bucket-metrics" {
+resource "ibm_cos_bucket" "logs-bucket-metrics" {
   bucket_name          = format("%s-%s", local.basename, "bucket-metrics")
-  resource_instance_id = ibm_resource_instance.cos.id
+  resource_instance_id = ibm_resource_instance.cos-for-logs.id
   storage_class        = "smart"
 
   # SCC Control 2.1.1.2
