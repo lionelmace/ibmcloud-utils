@@ -17,7 +17,7 @@ vpc_enable_public_gateway     = true
 ## Cluster ROKS
 ##############################################################################
 # Optional: Specify OpenShift version. If not included, 4.15 is used
-openshift_version        = ""
+openshift_version        = "4.15.17_openshift"
 openshift_os             = "RHCOS"
 openshift_machine_flavor = "bx2.16x64" # ODF Flavors
 # openshift_machine_flavor = "bx2.4x16"
@@ -33,13 +33,14 @@ openshift_update_all_workers = false
 ##############################################################################
 ## Secrets Manager
 ##############################################################################
-existing_secrets_manager_name = "secrets-manager"
+# existing_secrets_manager_name = "secrets-manager"
+existing_secrets_manager_name = ""
 
 ##############################################################################
 ## COS
 ##############################################################################
-cos_plan   = "standard"
-cos_region = "global"
+# cos_plan   = "standard"
+# cos_region = "global"
 
 
 ##############################################################################
@@ -52,4 +53,4 @@ log_enable_platform_logs = false
 sysdig_plan                    = "graduated-tier"
 sysdig_enable_platform_metrics = false
 
-activity_tracker_name = "platform-activities"
+activity_tracker_name = "activity-tracker"

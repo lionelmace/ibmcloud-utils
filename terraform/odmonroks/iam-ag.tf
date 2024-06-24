@@ -37,59 +37,6 @@ resource "ibm_iam_access_group_policy" "policy-k8s-identity-administrator" {
 }
 
 
-# SERVICE ID
-# Equivalent to CLI commands in this tutorial
-# https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-tutorial-kubernetes-secrets#tutorial-external-kubernetes-secrets-access
-# resource "ibm_iam_service_id" "kubernetes-secrets" {
-#   name        = "kubernetes-secrets"
-#   description = "A service ID for testing Secrets Manager and Kubernetes Service."
-#   tags        = var.tags
-# }
-
-# resource "ibm_iam_service_policy" "secrets-policy" {
-#   iam_service_id = ibm_iam_service_id.kubernetes-secrets.id
-#   roles          = ["SecretsReader"]
-
-#   resources {
-#     service              = "secrets-manager"
-#     resource_instance_id = ibm_iam_service_id.kubernetes-secrets.id
-#   }
-# }
-
-# resource "ibm_iam_service_api_key" "secrets_apikey" {
-#   name           = "secrets_apikey"
-#   description    = "An API key for testing Secrets Manager."
-#   iam_service_id = ibm_iam_service_id.kubernetes-secrets.iam_id
-# }
-
-
 # AUTHORIZATIONS
 ##############################################################################
 
-# Authorization policy between OpenShift and Secrets Manager
-# resource "ibm_iam_authorization_policy" "roks-sm" {
-#   source_service_name         = "containers-kubernetes"
-#   source_resource_instance_id = module.vpc_openshift_cluster.vpc_openshift_cluster_id
-#   target_service_name         = "secrets-manager"
-#   target_resource_instance_id = ibm_resource_instance.secrets-manager.guid
-#   roles                       = ["Manager"]
-# }
-
-# Authorization policy between SCC (Source) and COS Bucket (Target)
-# Required by SCC in order to store SCC evaluation results into COS bucket
-resource "ibm_iam_authorization_policy" "iam-auth-scc-cos" {
-  source_service_name         = "compliance"
-  target_service_name         = "cloud-object-storage"
-  target_resource_instance_id = ibm_resource_instance.cos-scc.guid
-  roles                       = ["Writer"]
-}
-
-# Authorization policy between COS Bucket (Source) and Key Protect (Target)
-# Required to encrypt COS buckets
-resource "ibm_iam_authorization_policy" "iam-auth-kms-cos" {
-  source_service_name         = "cloud-object-storage"
-  source_resource_instance_id = ibm_resource_instance.cos-scc.guid
-  target_service_name         = "kms"
-  target_resource_instance_id = ibm_resource_instance.key-protect.guid
-  roles                       = ["Reader"]
-}
