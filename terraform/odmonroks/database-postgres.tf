@@ -95,5 +95,5 @@ locals {
 }
 
 output "icd-postgres-credentials" {
-  value     = local.endpoints
+  value = local.endpoints
 }

@@ -2,7 +2,7 @@
 ## Global Variables
 ##############################################################################
 
-region     = "eu-de"     # eu-de for Frankfurt MZR
+region = "eu-de" # eu-de for Frankfurt MZR
 # existing_resource_group_name = ""
 
 ##############################################################################

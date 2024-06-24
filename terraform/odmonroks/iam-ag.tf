@@ -1,3 +1,6 @@
+## IAM
+##############################################################################
+
 # Create Access Group
 resource "ibm_iam_access_group" "accgrp" {
   name = format("%s-%s", local.basename, "ag")
@@ -36,8 +39,6 @@ resource "ibm_iam_access_group_policy" "policy-k8s-identity-administrator" {
   }
 }
 
-## IAM
-##############################################################################
 # Doc at https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-iam
 resource "ibm_iam_access_group_policy" "iam-postgres" {
   access_group_id = ibm_iam_access_group.accgrp.id
