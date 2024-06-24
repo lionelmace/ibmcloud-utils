@@ -85,9 +85,10 @@ locals {
   endpoints = [
     {
       name        = "postgres",
-      crn         = ibm_database.icd_postgres.id
+      # crn         = ibm_database.icd_postgres.id
       db-name     = nonsensitive(ibm_resource_key.db-svc-credentials.credentials["connection.postgres.database"])
       db-host     = nonsensitive(ibm_resource_key.db-svc-credentials.credentials["connection.postgres.hosts.0.hostname"])
+      db-port     = nonsensitive(ibm_resource_key.db-svc-credentials.credentials["connection.postgres.hosts.0.port"])
       db-user     = nonsensitive(ibm_resource_key.db-svc-credentials.credentials["connection.postgres.authentication.username"])
       db-password = nonsensitive(ibm_resource_key.db-svc-credentials.credentials["connection.postgres.authentication.password"])
     }
