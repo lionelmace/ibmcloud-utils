@@ -22,7 +22,7 @@ variable "icd_postgres_ram_allocation" {
 variable "icd_postgres_disk_allocation" {
   type        = number
   description = "Disk Usage (GB/data member)"
-  default     = 20480
+  default     = 5120
 }
 
 variable "icd_postgres_core_allocation" {
@@ -80,12 +80,9 @@ resource "ibm_database" "icd_postgres" {
   group {
     group_id = "member"
     host_flavor { id = "multitenant" }
-    memory { allocation_mb = 4096 }
-    disk { allocation_mb = 5120 }
-    cpu { allocation_count = 0 }
-    # memory { allocation_mb = var.icd_postgres_ram_allocation }
-    # disk { allocation_mb = var.icd_postgres_disk_allocation }
-    # cpu { allocation_count = var.icd_postgres_core_allocation }
+    memory { allocation_mb = var.icd_postgres_ram_allocation }
+    disk { allocation_mb = var.icd_postgres_disk_allocation }
+    cpu { allocation_count = var.icd_postgres_core_allocation }
   }
 
   # auto_scaling {

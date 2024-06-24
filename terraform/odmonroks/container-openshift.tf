@@ -107,11 +107,6 @@ variable "roks_worker_pools" {
       pool_name        = "dev"
       machine_type     = "bx2.4x16"
       workers_per_zone = 1
-      # },
-      # {
-      #     pool_name        = "odf"
-      #     machine_type     = "bx2.16x64"
-      #     workers_per_zone = 1
     }
   ]
 
@@ -137,7 +132,7 @@ variable "roks_worker_pools" {
 resource "ibm_container_vpc_cluster" "roks_cluster" {
   name              = format("%s-%s", local.basename, var.openshift_cluster_name)
   vpc_id            = ibm_is_vpc.vpc.id
-  resource_group_id = ibm_resource_group.group.id
+  resource_group_id = local.resource_group_id
   # Optional: Specify OpenShift version. If not included, 4.15 is used
   kube_version         = var.openshift_version == "" ? "4.15_openshift" : var.openshift_version
   operating_system     = var.openshift_os
@@ -161,58 +156,16 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
       subnet_id = zones.value.id
     }
   }
-
-  kms_config {
-    instance_id      = ibm_resource_instance.key-protect.guid # GUID of Key Protect instance
-    crk_id           = ibm_kms_key.key.key_id                 # ID of customer root key
-    private_endpoint = true
-  }
-  depends_on = [
-    ibm_iam_authorization_policy.roks-kms
-  ]
 }
-
-# Additional Worker Pool
-##############################################################################
-# resource "ibm_container_vpc_worker_pool" "roks_worker_pools" {
-#   for_each          = { for pool in var.roks_worker_pools : pool.pool_name => pool }
-#   cluster           = ibm_container_vpc_cluster.roks_cluster.id
-#   resource_group_id = ibm_resource_group.group.id
-#   worker_pool_name  = each.key
-#   flavor            = lookup(each.value, "machine_type", null)
-#   vpc_id            = ibm_is_vpc.vpc.id
-#   worker_count      = each.value.workers_per_zone
-#   operating_system  = var.openshift_os
-
-#   dynamic "zones" {
-#     for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
-#     content {
-#       name      = zones.value.zone
-#       subnet_id = zones.value.id
-#     }
-#   }
-# }
 
 # Object Storage to backup the OpenShift Internal Registry
 ##############################################################################
 resource "ibm_resource_instance" "cos_openshift_registry" {
   count             = var.is_openshift_cluster ? 1 : 0
   name              = join("-", [local.basename, "cos-registry"])
-  resource_group_id = ibm_resource_group.group.id
+  resource_group_id = local.resource_group_id
   service           = "cloud-object-storage"
   plan              = "standard"
   location          = "global"
   tags              = var.tags
-}
-
-# IAM AUTHORIZATIONS
-##############################################################################
-
-# Authorization policy between OpenShift and Key Protect
-# Require to encrypt OpenShift with Key in Key Protect
-resource "ibm_iam_authorization_policy" "roks-kms" {
-  source_service_name         = "containers-kubernetes"
-  target_service_name         = "kms"
-  target_resource_instance_id = ibm_resource_instance.key-protect.guid
-  roles                       = ["Reader"]
 }

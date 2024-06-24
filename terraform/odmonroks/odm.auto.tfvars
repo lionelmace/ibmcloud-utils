@@ -2,8 +2,8 @@
 ## Global Variables
 ##############################################################################
 
-#region     = "eu-de"     # eu-de for Frankfurt MZR
-#icr_region = "de.icr.io"
+region     = "eu-de"     # eu-de for Frankfurt MZR
+# existing_resource_group_name = ""
 
 ##############################################################################
 ## VPC
@@ -29,11 +29,6 @@ openshift_disable_outbound_traffic_protection = true
 openshift_wait_till          = "OneWorkerNodeReady"
 openshift_update_all_workers = false
 
-##############################################################################
-## Secrets Manager
-##############################################################################
-# existing_secrets_manager_name = "secrets-manager"
-existing_secrets_manager_name = ""
 
 ##############################################################################
 ## ICD Postgres
@@ -46,11 +41,11 @@ icd_postgres_db_version        = "16"
 icd_postgres_service_endpoints = "public"
 
 # Minimum parameter for Standard Edition
-icd_postgres_ram_allocation  = 1024
-icd_postgres_disk_allocation = 20480
+icd_postgres_ram_allocation  = 4096
+icd_postgres_disk_allocation = 5120
 icd_postgres_core_allocation = 0
 
-icd_postgres_users = [{
-  name     = "user123"
-  password = "Password12forODM"
-}]
+# icd_postgres_users = [{
+#   name     = "user123"
+#   password = "Password12forODM"
+# }]
