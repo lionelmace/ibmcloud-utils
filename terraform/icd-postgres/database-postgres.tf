@@ -68,21 +68,24 @@ resource "ibm_database" "icd_postgres" {
   tags              = var.tags
 
   # Encrypt DB (comment to use IBM-provided Automatic Key)
-  key_protect_instance      = ibm_resource_instance.key-protect.id
-  key_protect_key           = ibm_kms_key.key.id
-  backup_encryption_key_crn = ibm_kms_key.key.id
-  depends_on = [ # require when using encryption key otherwise provisioning failed
-    ibm_iam_authorization_policy.postgres-kms,
-  ]
+  # key_protect_instance      = ibm_resource_instance.key-protect.id
+  # key_protect_key           = ibm_kms_key.key.id
+  # backup_encryption_key_crn = ibm_kms_key.key.id
+  # depends_on = [ # require when using encryption key otherwise provisioning failed
+  #   ibm_iam_authorization_policy.postgres-kms,
+  # ]
 
   # DB Settings
   adminpassword = var.icd_postgres_adminpassword
   group {
     group_id = "member"
-    # host_flavor { id = "multitenant" }
-    memory { allocation_mb = var.icd_postgres_ram_allocation }
-    disk { allocation_mb = var.icd_postgres_disk_allocation }
-    cpu { allocation_count = var.icd_postgres_core_allocation }
+    host_flavor { id = "multitenant" }
+    memory { allocation_mb = 4096 }
+    disk { allocation_mb = 5120 }
+    cpu { allocation_count = 0 }
+    # memory { allocation_mb = var.icd_postgres_ram_allocation }
+    # disk { allocation_mb = var.icd_postgres_disk_allocation }
+    # cpu { allocation_count = var.icd_postgres_core_allocation }
   }
 
   # auto_scaling {
@@ -123,21 +126,11 @@ resource "ibm_database" "icd_postgres" {
 
 ## Service Credentials
 ##############################################################################
-resource "ibm_resource_key" "icd_postgres_key" {
+resource "ibm_resource_key" "db-svc-credentials" {
   name                 = format("%s-%s", local.basename, "postgres-key")
   resource_instance_id = ibm_database.icd_postgres.id
   role                 = "Viewer"
 }
-
-# Database connection
-##############################################################################
-# data "ibm_database_connection" "postgres_db_connection" {
-#     deployment_id = ibm_database.icd_postgres.id
-#     endpoint_type = var.icd_postgres_service_endpoints
-#     user_id = "user_id"
-#     user_type = "database"
-# }
-
 
 ## IAM
 ##############################################################################
@@ -155,18 +148,19 @@ resource "ibm_iam_access_group_policy" "iam-postgres" {
 locals {
   endpoints = [
     {
-      name     = "postgres",
-      crn      = ibm_database.icd_postgres.id
-      hostname = ibm_resource_key.icd_postgres_key.credentials["connection.postgres.hosts.0.hostname"]
+      name        = "postgres",
+      crn         = ibm_database.icd_postgres.id
+      db-name     = nonsensitive(ibm_resource_key.db-svc-credentials.credentials["connection.postgres.database"])
+      db-host     = nonsensitive(ibm_resource_key.db-svc-credentials.credentials["connection.postgres.hosts.0.hostname"])
+      db-user     = nonsensitive(ibm_resource_key.db-svc-credentials.credentials["connection.postgres.authentication.username"])
+      db-password = nonsensitive(ibm_resource_key.db-svc-credentials.credentials["connection.postgres.authentication.password"])
     }
   ]
 }
 
-output "endpoints" {
-  sensitive = true
+output "icd-postgres-credentials" {
   value     = local.endpoints
 }
-
 
 ## VPE (Optional)
 ##############################################################################
