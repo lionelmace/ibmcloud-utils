@@ -19,8 +19,8 @@ vpc_enable_public_gateway     = true
 # Optional: Specify OpenShift version. If not included, 4.15 is used
 openshift_version        = "4.15.17_openshift"
 openshift_os             = "RHCOS"
-openshift_machine_flavor = "bx2.16x64" # ODF Flavors
-# openshift_machine_flavor = "bx2.4x16"
+# openshift_machine_flavor = "bx2.16x64" # ODF Flavors
+openshift_machine_flavor = "bx2.4x16"
 
 openshift_disable_public_service_endpoint = false
 # By default, public outbound access is blocked in OpenShift 4.15
@@ -54,3 +54,23 @@ sysdig_plan                    = "graduated-tier"
 sysdig_enable_platform_metrics = false
 
 activity_tracker_name = "activity-tracker"
+
+##############################################################################
+## ICD Postgres
+##############################################################################
+# Available Plans: standard, enterprise
+icd_postgres_plan = "standard"
+# expected length in the range (10 - 32) - must not contain special characters
+icd_postgres_adminpassword     = "Passw0rd01forODM"
+icd_postgres_db_version        = "12"
+icd_postgres_service_endpoints = "public"
+
+# Minimum parameter for Standard Edition
+icd_postgres_ram_allocation  = 1024
+icd_postgres_disk_allocation = 20480
+icd_postgres_core_allocation = 0
+
+icd_postgres_users = [{
+  name     = "user123"
+  password = "Password12forODM"
+}]
