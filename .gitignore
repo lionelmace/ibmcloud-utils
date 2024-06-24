@@ -6,6 +6,8 @@ local.env
 *.ovpn
 
 **/*.txt
+**/*.crt
+**/*.key
 
 apikey
 settings.json
