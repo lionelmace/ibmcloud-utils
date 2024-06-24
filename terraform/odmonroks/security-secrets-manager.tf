@@ -19,13 +19,6 @@ resource "ibm_resource_instance" "secrets_manager" {
   service_endpoints = "private"
 }
 
-# resource "ibm_sm_secret_group" "sm_secret_group"{
-#   instance_id   = local.secrets_manager_guid
-#   region        = var.region
-#   name          = format("%s-%s", local.basename, "sm-group")
-#   description   = "Secret Group"
-# }
-
 data "ibm_resource_instance" "secrets_manager" {
   count = var.existing_secrets_manager_name != "" ? 1 : 0
   name  = var.existing_secrets_manager_name

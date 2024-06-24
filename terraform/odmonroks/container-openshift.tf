@@ -193,35 +193,6 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
 #   }
 # }
 
-# Retrieve VPC LB attached to the cluster
-##############################################################################
-# data "ibm_container_vpc_cluster" "roks_cluster" {
-#   name = ibm_container_vpc_cluster.roks_cluster.id
-# }
-
-# data "ibm_container_vpc_alb" "roks_cluster_alb" {
-#   alb_id = data.ibm_container_vpc_cluster.roks_cluster.albs[0].id
-# }
-
-# output "roks_cluster_alb" {
-#   value = data.ibm_container_vpc_alb.roks_cluster_alb
-# }
-
-
-## IAM
-##############################################################################
-# resource "ibm_iam_access_group_policy" "iam-roks" {
-#   access_group_id = ibm_iam_access_group.accgrp.id
-#   # Full Access Rights
-#   roles = ["Reader", "Writer", "Manager", "Administrator", "Editor", "Operator", "Viewer"]
-
-#   resources {
-#     service           = "containers-kubernetes"
-#     resource_group_id = ibm_resource_group.group.id
-#   }
-# }
-
-
 # Object Storage to backup the OpenShift Internal Registry
 ##############################################################################
 resource "ibm_resource_instance" "cos_openshift_registry" {
@@ -233,33 +204,6 @@ resource "ibm_resource_instance" "cos_openshift_registry" {
   location          = "global"
   tags              = var.tags
 }
-
-
-##############################################################################
-# Connect Log Analysis Service to cluster
-# 
-# Integrating Logging requires the master node to be 'Ready'
-# If not, you will face a timeout error after 45mins
-##############################################################################
-# resource "ibm_ob_logging" "openshift_log_connect" {
-#   depends_on       = [module.log_analysis.key_guid]
-#   cluster          = ibm_container_vpc_cluster.roks_cluster.id
-#   instance_id      = module.log_analysis.guid
-#   private_endpoint = var.log_private_endpoint
-# }
-
-##############################################################################
-# Connect Monitoring Service to cluster
-# 
-# Integrating Monitoring requires the master node to be 'Ready'
-# If not, you will face a timeout error after 45mins
-##############################################################################
-# resource "ibm_ob_monitoring" "openshift_connect_monitoring" {
-#   depends_on       = [module.cloud_monitoring.key_guid]
-#   cluster          = ibm_container_vpc_cluster.roks_cluster.id
-#   instance_id      = module.cloud_monitoring.guid
-#   private_endpoint = var.sysdig_private_endpoint
-# }
 
 # IAM AUTHORIZATIONS
 ##############################################################################
