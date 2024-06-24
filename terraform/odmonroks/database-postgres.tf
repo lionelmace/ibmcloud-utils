@@ -79,7 +79,7 @@ resource "ibm_database" "icd_postgres" {
   adminpassword = var.icd_postgres_adminpassword
   group {
     group_id = "member"
-    host_flavor { id = "multitenant" }
+    # host_flavor { id = "multitenant" }
     memory { allocation_mb = var.icd_postgres_ram_allocation }
     disk { allocation_mb = var.icd_postgres_disk_allocation }
     cpu { allocation_count = var.icd_postgres_core_allocation }
