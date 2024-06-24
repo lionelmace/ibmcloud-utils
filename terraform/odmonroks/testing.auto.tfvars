@@ -62,7 +62,7 @@ activity_tracker_name = "activity-tracker"
 icd_postgres_plan = "standard"
 # expected length in the range (10 - 32) - must not contain special characters
 icd_postgres_adminpassword     = "Passw0rd01forODM"
-icd_postgres_db_version        = "12"
+icd_postgres_db_version        = "16"
 icd_postgres_service_endpoints = "public"
 
 # Minimum parameter for Standard Edition
