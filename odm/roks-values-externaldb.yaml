@@ -17,10 +17,10 @@ image:
 #   runAsUser: ''
 externalDatabase:
   type: postgresql
-  port: 32312
+  port: 32046
   secretCredentials: odm-db-credentials
   databaseName: ibmclouddb
-  serverName: 75b9f0b9-bac9-4192-b2e2-7fad648a53e2.bngflf7f0ktkmkdl3jhg.databases.appdomain.cloud
+  serverName: ad64635e-93e7-4285-b7ed-aac7cfda5dcc.bc28ac43cf10402584b5f01db462d330.databases.appdomain.cloud
   populateSampleData: true
 license: true
 service:
