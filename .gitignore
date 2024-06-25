@@ -1,5 +1,5 @@
 # te
-local.env
+**/*.env
 **/secrets/*
 
 # VPN Certificates
