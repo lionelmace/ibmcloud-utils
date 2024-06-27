@@ -26,8 +26,12 @@ metadata:
   name: nginx-mylb
   annotations:
     service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: public
+    # service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: private
     service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: "ams03"
+    # Public VLAN ID (visible in the URL)
     service.kubernetes.io/ibm-load-balancer-cloud-provider-vlan: "3427877"
+    # Private VLAN ID (visible in the URL)
+    # service.kubernetes.io/ibm-load-balancer-cloud-provider-vlan: "2004119"
     # Annotation to specify a version 2.0 load balancer.
     # service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "ipvs"
 spec:
