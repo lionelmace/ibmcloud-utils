@@ -25,7 +25,7 @@ do
   #ibmcloud account user-invite $email -o cloud-workshop -s $lastname --space-role SpaceDeveloper
 
   ## Give Editor access to a Resource Group (Not the right command)
-  ibmcloud iam user-policy-create lionel.mace@gmail.com --roles Viewer --resource-type resource-group --resource a260658ac8b14975827b8d6b3d146aea
+  ibmcloud iam user-policy-create $email --roles Viewer --resource-type resource-group --resource a260658ac8b14975827b8d6b3d146aea
   # a260658ac8b14975827b8d6b3d146aea
   # ibmcloud iam user-policy-create $email --roles Viewer --resource-group-name $RG
 

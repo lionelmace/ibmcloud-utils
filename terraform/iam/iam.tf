@@ -20,6 +20,19 @@ resource "ibm_iam_access_group_policy" "iam_create_user_api_key_service_id" {
   }
 }
 
+# Service: PowerVS
+# resource "ibm_iam_access_group_policy" "policy-power-vs" {
+#   access_group_id = ibm_iam_access_group.ag-test.id
+#   resource_attributes {
+#     name     = "serviceType"
+#     operator = "stringEquals"
+#     value    = "service"
+#   }
+#   # roles = ["Administrator", "Manager"]
+#   roles = ["Viewer"]
+# }
+
+
 # Service: All Identity and Access enabled services
 resource "ibm_iam_access_group_policy" "policy-all-iam-services" {
   access_group_id = ibm_iam_access_group.ag-test.id
