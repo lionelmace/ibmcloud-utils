@@ -1,0 +1,88 @@
+
+# Cloud Monitoring Services
+#
+# Create one Cloud Monitoring service instance per MZR in Europe
+# Set each instance as Platform Monitoring.
+##############################################################################
+
+
+# Monitoring Variables
+##############################################################################
+variable "sysdig_plan" {
+  description = "plan type"
+  type        = string
+  default     = "graduated-tier"
+}
+
+variable "sysdig_service_endpoints" {
+  description = "Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'."
+  type        = string
+  default     = "private"
+}
+
+variable "sysdig_private_endpoint" {
+  description = "Add this option to connect to your Sysdig service instance through the private service endpoint"
+  type        = bool
+  default     = true
+}
+
+variable "sysdig_enable_platform_metrics" {
+  type        = bool
+  description = "Receive platform metrics in Sysdig"
+  default     = true
+}
+
+# Monitoring Resource
+##############################################################################
+
+module "cloud_monitoring_de" {
+  source = "terraform-ibm-modules/observability-instances/ibm//modules/cloud_monitoring"
+  # version = "latest" # Replace "latest" with a release version to lock into a specific release
+
+  resource_group_id       = ibm_resource_group.group.id
+  instance_name           = "shared-monitoring-eu-de"
+  plan                    = var.sysdig_plan
+  service_endpoints       = var.sysdig_service_endpoints
+  enable_platform_metrics = var.sysdig_enable_platform_metrics
+  region                  = "eu-de"
+  tags                    = var.tags
+}
+
+module "cloud_monitoring_es" {
+  source = "terraform-ibm-modules/observability-instances/ibm//modules/cloud_monitoring"
+  # version = "latest" # Replace "latest" with a release version to lock into a specific release
+
+  resource_group_id       = ibm_resource_group.group.id
+  instance_name           = "shared-monitoring-eu-es"
+  plan                    = var.sysdig_plan
+  service_endpoints       = var.sysdig_service_endpoints
+  enable_platform_metrics = var.sysdig_enable_platform_metrics
+  region                  = "eu-es"
+  tags                    = var.tags
+}
+
+module "cloud_monitoring_gb" {
+  source = "terraform-ibm-modules/observability-instances/ibm//modules/cloud_monitoring"
+  # version = "latest" # Replace "latest" with a release version to lock into a specific release
+
+  resource_group_id       = ibm_resource_group.group.id
+  instance_name           = "shared-monitoring-eu-gb"
+  plan                    = var.sysdig_plan
+  service_endpoints       = var.sysdig_service_endpoints
+  enable_platform_metrics = var.sysdig_enable_platform_metrics
+  region                  = "eu-gb"
+  tags                    = var.tags
+}
+
+# ## IAM
+# ##############################################################################
+
+# resource "ibm_iam_access_group_policy" "iam-sysdig" {
+#   access_group_id = ibm_iam_access_group.accgrp.id
+#   roles           = ["Writer", "Editor"]
+
+#   resources {
+#     service           = "sysdig-monitor"
+#     resource_group_id = ibm_resource_group.group.id
+#   }
+# }
