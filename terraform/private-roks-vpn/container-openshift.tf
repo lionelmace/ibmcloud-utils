@@ -108,6 +108,7 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
   disable_public_service_endpoint = var.openshift_disable_public_service_endpoint
   disable_outbound_traffic_protection = var.openshift_disable_outbound_traffic_protection 
   update_all_workers              = var.openshift_update_all_workers
+  security_groups = [ibm_is_security_group.sg-cluster-outbound.id]
 
   flavor       = var.openshift_machine_flavor
   worker_count = var.openshift_worker_nodes_per_zone

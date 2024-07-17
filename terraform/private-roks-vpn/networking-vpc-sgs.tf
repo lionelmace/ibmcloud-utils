@@ -155,6 +155,38 @@ resource "ibm_is_security_group_rule" "sg-rule-kube-master-udp-outbound" {
   }
 }
 
+##############################################################################
+# New Outbound security group rules to add for version 4.14 or later
+# Source: https://cloud.ibm.com/docs/openshift?topic=openshift-vpc-security-group&interface=ui#rules-sg-128
+resource "ibm_is_security_group" "sg-cluster-outbound" {
+  name           = format("%s-%s", local.basename, "kube-outbound-sg")
+  vpc            = ibm_is_vpc.vpc.id
+  resource_group = local.resource_group_id
+}
+
+resource "ibm_is_security_group_rule" "sg-rule-outbound-addprefix-443" {
+  group     = ibm_is_security_group.sg-cluster-outbound.id
+  count     = length(var.vpc_cidr_blocks)
+  direction = "outbound"
+  remote    = element(var.vpc_cidr_blocks, count.index)
+  tcp {
+    port_min = 443
+    port_max = 443
+  }
+}
+
+resource "ibm_is_security_group_rule" "sg-rule-outbound-addprefix-4443" {
+  group     = ibm_is_security_group.sg-cluster-outbound.id
+  count     = length(var.vpc_cidr_blocks)
+  direction = "outbound"
+  remote    = element(var.vpc_cidr_blocks, count.index)
+  tcp {
+    port_min = 4443
+    port_max = 4443
+  }
+}
+##############################################################################
+
 # Allow access to the OpenShift Console my home IP address
 # Required if allowing traffic only from CIS
 ##############################################################################
