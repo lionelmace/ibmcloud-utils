@@ -27,6 +27,9 @@ resource "ibm_is_subnet" "subnet-mirror" {
 # Public Gateways
 ##############################################################################
 
+# Warning: cannot create a Public Gateway on an existing subnet with already a PGW
+# [ERROR] Error while creating Public Gateway Creating a new public gateway 
+# will put the user over quota. Allocated: 1, Requested: 1, Quota: 1
 resource "ibm_is_public_gateway" "pgw-mirror" {
 
   name           = "${local.basename}-pgw-mirror"
