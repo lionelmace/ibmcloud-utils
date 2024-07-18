@@ -48,7 +48,7 @@ resource "ibm_cos_bucket" "logs-bucket-data" {
   # SCC Control 2.1.1.2
   # Ensure Cloud Object Storage encryption is enabled with BYOK
   # Key management services can only be added during bucket creation.
-  depends_on  = [ibm_iam_authorization_policy.iam-auth-kms-cos]
+  depends_on  = [ibm_iam_authorization_policy.iam-auth-kms-cos-for-logs]
   kms_key_crn = ibm_kms_key.key.id
 
   # Does Cloud Logs require Cross-Region bucket for resiliency?
@@ -67,7 +67,7 @@ resource "ibm_cos_bucket" "logs-bucket-metrics" {
   # SCC Control 2.1.1.2
   # Ensure Cloud Object Storage encryption is enabled with BYOK
   # Key management services can only be added during bucket creation.
-  depends_on  = [ibm_iam_authorization_policy.iam-auth-kms-cos]
+  depends_on  = [ibm_iam_authorization_policy.iam-auth-kms-cos-for-logs]
   kms_key_crn = ibm_kms_key.key.id
 
   # Does Cloud Logs require Cross-Region bucket for resiliency?

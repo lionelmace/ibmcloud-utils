@@ -11,7 +11,7 @@ resource "ibm_resource_instance" "logs_instance" {
   resource_group_id = local.resource_group_id
   name              = format("%s-%s", local.basename, "cloud-logs")
   service           = "logs"
-  plan              = "beta"
+  plan              = "standard"
   location          = var.region
   tags              = var.tags
   service_endpoints = "private"
