@@ -1,26 +1,67 @@
 ---
+# Create a namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test-nlb
+  labels:
+    environment: production
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test
+  namespace: test-nlb
+  labels:
+    app: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      containers:
+      - name: mtls-test
+        image: openshift/hello-openshift
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 250m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 384Mi
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: nlb-tcp
-  # namespace: default
+  namespace: test-nlb
   annotations:
     service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "nlb"
     service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: "public"
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-node-selector: "<key>=<value>"
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-subnets: "0797-91785612-96be-48eb-a42b-448c79975ef7"
-    #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: "eu-gb-2"
+    #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: "eu-de-1"
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-health-check-udp: "<tcp_port"
   labels:
-    app: mytodo
-    tier: frontend
+    app: test
 spec:
   type: LoadBalancer
   selector:
-    app: mytodo
-    tier: frontend
+    app: test
   ports:
-  - name: 8p80-tcp
+  - name: 8080-tcp
     port: 8080
     protocol: TCP
     targetPort: 8080
