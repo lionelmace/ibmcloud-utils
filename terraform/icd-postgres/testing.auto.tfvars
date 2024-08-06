@@ -32,7 +32,7 @@ icd_postgres_use_vpe           = "true"
 # Minimum parameter for Standard Edition
 icd_postgres_ram_allocation  = 4096
 icd_postgres_disk_allocation = 5120
-icd_postgres_core_allocation = 0
+icd_postgres_core_allocation = 2
 
 icd_postgres_users = [{
   name     = "user123"

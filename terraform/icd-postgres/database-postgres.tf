@@ -79,6 +79,7 @@ resource "ibm_database" "icd_postgres" {
   adminpassword = var.icd_postgres_adminpassword
   group {
     group_id = "member"
+    # New flag for the new Hosting Model
     host_flavor { id = "multitenant" }
     memory { allocation_mb = var.icd_postgres_ram_allocation }
     disk { allocation_mb = var.icd_postgres_disk_allocation }
