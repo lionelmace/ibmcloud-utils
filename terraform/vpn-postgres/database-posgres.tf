@@ -109,7 +109,7 @@ resource "ibm_resource_key" "icd_postgresql_key" {
 # }
 
 locals {
-  endpoints = [
+  postgres_endpoints = [
     {
       name     = "postgresql",
       crn      = ibm_database.icd_postgresql.id
@@ -118,9 +118,9 @@ locals {
   ]
 }
 
-output "endpoints" {
+output "postgres_endpoints" {
   sensitive = true
-  value     = local.endpoints
+  value     = local.postgres_endpoints
 }
 
 
@@ -143,7 +143,7 @@ resource "time_sleep" "wait_for_postgresql_initialization" {
 # otherwise you'll face this error: "Service does not support VPE extensions."
 ##############################################################################
 resource "ibm_is_virtual_endpoint_gateway" "vpe_postgresql" {
-  for_each = { for target in local.endpoints : target.name => target if tobool(var.icd_postgresql_use_vpe) }
+  for_each = { for target in local.postgres_endpoints : target.name => target if tobool(var.icd_postgresql_use_vpe) }
 
   name           = "${local.basename}-postgresql-vpe"
   resource_group = ibm_resource_group.group.id

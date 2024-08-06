@@ -71,7 +71,8 @@ resource "ibm_is_security_group_rule" "vpn_icmp_inbound" {
   }
 }
 
-# allow clients to reach cloud service endpoints
+# Accessing IaaS endpoints clients through VPN
+# Source: https://cloud.ibm.com/docs/vpc?topic=vpc-build-se-connectivity-using-vpn
 resource "ibm_is_security_group_rule" "vpn_cse_outbound" {
   group     = ibm_is_security_group.vpn.id
   direction = "outbound"
@@ -87,6 +88,8 @@ resource "ibm_is_vpn_server_route" "route_nating" {
   name        = "nating-frankfurt"
 }
 
+# Accessing service endpoints through VPN
+# Source: https://cloud.ibm.com/docs/vpc?topic=vpc-build-se-connectivity-using-vpn
 resource "ibm_is_vpn_server_route" "route_cse_to_vpc" {
   vpn_server  = ibm_is_vpn_server.vpn.id
   action      = "deliver"

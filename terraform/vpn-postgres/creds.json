@@ -1,0 +1,77 @@
+{
+    "apikey": "T0AE2qi7CGgu3scU9NDqM4lsjPZlqT08k6jUkva1lDmq",
+    "connection": {
+      "cli": {
+        "arguments": [
+          [
+            "-u",
+            "aa9f4190",
+            "-p",
+            "7ECTEGWLVySbn2yD",
+            "--ssl",
+            "--sslCAFile",
+            "4ce8398a-c09b-4ab3-aec2-03918148c432",
+            "--authenticationDatabase",
+            "admin",
+            "--host",
+            "328edc21-0828-4027-b9c5-2d2d6c7eb37d.bv7e8rbf0shslbo0krsg.private.databases.appdomain.cloud:30739"
+          ]
+        ],
+        "bin": "db2",
+        "certificate": {
+          "certificate_base64": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURIVENDQWdXZ0F3SUJBZ0lVYUJOS3ZKSk5yWDIwZUthVGFkTlNLckV0TGUwd0RRWUpLb1pJaHZjTkFRRUwKQlFBd0hqRWNNQm9HQTFVRUF3d1RTVUpOSUVOc2IzVmtJRVJoZEdGaVlYTmxjekFlRncweU1EQTNNVFl3TlRNeQpNalphRncwek1EQTNNVFF3TlRNeU1qWmFNQjR4SERBYUJnTlZCQU1NRTBsQ1RTQkRiRzkxWkNCRVlYUmhZbUZ6ClpYTXdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBd2dnRUtBb0lCQVFEUjFWZjRNRDFvNkI5Qkw5TG4KMkh0NXVQQTA2VnhwSXlINTA4QXgrL1ViN0M2eVcwUHlYK0U0QzV5bTZpOWl1VitSbFFZa0lINjBzUlc3dVArTgp3YVRxNjZtZGFxNzFmN3BrZXpoR1BkblpKdUFrUmpjdDgyNFlIZHNoUmROcFRiR2Z4emJVcUk2VVdCbVlNaTVTCllVL3F4TDFOMkhTUGxQcmlpNTVFU3FPVGxlNUxIbHpVbGk0d0VLTExYNVE2WEt3NmJwaGpiNHNaK01ydFJiZXAKcElySlJ1ejB5c2RKcWo1cDRDc2dYY0tEblpiUHoxRFk5RUtoMXhyR3RaazUreGJZeWRENVVPRFpNd1BnVjY1aQptRVUvTnBlUzNaTDJWQWs2ZmlFak51NXdVMStUdk1rRWd1STNhbDFJSXNqamZKcGNiZzFmTHMvditsamtDZEdFCm52MmxBZ01CQUFHalV6QlJNQjBHQTFVZERnUVdCQlJhb2RDdjIwRldHSEx5eFlqTmRzZDF4elZGbERBZkJnTlYKSFNNRUdEQVdnQlJhb2RDdjIwRldHSEx5eFlqTmRzZDF4elZGbERBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUEwRwpDU3FHU0liM0RRRUJDd1VBQTRJQkFRQmlGanFZM1QvdFNWbTR1Zys4MlFxVEtqYzdWN3NlN2Q2RXlieUlNb1JzCjdhSSs4eHFlWUxHN3ZSSEljOWVPcXN5Q0VHbmV4ZlFNWXI3aDFLNjFWc05QZk9uNWx1S3Q4R2tmWDRkWXkyYXoKMHp5clJIdzJkOUMwbml0ck1hb1VFRW9mYkFZQytjQmYvTHdnd3ZzcU5RbWJvV2NvMndhV00vQnhYRXI5cHZUbwo5SXNpZDA5Z3VwRENEU1huNDhjeVlReVFlU1BSbDlxdEpFSVRtWDNqU0VOVVp0NGV3V0lUMzUyNDdzeURXZHZxClhBSEtxMUdGTzhEZEVaQlNldVViNkVOamFVOWVEM2JTb3JWc0xSSGlyeFJoTEhhUTJnVE9zQ1ltdjkzemtVN1cKQUZjcnVucCtqaWZyZk95UWp3V2E0WXJaZHExNGRWVzVMNGpwOFpzOXlmakIKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=",
+          "name": "4ce8398a-c09b-4ab3-aec2-03918148c432"
+        },
+        "composed": [
+          "db2 -u aa9f4190 -p 7ECTEGWLVySbn2yD --ssl --sslCAFile 4ce8398a-c09b-4ab3-aec2-03918148c432 --authenticationDatabase admin --host 328edc21-0828-4027-b9c5-2d2d6c7eb37d.bv7e8rbf0shslbo0krsg.private.databases.appdomain.cloud:30739"
+        ],
+        "environment": {},
+        "type": "cli"
+      },
+      "db2": {
+        "authentication": {
+          "method": "direct",
+          "password": "7ECTEGWLVySbn2yD",
+          "username": "aa9f4190"
+        },
+        "certificate": {
+          "certificate_base64": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURIVENDQWdXZ0F3SUJBZ0lVYUJOS3ZKSk5yWDIwZUthVGFkTlNLckV0TGUwd0RRWUpLb1pJaHZjTkFRRUwKQlFBd0hqRWNNQm9HQTFVRUF3d1RTVUpOSUVOc2IzVmtJRVJoZEdGaVlYTmxjekFlRncweU1EQTNNVFl3TlRNeQpNalphRncwek1EQTNNVFF3TlRNeU1qWmFNQjR4SERBYUJnTlZCQU1NRTBsQ1RTQkRiRzkxWkNCRVlYUmhZbUZ6ClpYTXdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBd2dnRUtBb0lCQVFEUjFWZjRNRDFvNkI5Qkw5TG4KMkh0NXVQQTA2VnhwSXlINTA4QXgrL1ViN0M2eVcwUHlYK0U0QzV5bTZpOWl1VitSbFFZa0lINjBzUlc3dVArTgp3YVRxNjZtZGFxNzFmN3BrZXpoR1BkblpKdUFrUmpjdDgyNFlIZHNoUmROcFRiR2Z4emJVcUk2VVdCbVlNaTVTCllVL3F4TDFOMkhTUGxQcmlpNTVFU3FPVGxlNUxIbHpVbGk0d0VLTExYNVE2WEt3NmJwaGpiNHNaK01ydFJiZXAKcElySlJ1ejB5c2RKcWo1cDRDc2dYY0tEblpiUHoxRFk5RUtoMXhyR3RaazUreGJZeWRENVVPRFpNd1BnVjY1aQptRVUvTnBlUzNaTDJWQWs2ZmlFak51NXdVMStUdk1rRWd1STNhbDFJSXNqamZKcGNiZzFmTHMvditsamtDZEdFCm52MmxBZ01CQUFHalV6QlJNQjBHQTFVZERnUVdCQlJhb2RDdjIwRldHSEx5eFlqTmRzZDF4elZGbERBZkJnTlYKSFNNRUdEQVdnQlJhb2RDdjIwRldHSEx5eFlqTmRzZDF4elZGbERBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUEwRwpDU3FHU0liM0RRRUJDd1VBQTRJQkFRQmlGanFZM1QvdFNWbTR1Zys4MlFxVEtqYzdWN3NlN2Q2RXlieUlNb1JzCjdhSSs4eHFlWUxHN3ZSSEljOWVPcXN5Q0VHbmV4ZlFNWXI3aDFLNjFWc05QZk9uNWx1S3Q4R2tmWDRkWXkyYXoKMHp5clJIdzJkOUMwbml0ck1hb1VFRW9mYkFZQytjQmYvTHdnd3ZzcU5RbWJvV2NvMndhV00vQnhYRXI5cHZUbwo5SXNpZDA5Z3VwRENEU1huNDhjeVlReVFlU1BSbDlxdEpFSVRtWDNqU0VOVVp0NGV3V0lUMzUyNDdzeURXZHZxClhBSEtxMUdGTzhEZEVaQlNldVViNkVOamFVOWVEM2JTb3JWc0xSSGlyeFJoTEhhUTJnVE9zQ1ltdjkzemtVN1cKQUZjcnVucCtqaWZyZk95UWp3V2E0WXJaZHExNGRWVzVMNGpwOFpzOXlmakIKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=",
+          "name": "4ce8398a-c09b-4ab3-aec2-03918148c432"
+        },
+        "composed": [
+          "db2://aa9f4190:7ECTEGWLVySbn2yD@328edc21-0828-4027-b9c5-2d2d6c7eb37d.bv7e8rbf0shslbo0krsg.private.databases.appdomain.cloud:30739/bludb?authSource=admin&replicaSet=replset"
+        ],
+        "database": "bludb",
+        "host_ros": [
+          "328edc21-0828-4027-b9c5-2d2d6c7eb37d.bv7e8rbf0shslbo0krsg.private.databases.appdomain.cloud:30252"
+        ],
+        "hosts": [
+          {
+            "hostname": "328edc21-0828-4027-b9c5-2d2d6c7eb37d.bv7e8rbf0shslbo0krsg.private.databases.appdomain.cloud",
+            "port": 30739
+          }
+        ],
+        "jdbc_url": [
+          "jdbc:db2://328edc21-0828-4027-b9c5-2d2d6c7eb37d.bv7e8rbf0shslbo0krsg.private.databases.appdomain.cloud:30739/bludb:user=<userid>;password=<your_password>;sslConnection=true;"
+        ],
+        "path": "/bludb",
+        "query_options": {
+          "authSource": "admin",
+          "replicaSet": "replset"
+        },
+        "replica_set": "replset",
+        "scheme": "db2",
+        "type": "uri"
+      }
+    },
+    "iam_apikey_description": "Auto-generated for key crn:v1:bluemix:public:dashdb-for-transactions:eu-de:a/ad09f476263c44cda2cdc697bd808a6f:328edc21-0828-4027-b9c5-2d2d6c7eb37d:resource-key:aa9f4190-d1c2-458c-9209-2e31cda8f3cc",
+    "iam_apikey_id": "ApiKey-1761e3bc-73dd-4460-ad5f-3198ca139471",
+    "iam_apikey_name": "Service-credentials-1",
+    "iam_role_crn": "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+    "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::a/ad09f476263c44cda2cdc697bd808a6f::serviceid:ServiceId-f65a8e1d-956a-4f5c-9d27-5f4de76d5665",
+    "instance_administration_api": {
+      "deployment_id": "crn:v1:bluemix:public:dashdb-for-transactions:eu-de:a/ad09f476263c44cda2cdc697bd808a6f:328edc21-0828-4027-b9c5-2d2d6c7eb37d::",
+      "instance_id": "crn:v1:bluemix:public:dashdb-for-transactions:eu-de:a/ad09f476263c44cda2cdc697bd808a6f:328edc21-0828-4027-b9c5-2d2d6c7eb37d::",
+      "root": "https://apieude.db2.cloud.ibm.com/v5/ibm"
+    }
+  }
