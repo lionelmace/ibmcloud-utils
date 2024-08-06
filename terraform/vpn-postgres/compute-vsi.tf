@@ -1,6 +1,7 @@
+# ibmcloud is images | grep ibm-ubuntu | grep "available"
 variable "image_name" {
   type        = string
-  default     = "ibm-ubuntu-18-04-1-minimal-amd64-2"
+  default     = "ibm-ubuntu-24-04-minimal-amd64-3"
   description = "Name of the image to use for the private instance"
 }
 
