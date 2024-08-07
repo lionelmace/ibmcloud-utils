@@ -49,9 +49,10 @@ metadata:
   namespace: test-nlb
   annotations:
     service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "nlb"
-    service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: "public"
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: "private"
+    # Private NLB require the annotation service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-subnets
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-subnets: "02b7-7cbd0dd6-1b1f-4f63-812e-c7691f832a8a"
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-node-selector: "<key>=<value>"
-    #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-subnets: "0797-91785612-96be-48eb-a42b-448c79975ef7"
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: "eu-de-1"
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-health-check-udp: "<tcp_port"
   labels:
