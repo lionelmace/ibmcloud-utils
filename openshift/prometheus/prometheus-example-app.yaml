@@ -41,3 +41,24 @@ spec:
   selector:
     app: prometheus-example-app
   type: ClusterIP
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    haproxy.router.openshift.io/hsts_header: max-age=31536000;includeSubDomains;preload
+  labels:
+    app: test
+  name: test
+  namespace: ns1
+spec:
+  host: icn-aznxnp-roks-5348c99e82c5c6b8edeec6aa250d032f-0000.eu-de.containers.appdomain.cloud
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: prometheus-example-app
+    weight: 100
+  wildcardPolicy: None
