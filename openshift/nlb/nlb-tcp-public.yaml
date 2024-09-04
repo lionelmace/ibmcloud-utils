@@ -11,7 +11,7 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test
+  name: test-public
   namespace: test-nlb
   labels:
     app: test
@@ -56,7 +56,7 @@ metadata:
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: "eu-de-1"
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-health-check-udp: "<tcp_port"
   labels:
-    app: test
+    app: test-public
 spec:
   type: LoadBalancer
   selector:
