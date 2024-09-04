@@ -11,12 +11,11 @@ resource "ibm_iam_authorization_policy" "cloud-logs-cos" {
 }
 
 # S2S Authorization from Logs Router to Cloud Logs
-# ALREADY EXIST
-# resource "ibm_iam_authorization_policy" "cloud-logs-router" {
-#   source_service_name = "logs-router"
-#   target_service_name = "logs"
-#   roles = ["Sender"]
-# }
+resource "ibm_iam_authorization_policy" "cloud-logs-router" {
+  source_service_name = "logs-router"
+  target_service_name = "logs"
+  roles = ["Sender"]
+}
 
 ##############################################################################
 resource "ibm_iam_authorization_policy" "iam-auth-kms-cos-for-logs" {

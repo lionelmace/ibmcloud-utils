@@ -4,7 +4,7 @@
 ##############################################################################
 
 
-# Cloud Logs Resource
+# Cloud Logs Instance
 ##############################################################################
 
 resource "ibm_resource_instance" "logs_instance" {
@@ -24,4 +24,14 @@ resource "ibm_resource_instance" "logs_instance" {
     retention_period = 7
   }
   depends_on = [ibm_iam_authorization_policy.cloud-logs-cos]
+}
+
+# Cloud Logs Routing
+##############################################################################
+resource "ibm_logs_router_tenant" "logs_router_tenant_instance" {
+  name = format("%s-%s", local.basename, "cloud-logs-router")
+  targets {
+    log_sink_crn = ibm_resource_instance.logs_instance.crn
+    name = "my-target"
+  }
 }
