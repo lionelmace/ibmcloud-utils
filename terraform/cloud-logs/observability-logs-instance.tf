@@ -34,17 +34,23 @@ resource "ibm_logs_router_tenant" "logs_router_tenant_instance" {
     log_sink_crn = ibm_resource_instance.logs_instance.id
     name = "my-cloud-logs-target"
     parameters {
-      host = "www.example-2.com"
-      port = 80
+      host = ibm_resource_instance.logs_instance.extensions.external_ingress_private
+      port = 443
     }
   }
-  targets {
-    log_sink_crn = module.log_analysis.crn
-    name = "my-log-analysis-target"
-    parameters {
-      host = "www.example-1.com"
-      port = 80
-      access_credential = "new-cred"
-    }
-  }
+  # targets {
+  #   log_sink_crn = module.log_analysis.crn
+  #   name = "my-log-analysis-target"
+  #   parameters {
+  #     host = "www.example-1.com"
+  #     port = 80
+  #     access_credential = "new-cred"
+  #   }
+  # }
 }
+
+output "logs-endpoint" {
+  description = "The Cloud Logs Extension"
+  value       = ibm_resource_instance.logs_instance.extensions.external_ingress_private
+}
+
