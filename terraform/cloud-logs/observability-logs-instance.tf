@@ -26,6 +26,11 @@ resource "ibm_resource_instance" "logs_instance" {
   depends_on = [ibm_iam_authorization_policy.cloud-logs-cos]
 }
 
+output "logs-endpoint" {
+  description = "The Cloud Logs Extension"
+  value       = ibm_resource_instance.logs_instance.extensions
+}
+
 # Cloud Logs Routing
 ##############################################################################
 resource "ibm_logs_router_tenant" "logs_router_tenant_instance" {
@@ -34,23 +39,43 @@ resource "ibm_logs_router_tenant" "logs_router_tenant_instance" {
     log_sink_crn = ibm_resource_instance.logs_instance.id
     name = "my-cloud-logs-target"
     parameters {
-      host = ibm_resource_instance.logs_instance.extensions.external_ingress_private
-      port = 443
+      # Private Endpoint is not supported yet.
+      # host = ibm_resource_instance.logs_instance.extensions.external_ingress_private
+      # port = 443
+      host = ibm_resource_instance.logs_instance.extensions.external_ingress
+      port = 80
     }
   }
-  # targets {
-  #   log_sink_crn = module.log_analysis.crn
-  #   name = "my-log-analysis-target"
-  #   parameters {
-  #     host = "www.example-1.com"
-  #     port = 80
-  #     access_credential = "new-cred"
-  #   }
-  # }
+  targets {
+    log_sink_crn = module.log_analysis.crn
+    name = "my-log-analysis-target"
+    parameters {
+      host = "logs.private.${var.region}.logging.cloud.ibm.com"
+      port = 443
+      access_credential = module.log_analysis.ingestion_key
+    }
+  }
 }
 
-output "logs-endpoint" {
-  description = "The Cloud Logs Extension"
-  value       = ibm_resource_instance.logs_instance.extensions.external_ingress_private
+# Activity tracker event routing
+##############################################################################
+resource "ibm_atracker_route" "atracker_route" {
+  name = format("%s-%s", local.basename, "at-route")
+  rules {
+    target_ids = [ ibm_atracker_target.atracker_cloudlogs_target.id ]
+    locations = [ var.region, "global" ]
+  }
+  lifecycle {
+    # Recommended to ensure that if a target ID is removed here and destroyed in a plan, this is updated first
+    create_before_destroy = true
+  }
 }
 
+resource "ibm_atracker_target" "atracker_cloudlogs_target" {
+  cloudlogs_endpoint {
+    target_crn = ibm_resource_instance.logs_instance.id
+  }
+  name = format("%s-%s", local.basename, "cloudlogs-target")
+  target_type = "cloud_logs"
+  region = var.region
+}
