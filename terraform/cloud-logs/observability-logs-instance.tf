@@ -41,9 +41,8 @@ resource "ibm_logs_router_tenant" "logs_router_tenant_instance" {
     parameters {
       # Private Endpoint is not supported yet.
       # host = ibm_resource_instance.logs_instance.extensions.external_ingress_private
-      # port = 443
       host = ibm_resource_instance.logs_instance.extensions.external_ingress
-      port = 80
+      port = 443
     }
   }
   targets {
@@ -57,7 +56,7 @@ resource "ibm_logs_router_tenant" "logs_router_tenant_instance" {
   }
 }
 
-# Activity tracker event routing
+# Activity Tracker Event Routing
 ##############################################################################
 resource "ibm_atracker_route" "atracker_route" {
   name = format("%s-%s", local.basename, "at-route")
@@ -69,6 +68,7 @@ resource "ibm_atracker_route" "atracker_route" {
     # Recommended to ensure that if a target ID is removed here and destroyed in a plan, this is updated first
     create_before_destroy = true
   }
+  depends_on = [ibm_iam_authorization_policy.iam-auth-atracker-2-logs]
 }
 
 resource "ibm_atracker_target" "atracker_cloudlogs_target" {

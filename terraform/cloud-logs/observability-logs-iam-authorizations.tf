@@ -25,3 +25,11 @@ resource "ibm_iam_authorization_policy" "iam-auth-kms-cos-for-logs" {
   target_resource_instance_id = ibm_resource_instance.key-protect.guid
   roles                       = ["Reader"]
 }
+
+##############################################################################
+resource "ibm_iam_authorization_policy" "iam-auth-atracker-2-logs" {
+  source_service_name         = "atracker"
+  target_service_name         = "logs"
+  target_resource_instance_id = ibm_resource_instance.logs_instance.guid
+  roles                       = ["Sender"]
+}
