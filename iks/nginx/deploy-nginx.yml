@@ -1,5 +1,5 @@
 ---
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: nginx
-  replicas: 1 # tells deployment to run 2 pods matching the template
+  replicas: 3
   template:
     metadata:
       labels:
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:1.7.9
+        image: nginx:latest
         ports:
         - containerPort: 80
 ---
@@ -33,23 +33,28 @@ spec:
   selector:
     app: nginx
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: nginx-ingress
+  namespace: default
   annotations:
-    # Force the use of https if the request is http
     ingress.bluemix.net/redirect-to-https: "True"
 spec:
+  ingressClassName: public-iks-k8s-nginx
+  # ingressClassName: private-iks-k8s-nginx
   tls:
   - hosts:
-    - nginx.hacluster.eu-de.containers.appdomain.cloud
-    secretName: hacluster
+    - nginx.icn-kjrdrf-iks-7d23ce9b99cc281f754f713c0a27f19a-0000.eu-de.containers.appdomain.cloud
+    secretName: icn-kjrdrf-iks-7d23ce9b99cc281f754f713c0a27f19a-0000
   rules:
-  - host: nginx.hacluster.eu-de.containers.appdomain.cloud
+  - host: nginx.icn-kjrdrf-iks-7d23ce9b99cc281f754f713c0a27f19a-0000.eu-de.containers.appdomain.cloud
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: nginx-service
-          servicePort: 80
+          service:
+            name: nginx-service
+            port:
+              number: 80

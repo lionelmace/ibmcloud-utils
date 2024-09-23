@@ -26,7 +26,7 @@ resource "ibm_resource_instance" "logs_instance" {
   depends_on = [ibm_iam_authorization_policy.cloud-logs-cos]
 }
 
-output "logs-endpoint" {
-  description = "The Cloud Logs Extension"
+output "logs-extensions" {
+  description = "The Cloud Logs Extensions"
   value       = ibm_resource_instance.logs_instance.extensions
 }
