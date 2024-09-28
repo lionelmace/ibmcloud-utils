@@ -50,7 +50,7 @@ metadata:
   annotations:
     service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "nlb"
     service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: "public"
-    service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-security-group: "r010-326cfb84-24e9-4fdc-a252-d1d5b738c1e7"
+    # service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-security-group: "r010-326cfb84-24e9-4fdc-a252-d1d5b738c1e7"
   labels:
     app: test-public
 spec:

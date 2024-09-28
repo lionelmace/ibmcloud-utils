@@ -72,7 +72,7 @@ metadata:
   name: test
   namespace: ns-route
 spec:
-  host: hello-ns-route.icn-krro6s-roks-5348c99e82c5c6b8edeec6aa250d032f-0000.eu-de.containers.appdomain.cloud
+  host: hello.icn-erlthu-roks-7d23ce9b99cc281f754f713c0a27f19a-0000.eu-de.containers.appdomain.cloud
   # host: hello.lionelmace.com
   port:
     targetPort: 8080

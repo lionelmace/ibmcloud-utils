@@ -12,7 +12,7 @@
     oc describe service nlb-udp
     ```
 
-    > It takes a few minutes for the the Load Balancer to be provisioning. 
+    > It takes a few minutes for the the Load Balancer to be provisioning.
 
 1. You can check the status in the [console](https://cloud.ibm.com/vpc-ext/network/loadBalancers)
 
