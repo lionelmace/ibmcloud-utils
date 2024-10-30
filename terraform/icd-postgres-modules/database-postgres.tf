@@ -13,24 +13,6 @@ variable "icd_pg_admin_pass" {
   default     = "AdministratorPassw0rd01"
 }
 
-variable "icd_pg_ram_allocation" {
-  type        = number
-  description = "RAM (GB/data member)"
-  default     = 4096
-}
-
-variable "icd_pg_disk_allocation" {
-  type        = number
-  description = "Disk Usage (GB/data member)"
-  default     = 5120
-}
-
-variable "icd_pg_core_allocation" {
-  type        = number
-  description = "Dedicated Cores (cores/data member)"
-  default     = 2
-}
-
 variable "icd_pg_version" {
   type        = string
   description = "The database version to provision if specified"
