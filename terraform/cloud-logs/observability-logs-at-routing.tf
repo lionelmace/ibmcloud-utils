@@ -4,8 +4,8 @@
 resource "ibm_atracker_route" "atracker_route" {
   name = format("%s-%s", local.basename, "at-route")
   rules {
-    target_ids = [ ibm_atracker_target.atracker_cloudlogs_target.id ]
-    locations = [ var.region, "global" ]
+    target_ids = [ibm_atracker_target.atracker_cloudlogs_target.id]
+    locations  = [var.region, "global"]
   }
   lifecycle {
     # Recommended to ensure that if a target ID is removed here and destroyed in a plan, this is updated first
@@ -18,7 +18,7 @@ resource "ibm_atracker_target" "atracker_cloudlogs_target" {
   cloudlogs_endpoint {
     target_crn = ibm_resource_instance.logs_instance.id
   }
-  name = format("%s-%s", local.basename, "cloudlogs-target")
+  name        = format("%s-%s", local.basename, "cloudlogs-target")
   target_type = "cloud_logs"
-  region = var.region
+  region      = var.region
 }

@@ -1,0 +1,8 @@
+resource "ibm_iam_service_policy" "policy" {
+    iam_service_id = ibm_iam_service_id.service_id.id  roles = ["Administrator"]
+    resources {
+        resource_type = "resource-group"
+        #service = "resource-group" #NOK Crée la policy mais ne marche pas.
+        resource      = data.ibm_resource_group.group.id  
+    }
+}
