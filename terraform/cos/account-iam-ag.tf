@@ -10,7 +10,7 @@ resource "ibm_iam_access_group_policy" "iam-rg-viewer" {
   roles           = ["Viewer"]
   resources {
     resource_type = "resource-group"
-    resource      = ibm_resource_group.group.id
+    resource      = local.resource_group_id
   }
 }
 

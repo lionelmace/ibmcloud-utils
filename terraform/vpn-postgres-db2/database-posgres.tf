@@ -64,7 +64,7 @@ resource "ibm_database" "icd_postgresql" {
   version           = var.icd_postgresql_db_version
   service_endpoints = var.icd_postgresql_service_endpoints
   location          = var.region
-  resource_group_id = ibm_resource_group.group.id
+  resource_group_id = local.resource_group_id
   tags              = var.tags
 
   # Encrypt DB (comment to use IBM-provided Automatic Key)
@@ -146,7 +146,7 @@ resource "ibm_is_virtual_endpoint_gateway" "vpe_postgresql" {
   for_each = { for target in local.postgres_endpoints : target.name => target if tobool(var.icd_postgresql_use_vpe) }
 
   name           = "${local.basename}-postgresql-vpe"
-  resource_group = ibm_resource_group.group.id
+  resource_group = local.resource_group_id
   vpc            = ibm_is_vpc.vpc.id
 
   target {

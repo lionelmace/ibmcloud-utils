@@ -15,7 +15,7 @@ resource "ibm_resource_instance" "db2oncloud" {
   service = "dashdb-for-transactions"
   plan = "enterprise"
   location = var.region
-  resource_group_id = ibm_resource_group.group.id
+  resource_group_id = local.resource_group_id
   service_endpoints = "private"
   timeouts {
     create = "30m"

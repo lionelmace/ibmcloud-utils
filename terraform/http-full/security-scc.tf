@@ -6,7 +6,7 @@ resource "ibm_resource_instance" "scc_instance" {
   service           = "compliance"
   plan              = "security-compliance-center-standard-plan"
   location          = var.region
-  resource_group_id = ibm_resource_group.group.id
+  resource_group_id = local.resource_group_id
 }
 
 ## SCC Profile Attachment
@@ -21,7 +21,7 @@ resource "ibm_scc_profile_attachment" "scc_profile_attachment_instance" {
     properties {
       name = "scope_id"
       # value = local.account_id
-      value = ibm_resource_group.group.id
+      value = local.resource_group_id
     }
     properties {
       name  = "scope_type"

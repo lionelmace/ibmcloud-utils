@@ -45,9 +45,9 @@ provider "logdna" {
 
 module "log_analysis" {
   source  = "terraform-ibm-modules/observability-instances/ibm//modules/log_analysis"
-  # version = "latest"
+  version = "2.13.2"
   providers = {
-    logdna.ld  = logdna.ld
+    logdna.ld = logdna.ld
   }
 
   resource_group_id    = local.resource_group_id

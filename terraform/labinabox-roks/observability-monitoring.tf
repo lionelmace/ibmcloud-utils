@@ -14,9 +14,9 @@ variable "sysdig_plan" {
 }
 
 variable "sysdig_service_endpoints" {
-  description = "Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'."
+  description = "Only allow the value public-and-private. Previouslly it incorrectly allowed values of public and private however it is not possible to create public only or private only Cloud Monitoring instances."
   type        = string
-  default     = "private"
+  default     = "public-and-private"
 }
 
 variable "sysdig_private_endpoint" {
@@ -35,7 +35,7 @@ variable "sysdig_enable_platform_metrics" {
 ##############################################################################
 
 module "cloud_monitoring" {
-  source  = "terraform-ibm-modules/observability-instances/ibm//modules/cloud_monitoring"
+  source = "terraform-ibm-modules/observability-instances/ibm//modules/cloud_monitoring"
   # version = "latest" # Replace "latest" with a release version to lock into a specific release
 
   resource_group_id       = local.resource_group_id

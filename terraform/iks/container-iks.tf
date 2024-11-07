@@ -68,7 +68,7 @@ variable "iks_disable_public_service_endpoint" {
 resource "ibm_container_vpc_cluster" "iks_cluster" {
   name              = format("%s-%s", local.basename, var.iks_cluster_name)
   vpc_id            = ibm_is_vpc.vpc.id
-  resource_group_id = ibm_resource_group.group.id
+  resource_group_id = local.resource_group_id
   # Optional: Specify Kubes version. If not included, default version is used
   kube_version                    = var.iks_version == "" ? null : var.iks_version
   tags                            = var.tags
@@ -100,7 +100,7 @@ resource "ibm_container_vpc_cluster" "iks_cluster" {
 # resource "ibm_container_vpc_worker_pool" "iks_worker_pools" {
 #   for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
 #   cluster           = ibm_container_vpc_cluster.iks_cluster.id
-#   resource_group_id = ibm_resource_group.group.id
+#   resource_group_id = local.resource_group_id
 #   worker_pool_name  = each.key
 #   flavor            = lookup(each.value, "machine_type", null)
 #   vpc_id            = ibm_is_vpc.vpc.id

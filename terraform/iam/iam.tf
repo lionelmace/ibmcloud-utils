@@ -26,7 +26,7 @@ resource "ibm_iam_access_group_policy" "rg-visibility" {
   roles           = ["Viewer"]
   resources {
     resource_type = "resource-group"
-    resource      = ibm_resource_group.group.id
+    resource      = local.resource_group_id
   }
 }
 
@@ -44,7 +44,7 @@ resource "ibm_iam_access_group_policy" "policy-power-vs" {
   resource_attributes {
     name     = "resourceGroupId"
     operator = "stringEquals"
-    value    = ibm_resource_group.group.id
+    value    = local.resource_group_id
   }
   roles = ["Reader", "Manager", "Viewer", "Editor"]
 }

@@ -64,7 +64,7 @@ resource "ibm_database" "icd_mongo" {
   version           = var.icd_mongo_db_version
   service_endpoints = var.icd_mongo_service_endpoints
   location          = var.region
-  resource_group_id = ibm_resource_group.group.id
+  resource_group_id = local.resource_group_id
   tags              = var.tags
 
   # Encrypt DB (comment to use IBM-provided Automatic Key)
@@ -151,7 +151,7 @@ resource "ibm_iam_access_group_policy" "iam-mongo" {
 
   resources {
     service           = "databases-for-mongodb"
-    resource_group_id = ibm_resource_group.group.id
+    resource_group_id = local.resource_group_id
   }
 }
 
@@ -193,7 +193,7 @@ resource "ibm_is_virtual_endpoint_gateway" "vpe_mongo" {
   for_each = { for target in local.endpoints : target.name => target if tobool(var.icd_mongo_use_vpe) }
 
   name           = "${local.basename}-mongo-vpe"
-  resource_group = ibm_resource_group.group.id
+  resource_group = local.resource_group_id
   vpc            = ibm_is_vpc.vpc.id
 
   target {

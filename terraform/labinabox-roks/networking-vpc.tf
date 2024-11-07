@@ -8,12 +8,6 @@ variable "create_vpc" {
   default     = true
 }
 
-variable "vpc_classic_access" {
-  description = "Classic Access to the VPC"
-  type        = bool
-  default     = false
-}
-
 variable "vpc_address_prefix_management" {
   description = "Default address prefix creation method"
   type        = string
@@ -79,8 +73,7 @@ resource "ibm_is_vpc" "vpc" {
   # Delete all rules attached to default security group and default network ACL
   # for a new VPC. This attribute has no impact on update. Default = false
   # no_sg_acl_rules             = true
-  classic_access              = var.vpc_classic_access
-  tags                        = var.tags
+  tags           = var.tags
 }
 
 
@@ -90,7 +83,7 @@ resource "ibm_is_vpc" "vpc" {
 
 resource "ibm_is_vpc_address_prefix" "address_prefix" {
 
-  count = 3
+  count = length(var.vpc_cidr_blocks)
   name  = "${local.basename}-prefix-zone-${count.index + 1}"
   zone  = "${var.region}-${(count.index % 3) + 1}"
   vpc   = ibm_is_vpc.vpc.id
@@ -104,11 +97,12 @@ resource "ibm_is_vpc_address_prefix" "address_prefix" {
 
 resource "ibm_is_public_gateway" "pgw" {
 
-  count          = var.vpc_enable_public_gateway ? 3 : 0
+  count          = var.vpc_enable_public_gateway ? length(var.subnet_cidr_blocks) : 0
   name           = "${local.basename}-pgw-${count.index + 1}"
   vpc            = ibm_is_vpc.vpc.id
   zone           = "${var.region}-${count.index + 1}"
   resource_group = local.resource_group_id
+  tags           = var.tags
 }
 
 
@@ -119,6 +113,7 @@ resource "ibm_is_network_acl" "multizone_acl" {
   name           = "${local.basename}-multizone-acl"
   vpc            = ibm_is_vpc.vpc.id
   resource_group = local.resource_group_id
+  tags           = var.tags
 
   dynamic "rules" {
 
@@ -141,7 +136,7 @@ resource "ibm_is_network_acl" "multizone_acl" {
 
 resource "ibm_is_subnet" "subnet" {
 
-  count           = 3
+  count           = length(var.subnet_cidr_blocks)
   name            = "${local.basename}-subnet-${count.index + 1}"
   vpc             = ibm_is_vpc.vpc.id
   zone            = "${var.region}-${count.index + 1}"
@@ -154,15 +149,16 @@ resource "ibm_is_subnet" "subnet" {
   depends_on = [ibm_is_vpc_address_prefix.address_prefix]
 }
 
-# Enable SSH Inbound Rule
 ##############################################################################
-resource "ibm_is_security_group_rule" "sg-rule-inbound-ssh" {
-  group     = ibm_is_vpc.vpc.default_security_group
-  direction = "inbound"
-  remote    = "0.0.0.0/0"
+# Create a VPC subnet that is dedicated to the private VPC NLB
+##############################################################################
 
-  tcp {
-    port_min = 22
-    port_max = 22
-  }
+resource "ibm_is_subnet" "subnet-nlb" {
+  name            = "${local.basename}-subnet-nlb"
+  vpc             = ibm_is_vpc.vpc.id
+  zone            = "${var.region}-1"
+  ipv4_cidr_block = "10.243.1.0/24"
+  network_acl     = ibm_is_network_acl.multizone_acl.id
+  tags            = var.tags
+  resource_group  = local.resource_group_id
 }

@@ -7,7 +7,7 @@ resource "ibm_resource_instance" "hp-postgres" {
   service = "hyperp-dbaas-postgresql"
   plan = "postgresql-flexible"
   location = "eu-de"
-  resource_group_id = data.ibm_resource_group.group.id
+  resource_group_id = data.local.resource_group_id
 
   //User can increase timeouts
   timeouts {

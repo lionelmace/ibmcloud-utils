@@ -43,7 +43,7 @@ variable "icd_pg_use_vpe" { default = false }
 module "postgresql_db" {
   source                     = "terraform-ibm-modules/icd-postgresql/ibm"
   version                    = "3.17.9"
-  resource_group_id          = ibm_resource_group.group.id
+  resource_group_id          = local.resource_group_id
   name                       = format("%s-%s", local.basename, "postgres")
   region                     = var.region
   pg_version                 = var.icd_pg_version

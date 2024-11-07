@@ -17,11 +17,11 @@ variable "cos_region" {
   default     = "global"
 }
 
-# COS Service
+# COS Service for OpenShift Internal Registry
 ##############################################################################
 
-resource "ibm_resource_instance" "cos" {
-  name              = format("%s-%s", local.basename, "private-cos")
+resource "ibm_resource_instance" "cos-scc" {
+  name              = format("%s-%s", local.basename, "cos-scc")
   service           = "cloud-object-storage"
   plan              = var.cos_plan
   location          = var.cos_region
@@ -29,41 +29,38 @@ resource "ibm_resource_instance" "cos" {
   tags              = var.tags
 
   parameters = {
-    # SCC Control 2.1.3
-    # Ensure network access for Cloud Object Storage is set to be exposed only on private endpoints
-    # service-endpoints = "public"
     service-endpoints = "private"
   }
 }
 
 ## COS Bucket
 ##############################################################################
-# SCC requires Cross-Region bucket for resiliency
 resource "ibm_cos_bucket" "scc-bucket" {
-  bucket_name           = format("%s-%s", local.basename, "cos-bucket-scc")
-  resource_instance_id  = ibm_resource_instance.cos.id
-  storage_class         = "smart"
+  bucket_name          = format("%s-%s", local.basename, "scc-bucket")
+  resource_instance_id = ibm_resource_instance.cos-scc.id
+  storage_class        = "smart"
 
   # SCC Control 2.1.1.2
   # Ensure Cloud Object Storage encryption is enabled with BYOK
   # Key management services can only be added during bucket creation.
-  depends_on           = [ibm_iam_authorization_policy.iam-auth-kms-cos]
-  kms_key_crn          = ibm_kms_key.key.id
+  depends_on  = [ibm_iam_authorization_policy.iam-auth-kms-cos]
+  kms_key_crn = ibm_kms_key.key.id
 
+  # SCC requires Cross-Region bucket for resiliency
   cross_region_location = "eu"
   # region_location      = "eu-de"
+
   # activity_tracking {
   #   read_data_events     = true
   #   write_data_events    = true
   #   activity_tracker_crn = local.activity_tracker_id
   # }
-  # metrics_monitoring {
-  #   usage_metrics_enabled   = true
-  #   request_metrics_enabled = true
-  #   metrics_monitoring_crn  = module.cloud_monitoring.id
-  # }
-  # endpoint_type = "public"
-  endpoint_type = "private"
+  metrics_monitoring {
+    usage_metrics_enabled   = true
+    request_metrics_enabled = true
+    metrics_monitoring_crn  = module.cloud_monitoring.crn
+  }
+  endpoint_type = "public"
 }
 
 

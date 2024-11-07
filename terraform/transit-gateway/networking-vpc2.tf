@@ -72,7 +72,7 @@ variable "floating_ip2" {
 
 resource "ibm_is_vpc" "vpc2" {
   name                        = format("%s-%s", local.basename, "vpc2")
-  resource_group              = ibm_resource_group.group.id
+  resource_group              = local.resource_group_id
   address_prefix_management   = var.vpc_address_prefix_management2
   default_security_group_name = "${local.basename}-vpc-sg2"
   default_network_acl_name    = "${local.basename}-vpc-acl2"
@@ -105,7 +105,7 @@ resource "ibm_is_public_gateway" "pgw2" {
   name  = "${local.basename}-pgw-${count.index + 1}"
   vpc   = ibm_is_vpc.vpc2.id
   zone  = "${var.region}-${count.index + 1}"
-  resource_group = ibm_resource_group.group.id
+  resource_group = local.resource_group_id
 }
 
 
@@ -115,7 +115,7 @@ resource "ibm_is_network_acl" "multizone_acl2" {
 
   name           = "${local.basename}-multizone-acl2"
   vpc            = ibm_is_vpc.vpc2.id
-  resource_group = ibm_resource_group.group.id
+  resource_group = local.resource_group_id
 
   dynamic "rules" {
 
@@ -146,7 +146,7 @@ resource "ibm_is_subnet" "subnet2" {
   network_acl     = ibm_is_network_acl.multizone_acl2.id
   public_gateway  = var.vpc_enable_public_gateway2 ? element(ibm_is_public_gateway.pgw2.*.id, count.index) : null
   tags            = var.tags
-  resource_group  = ibm_resource_group.group.id
+  resource_group  = local.resource_group_id
 
   depends_on = [ibm_is_vpc_address_prefix.address_prefix2]
 }
