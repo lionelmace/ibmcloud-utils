@@ -20,8 +20,8 @@ existing_resource_group_name = "techxchange-group"
 openshift_version = ""
 # openshift_os             = "REDHAT_8_64"
 openshift_os             = "RHCOS"
-openshift_machine_flavor = "bx2.4x16"
-# openshift_machine_flavor = "bx2.16x64" # ODF Flavors
+# openshift_machine_flavor = "bx2.4x16"
+openshift_machine_flavor = "bx2.16x64" # ODF Flavors
 
 
 openshift_disable_public_service_endpoint = false
