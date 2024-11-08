@@ -43,7 +43,7 @@ variable "icd_pg_use_vpe" { default = false }
 module "postgresql_db" {
   source                     = "terraform-ibm-modules/icd-postgresql/ibm"
   version                    = "3.17.9"
-  resource_group_id          = local.resource_group_id
+  resource_group_id          = ibm_resource_group.group.id
   name                       = format("%s-%s", local.basename, "postgres")
   region                     = var.region
   pg_version                 = var.icd_pg_version
@@ -73,9 +73,12 @@ module "postgresql_db" {
     tcp_keepalives_interval    = 50
     tcp_keepalives_count       = 6
     archive_timeout            = 1000
-    wal_level                  = "hot_standby"
-    max_replication_slots      = 10
-    max_wal_senders            = 20
+    # wal_level                  = "hot_standby"
+    wal_level                  = "logical"
+    # max_replication_slots      = 10
+    max_replication_slots      = 21
+    # max_wal_senders            = 20
+    max_wal_senders            = 21
   }
   # cbr_rules = [
   #   {
