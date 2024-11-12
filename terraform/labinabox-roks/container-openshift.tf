@@ -194,21 +194,6 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
 #   }
 # }
 
-# Retrieve VPC LB attached to the cluster
-##############################################################################
-# data "ibm_container_vpc_cluster" "roks_cluster" {
-#   name = ibm_container_vpc_cluster.roks_cluster.id
-# }
-
-# data "ibm_container_vpc_alb" "roks_cluster_alb" {
-#   alb_id = data.ibm_container_vpc_cluster.roks_cluster.albs[0].id
-# }
-
-# output "roks_cluster_alb" {
-#   value = data.ibm_container_vpc_alb.roks_cluster_alb
-# }
-
-
 ## IAM
 ##############################################################################
 # resource "ibm_iam_access_group_policy" "iam-roks" {
