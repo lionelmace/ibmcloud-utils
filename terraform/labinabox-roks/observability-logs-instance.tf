@@ -41,6 +41,7 @@ resource "ibm_logs_router_tenant" "logs_router_tenant_instance" {
       port = 443
     }
   }
+  # LMA
   # targets {
   #   log_sink_crn = module.log_analysis.crn
   #   name         = "my-log-analysis-target"
