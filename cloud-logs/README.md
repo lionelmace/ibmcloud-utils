@@ -16,22 +16,24 @@
 1. Set the API Key
 
    ```sh
-   export IAMAPIKey="<your-api-key"
+   export IAMAPIKey="<your-api-key>"
    ```
 
 1. Install agent
 
     ```sh
-    curl -sSL https://ibm.biz/logs-router-setup | bash -s -- \
-      -v 1.2.2 \
-      -m IAMAPIKey \
-      -k $IAMAPIKey \
-      -t OpenShift \
-      -r eu-de \
-      -p 443 \
-      -d ./
+   curl -sSL https://ibm.biz/logs-router-setup | bash -s -- \
+     -v 1.3.2 \
+     -m IAMAPIKey \
+     -k $IAMAPIKey \
+     -t OpenShift \
+     -r eu-de \
+     --send-directly-to-icl \
+     -h 3f019d15-c402-4328-886d-7147e5c4ff50.ingress.eu-de.logs.cloud.ibm.com \
+     -p 443 \
+     -d ~/mygit/ibmcloud-utils/cloud-logs/
     ```
 
 ## Resources
 
-* https://test.cloud.ibm.com/docs/logs-router?topic=logs-router-agent-openshift
+* [Send IBM Cloud Kubernetes Service log data to IBM Cloud Logs](https://cloud.ibm.com/docs/cloud-logs?topic=cloud-logs-kube2logs)

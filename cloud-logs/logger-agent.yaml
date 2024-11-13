@@ -141,15 +141,16 @@ data:
     @INCLUDE input-kubernetes.conf
     @INCLUDE filter-kubernetes.conf
     @INCLUDE filter-add-meta-data.conf
-    @INCLUDE output-logs-router-agent-plugin.conf
+    @INCLUDE output-REPLACE_OUTPUT_PLUGIN_CONF_NAME.conf
     REPLACE_ICL_META_DATA_FILTER_INCLUDE
 
   input-kubernetes.conf: |
     [INPUT]
         Name              tail
         Tag               kube.*
-        Path              /var/log/containers/logger-agent-ds-*.log
+        Path              /var/log/containers/*.log
         Path_Key          file
+        Exclude_Path      /var/log/at/**
         DB                /var/log/fluent-bit/fluent-bit.DB
         Buffer_Chunk_Size 32KB
         Buffer_Max_Size   256KB
@@ -198,17 +199,17 @@ data:
           REPLACE_SUBSYSTEM_NAME
           REPLACE_APPLICATION_NAME
 
-  output-logs-router-agent-plugin.conf: |
+  output-REPLACE_OUTPUT_PLUGIN_CONF_NAME.conf: |
     [OUTPUT]
-        Name logger-agent-plugin
-        Id logs-router-agent-plugin
+        Name REPLACE_OUTPUT_PLUGIN_INTERNAL_NAME
+        Id REPLACE_OUTPUT_PLUGIN_CONF_NAME
         Match *
-        Retry_Limit 8
+        Retry_Limit False
 
         # Connection
         Target_Host REPLACE_INGESTER_HOST
         Target_Port REPLACE_INGESTER_PORT
-        Target_Path /v1/logs/ws
+        Target_Path REPLACE_TARGET_PATH
 
         # Authentication
         Authentication_Mode REPLACE_IAM_AUTH_MODE
@@ -277,7 +278,7 @@ data:
         Time_Format %b %d %H:%M:%S
   plugins.conf: |
     [PLUGINS]
-        Path    /fluent-bit/bin/logs-router-agent-plugin.so
+        Path    /fluent-bit/bin/REPLACE_OUTPUT_PLUGIN_CONF_NAME.so
 ---
 apiVersion: apps/v1
 kind: DaemonSet
