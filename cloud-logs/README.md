@@ -37,3 +37,4 @@
 ## Resources
 
 * [Send IBM Cloud Kubernetes Service log data to IBM Cloud Logs](https://cloud.ibm.com/docs/cloud-logs?topic=cloud-logs-kube2logs)
+* [Managing the Logging agent for IBM Cloud Kubernetes Service clusters](https://cloud.ibm.com/docs/cloud-logs?topic=cloud-logs-agent-std-cluster)
