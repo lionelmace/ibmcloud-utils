@@ -2,10 +2,18 @@
 
 In this tutorial, we will see how to run **tcpdump** from a ROKS worker node and how to run packet captures with the tool **ksniff** inside Kubernetes Pods.
 
+- [Pre-Requisites](#pre-requisites)
 - [Connect to the cluster](#connect-to-the-cluster)
 - [Run tcpdump from a worker node](#run-tcpdump-from-a-worker-node)
 - [Packet capture inside Pod using ksniff](#packet-capture-inside-pod-using-ksniff)
 - [Resources](#resources)
+
+## Pre-Requisites
+
+- [Cluster ROKS on IBM Cloud](https://cloud.ibm.com/containers/cluster-management/catalog/create?platformType=openshift)
+- [OpenShift Command Line](https://mirror.openshift.com/pub/openshift-v4/clients/ocp/))
+- [ksniff](https://github.com/eldadru/ksniff)
+- [wireshark](https://www.wireshark.org)
 
 ## Connect to the cluster
 
@@ -96,11 +104,6 @@ The oc debug command schedule a pod on the selected node where the main containe
 
 ksniff is a popular tool for conveniently running packet captures inside Kubernetes Pods.
 
-Pre-Requisites
-
-* [ksniff](https://github.com/eldadru/ksniff)
-* [wireshark](https://www.wireshark.org)
-
 1. Get the pod id
 
     ```sh
@@ -119,6 +122,6 @@ Pre-Requisites
 
 ## Resources
 
-* [Running tcpdump inside an OpenShift pod to capture network traffic](https://access.redhat.com/solutions/4569211s)
-* [Packet capture inside Pod using community ksniff with OpenShift 4](https://access.redhat.com/articles/5436111)
-* [Why can't I SSH into my worker node?](https://cloud.ibm.com/docs/openshift?topic=openshift-cs_ssh_worker)
+- [Running tcpdump inside an OpenShift pod to capture network traffic](https://access.redhat.com/solutions/4569211s)
+- [Packet capture inside Pod using community ksniff with OpenShift 4](https://access.redhat.com/articles/5436111)
+- [Why can't I SSH into my worker node?](https://cloud.ibm.com/docs/openshift?topic=openshift-cs_ssh_worker)
