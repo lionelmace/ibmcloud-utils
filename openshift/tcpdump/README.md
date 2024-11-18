@@ -11,7 +11,7 @@ In this tutorial, we will see how to run **tcpdump** from a ROKS worker node and
 ## Pre-Requisites
 
 - [Cluster ROKS on IBM Cloud](https://cloud.ibm.com/containers/cluster-management/catalog/create?platformType=openshift)
-- [OpenShift Command Line](https://mirror.openshift.com/pub/openshift-v4/clients/ocp/))
+- [OpenShift Command Line](https://mirror.openshift.com/pub/openshift-v4/clients/ocp/)
 - [ksniff](https://github.com/eldadru/ksniff)
 - [wireshark](https://www.wireshark.org)
 
