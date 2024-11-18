@@ -4,6 +4,14 @@ To get host access to worker nodes for debugging and troubleshooting purposes, u
 
 > You can't access your worker node by using an SSH connection. SSH by password is unavailable on the worker nodes.
 
+- [Analysing network traffic with tcpdump and ksniff in ROKS](#analysing-network-traffic-with-tcpdump-and-ksniff-in-roks)
+  - [Connect to the cluster](#connect-to-the-cluster)
+  - [Run tcpdump from a worker node](#run-tcpdump-from-a-worker-node)
+  - [Packet capture inside Pod using ksniff](#packet-capture-inside-pod-using-ksniff)
+  - [Resources](#resources)
+
+## Connect to the cluster
+
 1. List the cluster to find the cluster id
 
     ```sh
@@ -34,7 +42,9 @@ To get host access to worker nodes for debugging and troubleshooting purposes, u
     You can now execute 'kubectl' commands against your cluster. For example, run 'kubectl get nodes'.
     ```
 
-3. List the worker nodes
+## Run tcpdump from a worker node
+
+1. List the worker nodes
 
     ```sh
     oc get nodes
@@ -49,7 +59,7 @@ To get host access to worker nodes for debugging and troubleshooting purposes, u
     kube-cstfnmhf0pnd4tlh8ij0-icnzefpxmro-default-00000358   Ready    master,worker   18m   v1.29.8+632b078
     ```
 
-4. Start a debug container in one of the worker node
+1. Start a debug container in one of the worker node
 
     ```sh
     oc debug node/kube-cstfnmhf0pnd4tlh8ij0-icnzefpxmro-default-0000016b
@@ -67,7 +77,7 @@ To get host access to worker nodes for debugging and troubleshooting purposes, u
 
     > The oc debug command schedule a pod on the selected node where the main container mounts the host file system on the /host directory. After scheduling the pod, a shell into the main container is provided.
 
-5. Run tcpdump
+1. Run tcpdump
 
     ```sh
     sh-5.1# tcpdump
@@ -81,7 +91,7 @@ To get host access to worker nodes for debugging and troubleshooting purposes, u
     09:43:41.353869 IP 10.243.128.13.30371 > kube-cstfnmhf0pnd4tlh8ij0-icnzefpxmro-default-0000016b.34109: Flags [P.], seq 1738171949:1738172079, ack 2514377068, win 1578, options [nop,nop,TS val 381811480 ecr 649675979], length 130
     ```
 
-## Packet capture inside Pod using community ksniff with OpenShift 4
+## Packet capture inside Pod using ksniff
 
 ksniff is a popular tool for conveniently running packet captures inside Kubernetes Pods.
 
