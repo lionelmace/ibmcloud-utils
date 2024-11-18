@@ -4,11 +4,10 @@ To get host access to worker nodes for debugging and troubleshooting purposes, u
 
 > You can't access your worker node by using an SSH connection. SSH by password is unavailable on the worker nodes.
 
-- [Analysing network traffic with tcpdump and ksniff in ROKS](#analysing-network-traffic-with-tcpdump-and-ksniff-in-roks)
-  - [Connect to the cluster](#connect-to-the-cluster)
-  - [Run tcpdump from a worker node](#run-tcpdump-from-a-worker-node)
-  - [Packet capture inside Pod using ksniff](#packet-capture-inside-pod-using-ksniff)
-  - [Resources](#resources)
+- [Connect to the cluster](#connect-to-the-cluster)
+- [Run tcpdump from a worker node](#run-tcpdump-from-a-worker-node)
+- [Packet capture inside Pod using ksniff](#packet-capture-inside-pod-using-ksniff)
+- [Resources](#resources)
 
 ## Connect to the cluster
 
