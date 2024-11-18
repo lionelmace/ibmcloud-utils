@@ -1,8 +1,6 @@
 # Analysing network traffic with tcpdump and ksniff in ROKS
 
-To get host access to worker nodes for debugging and troubleshooting purposes, use the **oc debug node** command to deploy a pod with a privileged securityContext to a worker node that you want to troubleshoot.
-
-> You can't access your worker node by using an SSH connection. SSH by password is unavailable on the worker nodes.
+In this tutorial, we will see how to run **tcpdump** from a ROKS worker node and how to run packet captures with the tool **ksniff** inside Kubernetes Pods.
 
 - [Connect to the cluster](#connect-to-the-cluster)
 - [Run tcpdump from a worker node](#run-tcpdump-from-a-worker-node)
@@ -43,6 +41,12 @@ To get host access to worker nodes for debugging and troubleshooting purposes, u
 
 ## Run tcpdump from a worker node
 
+To get host access to worker nodes for debugging and troubleshooting purposes, use the **oc debug node** command to deploy a pod with a privileged securityContext to a worker node that you want to troubleshoot.
+
+> You can't access your worker node by using an SSH connection. SSH by password is unavailable on the worker nodes.
+
+The oc debug command schedule a pod on the selected node where the main container mounts the host file system on the /host directory. After scheduling the pod, a shell into the main container is provided.
+
 1. List the worker nodes
 
     ```sh
@@ -73,8 +77,6 @@ To get host access to worker nodes for debugging and troubleshooting purposes, u
     If you don't see a command prompt, try pressing enter.
     sh-5.1# chroot /host]
     ```
-
-    > The oc debug command schedule a pod on the selected node where the main container mounts the host file system on the /host directory. After scheduling the pod, a shell into the main container is provided.
 
 1. Run tcpdump
 
