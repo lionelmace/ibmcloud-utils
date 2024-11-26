@@ -20,12 +20,12 @@ variable "cos_region" {
 # COS Service
 ##############################################################################
 
-resource "ibm_resource_instance" "cos" {
+resource "ibm_resource_instance" "cos-scc" {
   name              = format("%s-%s", local.basename, "cos-scc")
   service           = "cloud-object-storage"
   plan              = var.cos_plan
   location          = var.cos_region
-  resource_group_id = local.resource_group_id
+  resource_group_id = ibm_resource_group.group.id
   tags              = var.tags
 
   parameters = {
@@ -40,7 +40,7 @@ resource "ibm_resource_instance" "cos" {
 # SCC requires Cross-Region bucket for resiliency
 resource "ibm_cos_bucket" "scc-bucket" {
   bucket_name          = format("%s-%s", local.basename, "cos-bucket-scc")
-  resource_instance_id = ibm_resource_instance.cos.id
+  resource_instance_id = ibm_resource_instance.cos-scc.id
   storage_class        = "smart"
 
   # SCC Control 2.1.1.2
@@ -74,6 +74,6 @@ resource "ibm_iam_access_group_policy" "policy-cos" {
 
   resources {
     service           = "cloud-object-storage"
-    resource_group_id = local.resource_group_id
+    resource_group_id = ibm_resource_group.group.id
   }
 }

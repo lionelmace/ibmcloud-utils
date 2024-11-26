@@ -3,5 +3,5 @@ resource "ibm_resource_instance" "event-notifications" {
   service           = "event-notifications"
   plan              = "lite"
   location          = var.region
-  resource_group_id = local.resource_group_id
+  resource_group_id = ibm_resource_group.group.id
 }

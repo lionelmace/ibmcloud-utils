@@ -34,7 +34,7 @@ variable "region" {
 variable "tags" {
   description = "List of Tags"
   type        = list(string)
-  default     = ["tf", "cn"]
+  default     = ["tf", "scc"]
 }
 
 # Account ID is required for the SCC Scope

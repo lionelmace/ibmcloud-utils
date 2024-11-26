@@ -10,7 +10,7 @@ resource "ibm_iam_access_group_policy" "iam-rg-viewer" {
   roles           = ["Viewer"]
   resources {
     resource_type = "resource-group"
-    resource      = local.resource_group_id
+    resource      = ibm_resource_group.group.id
   }
 }
 
@@ -19,13 +19,13 @@ resource "ibm_iam_access_group_policy" "iam-rg-viewer" {
 resource "ibm_iam_authorization_policy" "iam-auth-scc-cos" {
   source_service_name         = "compliance"
   target_service_name         = "cloud-object-storage"
-  target_resource_instance_id = ibm_resource_instance.cos.guid
+  target_resource_instance_id = ibm_resource_instance.cos-scc.guid
   roles                       = ["Writer"]
 }
 
 resource "ibm_iam_authorization_policy" "iam-auth-kms-cos" {
   source_service_name         = "cloud-object-storage"
-  source_resource_instance_id = ibm_resource_instance.cos.guid
+  source_resource_instance_id = ibm_resource_instance.cos-scc.guid
   target_service_name         = "kms"
   target_resource_instance_id = ibm_resource_instance.key-protect.guid
   roles                       = ["Reader"]
