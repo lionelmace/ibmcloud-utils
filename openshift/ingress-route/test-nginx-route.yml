@@ -71,7 +71,7 @@ metadata:
   name: test
   namespace: ns-route
 spec:
-  host: sandbox-48e132e329a93b062aefe96ed994cafc-0000.eu-de.containers.appdomain.cloud
+  host: icn-dh1irt-roks-7d23ce9b99cc281f754f713c0a27f19a-0000.eu-de.containers.appdomain.cloud
   port:
     targetPort: 8080
   tls:
