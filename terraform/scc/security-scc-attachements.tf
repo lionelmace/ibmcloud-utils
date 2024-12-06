@@ -29,6 +29,7 @@ module "create_profile_attachment_fs" {
 
 module "create_profile_attachment_cis" {
   source                 = "terraform-ibm-modules/scc/ibm//modules/attachment"
+  version                = "v1.8.24"
   profile_name           = "CIS IBM Cloud Foundations Benchmark v1.1.0"
   profile_version        = "latest"
   scc_instance_id        = ibm_resource_instance.scc_instance.guid
