@@ -41,11 +41,11 @@ data "http" "cis_certificate_order" {
 
   request_body = jsonencode(
     {
-        type = "advanced"
-        hosts = ["test.lionelmace.com"]
-        validation_method = "txt"
-        validity_days = 90
-        certificate_authority = "lets_encrypt"
+      type                  = "advanced"
+      hosts                 = ["test.lionelmace.com"]
+      validation_method     = "txt"
+      validity_days         = 90
+      certificate_authority = "lets_encrypt"
     }
   )
 }

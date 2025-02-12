@@ -3,8 +3,8 @@ resource "ibm_is_vpc" "vpc" {
   name                      = "${var.prefix}-vpc"
   address_prefix_management = var.vpc_address_prefix_management
   # default_network_acl_name  = "${var.prefix}-acl"
-  classic_access            = var.vpc_classic_access
-  tags                      = var.tags
+  classic_access = var.vpc_classic_access
+  tags           = var.tags
 }
 
 resource "ibm_is_vpc_address_prefix" "subnet_prefix" {
@@ -88,7 +88,7 @@ resource "ibm_is_subnet" "subnet" {
   public_gateway  = var.vpc_enable_public_gateway ? element(ibm_is_public_gateway.pgw.*.id, count.index) : null
 }
 
-resource "ibm_is_subnet_network_acl_attachment" attach {
+resource "ibm_is_subnet_network_acl_attachment" "attach" {
   count       = 3
   subnet      = element(ibm_is_subnet.subnet.*.id, count.index)
   network_acl = ibm_is_network_acl.multizone_acl.id

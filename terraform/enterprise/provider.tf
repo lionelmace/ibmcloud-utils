@@ -13,7 +13,7 @@ terraform {
 }
 
 provider "ibm" {
-  alias            = "child"
+  alias = "child"
   # how do I get the API Key after account creation?
   ibmcloud_api_key = var.ibmcloud_api_key
   region           = var.region

@@ -40,15 +40,15 @@ resource "ibm_resource_instance" "cos" {
 ##############################################################################
 # SCC requires Cross-Region bucket for resiliency
 resource "ibm_cos_bucket" "scc-bucket" {
-  bucket_name           = format("%s-%s", local.basename, "cos-bucket-scc")
-  resource_instance_id  = ibm_resource_instance.cos.id
-  storage_class         = "smart"
+  bucket_name          = format("%s-%s", local.basename, "cos-bucket-scc")
+  resource_instance_id = ibm_resource_instance.cos.id
+  storage_class        = "smart"
 
   # SCC Control 2.1.1.2
   # Ensure Cloud Object Storage encryption is enabled with BYOK
   # Key management services can only be added during bucket creation.
-  depends_on           = [ibm_iam_authorization_policy.iam-auth-kms-cos]
-  kms_key_crn          = ibm_kms_key.key.id
+  depends_on  = [ibm_iam_authorization_policy.iam-auth-kms-cos]
+  kms_key_crn = ibm_kms_key.key.id
 
   cross_region_location = "eu"
   # region_location      = "eu-de"

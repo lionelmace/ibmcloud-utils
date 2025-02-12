@@ -84,7 +84,7 @@ resource "ibm_resource_key" "db-svc-credentials" {
 locals {
   endpoints = [
     {
-      name        = "postgres",
+      name = "postgres",
       # crn         = ibm_database.icd_postgres.id
       db-name     = nonsensitive(ibm_resource_key.db-svc-credentials.credentials["connection.postgres.database"])
       db-host     = nonsensitive(ibm_resource_key.db-svc-credentials.credentials["connection.postgres.hosts.0.hostname"])

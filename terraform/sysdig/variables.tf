@@ -1,5 +1,5 @@
 variable "ibmcloud_api_key" {
-  type = "string"
+  type = string
 }
 
 variable "location" {

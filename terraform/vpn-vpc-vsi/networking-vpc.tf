@@ -79,8 +79,8 @@ resource "ibm_is_vpc" "vpc" {
   # Delete all rules attached to default security group and default network ACL
   # for a new VPC. This attribute has no impact on update. Default = false
   # no_sg_acl_rules             = true
-  classic_access              = var.vpc_classic_access
-  tags                        = var.tags
+  classic_access = var.vpc_classic_access
+  tags           = var.tags
 }
 
 

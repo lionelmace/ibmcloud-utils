@@ -85,7 +85,7 @@ resource "ibm_container_vpc_cluster" "iks_cluster" {
   #     subnet_id = "0717-0c0899ce-48ac-4eb6-892d-4e2e1ff8c9478"
   #     name      = "eu-de-1"
   # }
-  
+
   # Fix cost estimate for ROKS cluster showing zero - Not fixed for dynamic zones
   # https://github.ibm.com/cloud-finops/issues/issues/173
   dynamic "zones" {

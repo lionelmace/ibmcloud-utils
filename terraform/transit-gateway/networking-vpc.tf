@@ -101,10 +101,10 @@ resource "ibm_is_vpc_address_prefix" "address_prefix" {
 
 resource "ibm_is_public_gateway" "pgw" {
 
-  count = var.vpc_enable_public_gateway ? 3 : 0
-  name  = "${local.basename}-pgw-${count.index + 1}"
-  vpc   = ibm_is_vpc.vpc.id
-  zone  = "${var.region}-${count.index + 1}"
+  count          = var.vpc_enable_public_gateway ? 3 : 0
+  name           = "${local.basename}-pgw-${count.index + 1}"
+  vpc            = ibm_is_vpc.vpc.id
+  zone           = "${var.region}-${count.index + 1}"
   resource_group = local.resource_group_id
 }
 

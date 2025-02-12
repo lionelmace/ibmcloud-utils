@@ -22,7 +22,7 @@ icd_mongo_adminpassword     = "AdministratorPassw0rd01"
 icd_mongo_db_version        = "5.0"
 icd_mongo_service_endpoints = "private"
 # VPE can only be used if Mongo Private endpoint is enabled
-icd_mongo_use_vpe           = "true"
+icd_mongo_use_vpe = "true"
 
 # Minimum parameter for Enterprise Edition
 # icd_mongo_ram_allocation = 14336

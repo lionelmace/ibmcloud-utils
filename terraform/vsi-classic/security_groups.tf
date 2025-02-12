@@ -45,7 +45,7 @@ resource "ibm_security_group_rule" "https-pub" {
   port_range_min    = 443
   port_range_max    = 443
   protocol          = "tcp"
-  security_group_id = "${ibm_security_group.sg_public_maximo.id}"
+  security_group_id = ibm_security_group.sg_public_maximo.id
 }
 
 resource "ibm_security_group_rule" "http-pub" {
@@ -54,7 +54,7 @@ resource "ibm_security_group_rule" "http-pub" {
   port_range_min    = 80
   port_range_max    = 80
   protocol          = "tcp"
-  security_group_id = "${ibm_security_group.sg_public_maximo.id}"
+  security_group_id = ibm_security_group.sg_public_maximo.id
 }
 
 #public SSH for demo access, please remove
@@ -64,7 +64,7 @@ resource "ibm_security_group_rule" "ssh_pub" {
   port_range_min    = 22
   port_range_max    = 22
   protocol          = "tcp"
-  security_group_id = "${ibm_security_group.sg_public_maximo.id}"
+  security_group_id = ibm_security_group.sg_public_maximo.id
 }
 
 #########################################################
@@ -95,8 +95,8 @@ resource "ibm_security_group_rule" "ssh" {
   port_range_min    = 22
   port_range_max    = 22
   protocol          = "tcp"
-  remote_ip         = "10.0.0.0/8"                                 #replace for 0sl01 subnet CIDR or ip
-  security_group_id = "${ibm_security_group.sg_private_maximo.id}"
+  remote_ip         = "10.0.0.0/8" #replace for 0sl01 subnet CIDR or ip
+  security_group_id = ibm_security_group.sg_private_maximo.id
 }
 
 resource "ibm_security_group_rule" "ssh_db" {
@@ -105,8 +105,8 @@ resource "ibm_security_group_rule" "ssh_db" {
   port_range_min    = 22
   port_range_max    = 22
   protocol          = "tcp"
-  remote_ip         = "10.0.0.0/8"                             #replace for 0sl01 subnet CIDR or ip
-  security_group_id = "${ibm_security_group.sg_private_db.id}"
+  remote_ip         = "10.0.0.0/8" #replace for 0sl01 subnet CIDR or ip
+  security_group_id = ibm_security_group.sg_private_db.id
 }
 
 # Management if windows
@@ -117,8 +117,8 @@ resource "ibm_security_group_rule" "rdp" {
   port_range_min    = 3389
   port_range_max    = 3389
   protocol          = "tcp"
-  remote_ip         = "10.0.0.0/8"                                 #replace for 0sl01 subnet CIDR or ip
-  security_group_id = "${ibm_security_group.sg_private_maximo.id}"
+  remote_ip         = "10.0.0.0/8" #replace for 0sl01 subnet CIDR or ip
+  security_group_id = ibm_security_group.sg_private_maximo.id
 }
 
 resource "ibm_security_group_rule" "rdp_db" {
@@ -127,8 +127,8 @@ resource "ibm_security_group_rule" "rdp_db" {
   port_range_min    = 3389
   port_range_max    = 3389
   protocol          = "tcp"
-  remote_ip         = "10.0.0.0/8"                             #replace for 0sl01 subnet CIDR or ip
-  security_group_id = "${ibm_security_group.sg_private_db.id}"
+  remote_ip         = "10.0.0.0/8" #replace for 0sl01 subnet CIDR or ip
+  security_group_id = ibm_security_group.sg_private_db.id
 }
 
 resource "ibm_security_group_rule" "http-in" {
@@ -137,8 +137,8 @@ resource "ibm_security_group_rule" "http-in" {
   port_range_min    = 80
   port_range_max    = 80
   protocol          = "tcp"
-  remote_ip         = "10.0.0.0/8"                                 #replace for 0sl01 subnet CIDR or ip
-  security_group_id = "${ibm_security_group.sg_private_maximo.id}"
+  remote_ip         = "10.0.0.0/8" #replace for 0sl01 subnet CIDR or ip
+  security_group_id = ibm_security_group.sg_private_maximo.id
 }
 
 # Example for mysgl, create rules for DB, Maximo +++++
@@ -148,8 +148,8 @@ resource "ibm_security_group_rule" "mysql-in" {
   port_range_min    = 3306
   port_range_max    = 3306
   protocol          = "tcp"
-  remote_ip         = "10.0.0.0/8"                             #replace for 0sl01 subnet CIDR or ip
-  security_group_id = "${ibm_security_group.sg_private_db.id}"
+  remote_ip         = "10.0.0.0/8" #replace for 0sl01 subnet CIDR or ip
+  security_group_id = ibm_security_group.sg_private_db.id
 }
 
 resource "ibm_security_group_rule" "mysql-out" {
@@ -158,8 +158,8 @@ resource "ibm_security_group_rule" "mysql-out" {
   port_range_min    = 3306
   port_range_max    = 3306
   protocol          = "tcp"
-  remote_ip         = "10.0.0.0/8"                             #replace for 0sl01 subnet CIDR or ip
-  security_group_id = "${ibm_security_group.sg_private_db.id}"
+  remote_ip         = "10.0.0.0/8" #replace for 0sl01 subnet CIDR or ip
+  security_group_id = ibm_security_group.sg_private_db.id
 }
 
 #icmp_type specified via port_range_min
@@ -171,7 +171,7 @@ resource "ibm_security_group_rule" "icmp_db" {
   port_range_min    = 8
   port_range_max    = 0
   remote_ip         = "10.0.0.0/8"
-  security_group_id = "${ibm_security_group.sg_private_db.id}"
+  security_group_id = ibm_security_group.sg_private_db.id
 }
 
 resource "ibm_security_group_rule" "icmp" {
@@ -181,7 +181,7 @@ resource "ibm_security_group_rule" "icmp" {
   port_range_min    = 8
   port_range_max    = 0
   remote_ip         = "10.0.0.0/8"
-  security_group_id = "${ibm_security_group.sg_private_maximo.id}"
+  security_group_id = ibm_security_group.sg_private_maximo.id
 }
 
 # Allow access to IBM DNS name servers
@@ -192,7 +192,7 @@ resource "ibm_security_group_rule" "dns" {
   port_range_max    = 53
   protocol          = "udp"
   remote_ip         = "10.0.0.0/8"
-  security_group_id = "${ibm_security_group.sg_private_maximo.id}"
+  security_group_id = ibm_security_group.sg_private_maximo.id
 }
 
 resource "ibm_security_group_rule" "dns_db" {
@@ -202,5 +202,5 @@ resource "ibm_security_group_rule" "dns_db" {
   port_range_max    = 53
   protocol          = "udp"
   remote_ip         = "10.0.0.0/8"
-  security_group_id = "${ibm_security_group.sg_private_db.id}"
+  security_group_id = ibm_security_group.sg_private_db.id
 }

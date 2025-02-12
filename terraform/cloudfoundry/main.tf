@@ -15,7 +15,7 @@ variable "ibm_cloud_space" {
 
 variable "ibm_cloud_region" {
   description = "specify the region to deploy the app"
-  default = "eu-de"
+  default     = "eu-de"
 }
 
 
@@ -25,12 +25,12 @@ variable "application_hostname" {
 
 variable "application_version" {
   description = "specify the version of the application. A change of this parameters is an indication for terraform that the application code has changed and needs redeployment."
-  default = "100"
+  default     = "100"
 }
 
 variable "application_instances" {
   description = "specify the number of cloud foundry application instances to be deployed"
-  default = "1"
+  default     = "1"
 }
 
 
@@ -41,26 +41,26 @@ variable "application_instances" {
 # Configure the IBM Cloud Provider
 provider "ibm" {
   #bluemix_api_key = "${var.ibm_cloud_apikey}"
-  ibmcloud_api_key = "${var.ibm_cloud_apikey}"
-  region = "${var.ibm_cloud_region}"
+  ibmcloud_api_key = var.ibm_cloud_apikey
+  region           = var.ibm_cloud_region
 }
 
 data "ibm_space" "myspace" {
-  org   = "${var.ibm_cloud_organization}"
-  space = "${var.ibm_cloud_space}"
+  org   = var.ibm_cloud_organization
+  space = var.ibm_cloud_space
 }
 
 # Create an Cloud Froundry application 
 resource "ibm_app" "cfapp" {
   name              = "cfnode-${var.application_hostname}"
-  space_guid        = "${data.ibm_space.myspace.id}"
+  space_guid        = data.ibm_space.myspace.id
   wait_time_minutes = 10
   buildpack         = "nodejs_buildpack"
   #app_path          = "${path.module}/appcode/get-started-node-master.zip"
-  app_path          = "${path.module}/tree/master/terraform/cloudfoundry/appcode/get-started-node-master.zip"
-  app_version       = "${var.application_version}"
-  route_guid        = ["${ibm_app_route.myroute.id}"] 
-  instances         = "${var.application_instances}"
+  app_path    = "${path.module}/tree/master/terraform/cloudfoundry/appcode/get-started-node-master.zip"
+  app_version = var.application_version
+  route_guid  = ["${ibm_app_route.myroute.id}"]
+  instances   = var.application_instances
 }
 
 
@@ -69,9 +69,9 @@ data "ibm_app_domain_shared" "mydomain" {
 }
 
 resource "ibm_app_route" "myroute" {
-  domain_guid = "${data.ibm_app_domain_shared.mydomain.id}"
-  space_guid  = "${data.ibm_space.myspace.id}"
-  host        = "${var.application_hostname}"
+  domain_guid = data.ibm_app_domain_shared.mydomain.id
+  space_guid  = data.ibm_space.myspace.id
+  host        = var.application_hostname
 }
 
 
@@ -80,5 +80,5 @@ resource "ibm_app_route" "myroute" {
 ########## __________ O U T P U T S __________ ##########
 
 output "final_output" {
-    value = "Access the application at https://${var.application_hostname}.${data.ibm_app_domain_shared.mydomain.name}"
-} 
+  value = "Access the application at https://${var.application_hostname}.${data.ibm_app_domain_shared.mydomain.name}"
+}

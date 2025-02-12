@@ -4,7 +4,7 @@
 
 variable "ibmcloud_api_key" {
   description = "The IBM Cloud platform API key needed to deploy IAM enabled resources"
-  type = string
+  type        = string
 }
 
 variable "prefix" {
@@ -86,7 +86,7 @@ variable "vpc_cidr_blocks" {
   default = [
     "10.243.0.0/18",
     "10.243.64.0/18",
-    "10.243.128.0/18"]
+  "10.243.128.0/18"]
 }
 
 variable "subnet_cidr_blocks" {
@@ -94,7 +94,7 @@ variable "subnet_cidr_blocks" {
   default = [
     "10.243.0.0/24",
     "10.243.64.0/24",
-    "10.243.128.0/24"]
+  "10.243.128.0/24"]
 }
 
 variable "vpc_enable_public_gateway" {

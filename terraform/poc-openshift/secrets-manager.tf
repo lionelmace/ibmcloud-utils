@@ -45,7 +45,7 @@ resource "null_resource" "attach-secrets-manager-to-cluster" {
   #   }
   # }
 
-  depends_on = [ ibm_iam_authorization_policy.iks-sm, ]
+  depends_on = [ibm_iam_authorization_policy.iks-sm, ]
 }
 
 resource "null_resource" "attach-secrets-manager-to-openshift" {
@@ -77,5 +77,5 @@ resource "null_resource" "attach-secrets-manager-to-openshift" {
   #   }
   # }
 
-  depends_on = [ ibm_iam_authorization_policy.roks-sm, ]
+  depends_on = [ibm_iam_authorization_policy.roks-sm, ]
 }

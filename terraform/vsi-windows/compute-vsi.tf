@@ -14,8 +14,8 @@ variable "profile_name" {
 }
 
 variable "create_public_ip" {
-  type        = bool
-  default     = "true"
+  type    = bool
+  default = "true"
 }
 
 

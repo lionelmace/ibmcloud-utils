@@ -38,5 +38,5 @@ openshift_cluster_name       = "iro"
 openshift_worker_pool_flavor = "bx2.4x16"
 openshift_version            = "4.9.17_openshift"
 # Possible values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
-openshift_wait_till          = "OneWorkerNodeReady"
+openshift_wait_till = "OneWorkerNodeReady"
 

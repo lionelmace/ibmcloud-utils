@@ -21,7 +21,7 @@ icd_postgres_adminpassword     = "AdministratorPassw0rd01"
 icd_postgres_db_version        = "16"
 icd_postgres_service_endpoints = "private"
 # VPE can only be used if Mongo Private endpoint is enabled
-icd_postgres_use_vpe           = "true"
+icd_postgres_use_vpe = "true"
 
 # Minimum parameter for Enterprise Edition
 # icd_postgres_ram_allocation = 14336

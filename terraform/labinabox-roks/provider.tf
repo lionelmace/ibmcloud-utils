@@ -35,7 +35,7 @@ provider "helm" {
   }
   # IBM Cloud credentials are required to authenticate to the helm repo
   registry {
-    url = "oci://icr.io/ibm/observe/logs-agent-helm"
+    url      = "oci://icr.io/ibm/observe/logs-agent-helm"
     username = "iamapikey"
     password = var.ibmcloud_api_key # replace with an IBM cloud apikey
   }

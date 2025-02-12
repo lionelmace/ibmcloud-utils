@@ -1,7 +1,7 @@
 #ibmcloud_api_key = ""      # Set the variable export TF_VAR_ibmcloud_api_key=
-prefix         = "multizone"
-region         = "eu-de"    # eu-de for Frankfurt MZR
-tags           = ["tf", "multizone"]
+prefix = "multizone"
+region = "eu-de" # eu-de for Frankfurt MZR
+tags   = ["tf", "multizone"]
 
 vpc_classic_access            = false
 vpc_address_prefix_management = "manual"

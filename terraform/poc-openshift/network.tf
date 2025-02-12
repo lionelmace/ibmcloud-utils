@@ -87,8 +87,8 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-ssh" {
 ##############################################################################
 resource "ibm_is_network_acl" "multizone_acl" {
 
-  name = "${var.prefix}-multizone-acl"
-  vpc  = ibm_is_vpc.vpc.id
+  name           = "${var.prefix}-multizone-acl"
+  vpc            = ibm_is_vpc.vpc.id
   resource_group = ibm_resource_group.resource_group.id
 
   dynamic "rules" {
@@ -112,10 +112,10 @@ resource "ibm_is_network_acl" "multizone_acl" {
 
 resource "ibm_is_subnet" "subnet" {
 
-  count           = 3
-  name            = "${var.prefix}-subnet-${count.index + 1}"
-  vpc             = ibm_is_vpc.vpc.id
-  zone            = "${var.region}-${count.index + 1}"
+  count = 3
+  name  = "${var.prefix}-subnet-${count.index + 1}"
+  vpc   = ibm_is_vpc.vpc.id
+  zone  = "${var.region}-${count.index + 1}"
   # ipv4_cidr_block = element(ibm_is_vpc_address_prefix.address_prefix.*.cidr, count.index)
   ipv4_cidr_block = element(var.subnet_cidr_blocks, count.index)
   network_acl     = ibm_is_network_acl.multizone_acl.id

@@ -75,7 +75,7 @@ resource "ibm_is_security_group_rule" "vpn_cse_outbound" {
   group     = ibm_is_security_group.vpn.id
   direction = "outbound"
   # remote    = "166.9.0.0/16"
-  remote    = "166.8.0.0/14"
+  remote = "166.8.0.0/14"
 }
 
 # NATing
@@ -88,8 +88,8 @@ resource "ibm_is_vpn_server_route" "route_nating" {
 }
 
 resource "ibm_is_vpn_server_route" "route_cse_to_vpc" {
-  vpn_server  = ibm_is_vpn_server.vpn.id
-  action      = "deliver"
+  vpn_server = ibm_is_vpn_server.vpn.id
+  action     = "deliver"
   # destination = "166.9.0.0/16"
   destination = "166.8.0.0/14"
   name        = "route-2-ibm-cloud-service-endpoints"

@@ -22,8 +22,8 @@ module "vpc_openshift_cluster" {
   disable_public_service_endpoint = var.disable_public_service_endpoint
   cos_instance_crn                = module.cos.cos_instance_id
   force_delete_storage            = var.openshift_force_delete_storage
-  entitlement = var.entitlement
-  tags        = var.tags
+  entitlement                     = var.entitlement
+  tags                            = var.tags
 }
 
 ##############################################################################

@@ -14,7 +14,7 @@ resource "ibm_iam_access_group_members" "assign-vmware-ag-to-user" {
 }
 
 resource "ibm_iam_user_invite" "assign-existing-user-to-classic-infra" {
-  users         = ["first.last@gmail.com"]
+  users = ["first.last@gmail.com"]
   classic_infra_roles {
     # permission_set = "superuser"
     permission_set = "noacess"

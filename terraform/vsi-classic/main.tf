@@ -19,7 +19,7 @@ resource "ibm_compute_vm_instance" "dbsrv01" {
   private_security_group_ids = ["${ibm_security_group.sg_private_db.id}"]
 
   #public_security_group_ids  = [""]        #For VSI with public access
-  private_network_only = true               #Change if private network only
+  private_network_only = true #Change if private network only
   tags                 = ["group:database"]
   wait_time_minutes    = 30
 }
@@ -41,8 +41,8 @@ resource "ibm_compute_vm_instance" "maximo01" {
   ssh_key_ids     = [1153343] #ic sl security sshkey-list
 
   private_security_group_ids = ["${ibm_security_group.sg_private_maximo.id}"]
-  public_security_group_ids  = ["${ibm_security_group.sg_public_maximo.id}"]  #For VSI with public access
-  private_network_only       = false                                          #Change if private network only
+  public_security_group_ids  = ["${ibm_security_group.sg_public_maximo.id}"] #For VSI with public access
+  private_network_only       = false                                         #Change if private network only
   tags                       = ["group:maximo"]
   wait_time_minutes          = 30
 }

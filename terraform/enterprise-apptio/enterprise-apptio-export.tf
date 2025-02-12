@@ -14,8 +14,8 @@ locals {
 }
 
 variable "cos_bucket" {
-    type    = string
-    default = "usage-reports"
+  type    = string
+  default = "usage-reports"
 }
 
 # Declare a variable for the IBM Cloud API key.
@@ -23,7 +23,7 @@ variable "cos_bucket" {
 
 # Define the IBM provider configuration and set the API key from the variable.
 provider "ibm" {
-#   ibmcloud_api_key = "???????????????????????"
+  #   ibmcloud_api_key = "???????????????????????"
 }
 
 # Define a custom IAM role for Cloud Storage with specific actions.

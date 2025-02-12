@@ -1,10 +1,10 @@
 
-resource "ibm_tg_gateway" "my_tgw"{
-  name="transit-gateway-1"
-  location="eu-de"
-  global=false
+resource "ibm_tg_gateway" "my_tgw" {
+  name           = "transit-gateway-1"
+  location       = "eu-de"
+  global         = false
   resource_group = local.resource_group_id
-}  
+}
 
 resource "ibm_tg_connection" "test_ibm_tg_connection" {
   gateway      = ibm_tg_gateway.my_tgw.id
@@ -39,7 +39,7 @@ data "http" "tag_resource" {
   }
 
   request_body = jsonencode(
-    { 
+    {
       resources = [{ resource_id = "${ibm_tg_gateway.my_tgw.crn}" }]
       tag_names = ["tf", "tag_2"]
     }

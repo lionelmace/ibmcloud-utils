@@ -41,21 +41,21 @@ variable "icd_pg_use_vpe" { default = false }
 ##############################################################################
 
 module "postgresql_db" {
-  source                     = "terraform-ibm-modules/icd-postgresql/ibm"
-  version                    = "3.17.9"
-  resource_group_id          = ibm_resource_group.group.id
-  name                       = format("%s-%s", local.basename, "postgres")
-  region                     = var.region
-  pg_version                 = var.icd_pg_version
-  admin_pass                 = var.icd_pg_admin_pass
+  source            = "terraform-ibm-modules/icd-postgresql/ibm"
+  version           = "3.17.9"
+  resource_group_id = ibm_resource_group.group.id
+  name              = format("%s-%s", local.basename, "postgres")
+  region            = var.region
+  pg_version        = var.icd_pg_version
+  admin_pass        = var.icd_pg_admin_pass
   # users                      = var.icd_pg_users
   # kms_encryption_enabled     = true
   # kms_key_crn                = module.key_protect_all_inclusive.keys["icd-key"].crn
   # existing_kms_instance_guid = module.key_protect_all_inclusive.kms_guid
-  resource_tags              = var.tags
+  resource_tags = var.tags
   # service_credential_names   = var.service_credential_names
   # access_tags                = var.access_tags
-  member_host_flavor         = "b3c.4x16.encrypted"
+  member_host_flavor = "b3c.4x16.encrypted"
   # auto_scaling               = var.auto_scaling
 
   configuration = {

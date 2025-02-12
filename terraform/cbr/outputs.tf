@@ -4,7 +4,7 @@ output "vsi_private_ip" {
 
 output "vsi_public_ip" {
   description = "The public Floating IP attached to the VSI"
-  value = ibm_is_floating_ip.public_ip.0.address
+  value       = ibm_is_floating_ip.public_ip.0.address
 }
 
 output "ssh_connection_string" {
