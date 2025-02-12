@@ -2,8 +2,9 @@
 resource "ibm_resource_instance" "event-streams" {
   name              = format("%s-%s", local.basename, "event-streams")
   service           = "messagehub"
+  # Lite plan is not available in Frankfurt Region.
   plan              = "lite"
-  location          = var.region
+  location          = "us-south"
   resource_group_id = local.resource_group_id
 }
 
