@@ -18,6 +18,7 @@ spec:
         image: nginx:latest
         ports:
         - containerPort: 80
+
 ---
 # Service to expose frontend
 apiVersion: v1
@@ -32,6 +33,7 @@ spec:
     port: 80
   selector:
     app: nginx
+
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -45,10 +47,10 @@ spec:
   # ingressClassName: private-iks-k8s-nginx
   tls:
   - hosts:
-    - nginx.icn-kjrdrf-iks-7d23ce9b99cc281f754f713c0a27f19a-0000.eu-de.containers.appdomain.cloud
-    secretName: icn-kjrdrf-iks-7d23ce9b99cc281f754f713c0a27f19a-0000
+    - nginx.icn-chs9gu-iks-7d23ce9b99cc281f754f713c0a27f19a-0000.eu-de.containers.appdomain.cloud
+    secretName: icn-chs9gu-iks-7d23ce9b99cc281f754f713c0a27f19a-0000
   rules:
-  - host: nginx.icn-kjrdrf-iks-7d23ce9b99cc281f754f713c0a27f19a-0000.eu-de.containers.appdomain.cloud
+  - host: nginx.icn-chs9gu-iks-7d23ce9b99cc281f754f713c0a27f19a-0000.eu-de.containers.appdomain.cloud
     http:
       paths:
       - path: /
