@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ephemeral-volume-pod
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    command: [ "sh", "-c", "echo Hello from ephemeral volume > /data/hello.txt && sleep 3600" ]
+    volumeMounts:
+    - mountPath: /data
+      name: ephemeral-volume
+  volumes:
+  - name: ephemeral-volume
+    ephemeral:
+      volumeClaimTemplate:
+        metadata:
+          labels:
+            type: ephemeral
+        spec:
+          accessModes: [ "ReadWriteOnce" ]
+          storageClassName: ibmc-vpc-block-5iops-tier
+          resources:
+            requests:
+              storage: 20Gi
