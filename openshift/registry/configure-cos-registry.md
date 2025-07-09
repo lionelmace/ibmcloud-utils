@@ -151,3 +151,7 @@ You should already have both an existing ROKS (Red Hat OpenShift on IBM Cloud) c
     ```sh
     oc get clusteroperator image-registry
     ```
+
+## Resources
+
+* [Setting up and configuring the registry](https://docs.redhat.com/en/documentation/openshift_container_platform/4.7/html/registry/setting-up-and-configuring-the-registry#configuring-registry-storage-aws-user-infrastructure)
