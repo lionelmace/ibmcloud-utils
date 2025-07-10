@@ -42,7 +42,7 @@ You should already have both an existing ROKS (Red Hat OpenShift on IBM Cloud) c
 
     ```sh
     RANDOM_SUFFIX=$(LC_ALL=C tr -dc 'a-z0-9' </dev/urandom | head -c 6)
-    BUCKET_NAME="roks-${CLUSTER_ID}-${RANDOM_SUFFIX}"
+    COS_BUCKET_NAME="roks-${CLUSTER_ID}-${RANDOM_SUFFIX}"
     ibmcloud cos bucket-create \
       --bucket "$BUCKET_NAME" \
       --ibm-service-instance-id "$COS_INSTANCE_ID" \
@@ -50,10 +50,12 @@ You should already have both an existing ROKS (Red Hat OpenShift on IBM Cloud) c
       --region eu-de
     ```
 
-1. Store the bucket name in a variable
+1. This command will explicitly remove the emptyDir field:
 
     ```sh
-    COS_BUCKET_NAME=<your-cos-bucket-name>
+    oc patch configs.imageregistry.operator.openshift.io/cluster \
+      --type=json \
+      -p '[{"op": "remove", "path": "/spec/storage/emptyDir"}]'
     ```
 
 1. Configure the registry to use S3 storage (COS)
@@ -78,6 +80,12 @@ You should already have both an existing ROKS (Red Hat OpenShift on IBM Cloud) c
     }
     EOF
     )"
+    ```
+
+1. Check the image registry operator
+
+    ```sh
+    oc get configs.imageregistry.operator.openshift.io/cluster -o yaml
     ```
 
 1. Create a service credential key for the COS instance and store it to a file
@@ -108,10 +116,16 @@ You should already have both an existing ROKS (Red Hat OpenShift on IBM Cloud) c
     aws_secret_access_key = 4c78ddfa763XXXXXXX23d1cc9350d1
     ```
 
+1. Create the secret image-registry-private-configuration-user if it does not exist
+
+    ```sh
+    oc create secret generic image-registry-private-configuration-user -n openshift-image-registry
+    ```
+
 1. Patch the secret used by the image registry to set the access credentials (user)
 
     ```sh
-    kubectl patch secret image-registry-private-configuration-user \
+    oc patch secret image-registry-private-configuration-user \
     -n openshift-image-registry \
     --type merge \
     -p "{
@@ -122,12 +136,18 @@ You should already have both an existing ROKS (Red Hat OpenShift on IBM Cloud) c
     }"
     ```
 
+1. Create the secret image-registry-private-configuration-user if it does not exist
+
+    ```sh
+    oc create secret generic image-registry-private-configuration -n openshift-image-registry
+    ```
+
 1. Patch the main image registry secret with the full COS credentials file
 
     ```sh
     CREDENTIALS_B64=$(base64 -i creds.txt | tr -d '\n')
 
-    kubectl patch secret image-registry-private-configuration \
+    oc patch secret image-registry-private-configuration \
     -n openshift-image-registry \
     --type merge \
     -p "{\"data\": {\"credentials\": \"${CREDENTIALS_B64}\"}}"
@@ -150,6 +170,42 @@ You should already have both an existing ROKS (Red Hat OpenShift on IBM Cloud) c
 
     ```sh
     oc get clusteroperator image-registry
+    ```
+
+## Troubleshootings
+
+1. Check the pod image-registry is running
+
+    ```sh
+    oc project openshift-image-registry
+    oc get pods
+    NAME                              READY   STATUS    RESTARTS   AGE
+    image-registry-7d8b57c98f-m92t7   1/1     Running   0          3h53m
+    node-ca-62p88                     1/1     Running   0          5h12m
+    node-ca-6s8vx                     1/1     Running   0          5h17m
+    node-ca-b5jwl                     1/1     Running   0          4h56m
+    node-ca-chl7k                     1/1     Running   0          5h17m
+    node-ca-l6tlb                     1/1     Running   0          4h55m
+    node-ca-q4vw8                     1/1     Running   0          4h55m
+    ```
+
+1. Check the cluster operator image-registry
+
+    ```sh
+    oc describe clusteroperator image-registry
+    ```
+
+1. Removed the backend S3 to go back temporarily à emptyDir to unlock the operator.
+
+    ```sh
+    oc patch configs.imageregistry.operator.openshift.io/cluster --type=merge -p '{
+    "spec": {
+        "managementState": "Managed",
+        "storage": {
+        "emptyDir": {}
+        }
+    }
+    }'
     ```
 
 ## Resources
