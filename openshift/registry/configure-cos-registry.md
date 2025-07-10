@@ -208,6 +208,18 @@ You should already have both an existing ROKS (Red Hat OpenShift on IBM Cloud) c
     }'
     ```
 
+1. Check the pods in the openshift-image-registry.
+
+    ```sh
+    oc get pods -n openshift-image-registry
+    ```
+
+1. Check the deployed configuration
+
+    ```sh
+    oc get pod -n openshift-image-registry -l docker-registry=default -o jsonpath='{.items[0].spec.containers[0].env}' | jq
+    ```
+
 ## Resources
 
 * [Setting up and configuring the registry](https://docs.redhat.com/en/documentation/openshift_container_platform/4.7/html/registry/setting-up-and-configuring-the-registry#configuring-registry-storage-aws-user-infrastructure)
