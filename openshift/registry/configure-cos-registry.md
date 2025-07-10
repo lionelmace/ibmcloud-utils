@@ -202,7 +202,7 @@ You should already have both an existing ROKS (Red Hat OpenShift on IBM Cloud) c
     "spec": {
         "managementState": "Managed",
         "storage": {
-        "emptyDir": {}
+          "emptyDir": {}
         }
     }
     }'
