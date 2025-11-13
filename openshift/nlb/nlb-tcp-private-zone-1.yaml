@@ -16,7 +16,7 @@ metadata:
   labels:
     app: test
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: test
@@ -27,7 +27,8 @@ spec:
     spec:
       containers:
       - name: mtls-test
-        image: openshift/hello-openshift
+        # image: openshift/hello-openshift
+        image: mendhak/http-https-echo:latest
         imagePullPolicy: Always
         resources:
           requests:
@@ -48,11 +49,13 @@ metadata:
   name: private-nlb-eu-de-1
   namespace: test-nlb
   annotations:
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-lb-name: "my-private-nlb-1"
     service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "nlb"
     service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: "private"
     # Private NLB require the annotation service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-subnets
-    service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-subnets: "02b7-dbe2c811-b152-4692-9934-a94982b8b8e0"
-    #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-node-selector: "<key>=<value>"
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-subnets: "02b7-353dd35d-490a-4aee-804f-2254013c8774"
+    # Only select the workers from the zone selected (optional) - Impact the members in the LB Back-end Pools
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-node-selector: "ibm-cloud.kubernetes.io/zone=eu-de-1"
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: "eu-de-1"
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-health-check-udp: "<tcp_port"
   labels:

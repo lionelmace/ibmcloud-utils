@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: private-nlb-eu-de-2
+  namespace: test-nlb
+  annotations:
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-lb-name: "my-private-nlb-2"
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "nlb"
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: "private"
+    # Private NLB require the annotation service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-subnets
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-subnets: "02c7-131189ac-0f85-48c9-988c-7b29e60e13eb"
+    # Only select the workers from the zone selected (optional) - Impact the members in the LB Back-end Pools
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-node-selector: "ibm-cloud.kubernetes.io/zone=eu-de-2"
+    #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: "eu-de-1"
+    #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-health-check-udp: "<tcp_port"
+  labels:
+    app: test
+spec:
+  type: LoadBalancer
+  selector:
+    app: test
+    # Target only pods located in zone eu-de-2
+    ibm-cloud.kubernetes.io/zone: eu-de-2
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080

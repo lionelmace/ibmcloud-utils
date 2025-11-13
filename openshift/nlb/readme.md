@@ -63,4 +63,4 @@
 
 ## Resources
 
-* [Setting up a Network Load Balancer for VPC](https://cloud.ibm.com/docs/containers?topic=containers-vpc-lbaas#nlb_vpc)
+* [Setting up a Network Load Balancer for VPC](https://cloud.ibm.com/docs/containers?topic=containers-setup_vpc_nlb)
