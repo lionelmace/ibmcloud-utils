@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: test-nlb
+  name: nlb-private
   labels:
     environment: production
 
@@ -11,8 +11,8 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test
-  namespace: test-nlb
+  name: nlb-pod
+  namespace: nlb-private
   labels:
     app: test
 spec:
@@ -26,7 +26,7 @@ spec:
         app: test
     spec:
       containers:
-      - name: mtls-test
+      - name: mendhak-container
         # image: openshift/hello-openshift
         image: mendhak/http-https-echo:latest
         imagePullPolicy: Always
@@ -47,7 +47,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: private-nlb-eu-de-1
-  namespace: test-nlb
+  namespace: nlb-private
   annotations:
     service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-lb-name: "my-private-nlb-1"
     service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "nlb"
@@ -59,9 +59,11 @@ metadata:
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: "eu-de-1"
     #optional service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-health-check-udp: "<tcp_port"
   labels:
-    app: test
+    app: nlb-pod
 spec:
   type: LoadBalancer
+  # Specify Cluster (Default) or Local (to preserve the source IP address of client requests).
+  externalTrafficPolicy: Local
   selector:
     app: test
   ports:
