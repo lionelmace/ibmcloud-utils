@@ -35,6 +35,7 @@ variable "access_tags" {
 
 variable "ibmcloud_api_key" {
   type        = string
+  default     = ""
   description = "IBM Cloud API key used for authentication."
   sensitive   = true
 }
