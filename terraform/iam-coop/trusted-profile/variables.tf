@@ -5,7 +5,6 @@
 variable "ibmcloud_api_key" {
   description = "APIkey that's associated with the account to provision resources to"
   type        = string
-  # default     = ""
   sensitive   = true
 }
 
@@ -18,4 +17,10 @@ variable "tags" {
   description = "List of Tags"
   type        = list(string)
   default     = ["tf", "iam"]
+}
+
+variable "prefix" {
+  type = string
+  default     = "coop"
+  description = "A prefix for all resources to be created. If none provided a random prefix will be created"
 }
