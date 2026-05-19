@@ -4,7 +4,7 @@ metadata:
   name: banner-main
 spec:
   backgroundColor: blue
-  color: ‘#fff’
+  color: white
   location: BannerTop
   text: >-
-    You are logged on a Sandbox (Non Production) cluster.
+    You are logged on a shared ROVE cluster with OVN and VNI enabled.
