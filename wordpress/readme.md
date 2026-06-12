@@ -37,7 +37,7 @@
 
 1. Follow the installation process.
 
-    [Install](wordpress-1-install.png)
-    [Config](wordpress-2-config.png)
-    [Final](wordpress-3-final.png)
-    [Welcome](wordpress-4-welcome.png)
+    ![Install](wordpress-1-install.png)
+    ![Config](wordpress-2-config.png)
+    ![Final](wordpress-3-final.png)
+    ![Welcome](wordpress-4-welcome.png)
