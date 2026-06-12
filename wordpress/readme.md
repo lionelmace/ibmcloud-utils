@@ -26,8 +26,7 @@
     ./wordpress-centos.sh
     ```
 
-    > Once installed, you should see:
-    Relabeled /var/www/html/xmlrpc.php from unconfined_u:object_r:httpd_sys_content_t:s0 to unconfined_u:object_r:httpd_sys_rw_content_t:s0
+    > Once installed, you should see: Relabeled /var/www/html/xmlrpc.php from unconfined_u:object_r:httpd_sys_content_t:s0 to unconfined_u:object_r:httpd_sys_rw_content_t:s0
     > Done. Open: http://your-public-ip/
     > Database: wordpress
     > User: wordpress_user
