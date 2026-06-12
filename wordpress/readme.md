@@ -1,3 +1,5 @@
+# Install Wordpress on Centos 9 in IBM Cloud VPC VSI
+
 1. Create a VSI/VM with a public IP and a SSH Key
 
 1. Copy the Wordpress installation script on this VM
