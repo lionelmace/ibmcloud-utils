@@ -7,6 +7,8 @@ file=account_users.txt
 # Empty file content
 cat /dev/null > $file
 
+ibmcloud account users | awk '{print $1}' | paste -sd ';' -
+
 for i in `ibmcloud account users | awk '{ print $1}' `
 do
   # Extract all Account Users
@@ -29,8 +31,8 @@ do
 done
 
 echo $count 'users extracted to ' $file
-echo $ALL >> $file
-cat $file
+# echo $ALL >> $file
+# cat $file
 
 # cat remove_users.sh
 # echo "#"
