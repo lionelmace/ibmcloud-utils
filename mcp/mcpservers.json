@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "ibmcloud": {
+      "command": "/usr/local/bin/ibmcloud",
+      "args": [
+        "--mcp-transport", "stdio",
+        "--mcp-tools", "resource_groups,target,MORE COMMANDS HERE THAT LIST AND VIEW RESOURCES"
+      ]
+    }
+  }
+}
